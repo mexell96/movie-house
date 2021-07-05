@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import Movie from "./pages/Movie";
 import Movies from "./pages/Movies";
 import PreviousSearches from "./pages/PreviousSearches";
 
@@ -11,6 +12,9 @@ export default function App() {
                 <Navbar />
 
                 <Switch>
+                    <Route path="/movies/:id">
+                        <Movie />
+                    </Route>
                     <Route path="/movies">
                         <Movies />
                     </Route>
