@@ -3,36 +3,27 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-function Movie() {
-    let { id } = useParams();
-    const [movie, setMovie] = useState();
+const Movie = () => {
+  let { id } = useParams();
+  const [movie, setMovie] = useState();
 
-    const fetchData = async (id) => {
-        const response = await axios.get(`${APIFull}${id}`);
-        console.log(response.data, "responseNEW");
-        if (response.data) {
-            setMovie(response.data);
-        }
-    };
+  // useEffect(() => {
+  //     fetchData(id);
+  // }, [id]);
 
-    useEffect(() => {
-        fetchData(id);
-    }, []);
-
-    return (
+  return (
+    <div>
+      {movie && (
         <div>
-            {movie ? (
-                <div>
-                    <h4>{movie.Title}</h4>
-                    <img src={movie.Poster} alt={movie.Title} />
-                    <span>{movie.Year}</span>
-                    <span>{movie.Plot}</span>
-                </div>
-            ) : (
-                <h3>Загрузка</h3>
-            )}
+          <h4>{movie.Title}</h4>
+          <img src={movie.Poster} alt={movie.Title} />
+          <span>{movie.Year}</span>
+          <span>{movie.Plot}</span>
         </div>
-    );
-}
+      )}
+      {!movie && <div>Loading..</div>}
+    </div>
+  );
+};
 
-export default Movie;
+export { Movie };

@@ -1,18 +1,17 @@
 import React from "react";
 import Pagination from "@material-ui/lab/Pagination";
 
-
-function PaginationForMovies({ arrMovies, pagePagination, handleChange }) {
-    return (
-        <div>
-            <Pagination
+function PaginationForMovies() {
+  return (
+    <div>
+      {/* <Pagination
                 count={Math.ceil(arrMovies.totalResults / 10)}
                 page={pagePagination}
-                onChange={handleChange}
+                onChange={setNewPage}
                 color="primary"
-            />
-        </div>
-    );
+            /> */}
+    </div>
+  );
 }
 
 export default PaginationForMovies;
