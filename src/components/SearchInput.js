@@ -1,38 +1,35 @@
 import { setSearchValue } from "./../redux/actions";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 function SearchInput() {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
-  const history = useHistory();
-
   const searchValue = {
-    inputValue,
+    inputValue: inputValue,
     page: 1,
   };
 
-  function changeRouter(movie, page = 1) {
-    history.push(`movies?s=${movie}&page=${page}`);
-  }
-
-  function handler() {
+  const handler = () => {
     dispatch(setSearchValue(searchValue));
-    changeRouter(searchValue.inputValue, searchValue.page);
-  }
+  };
+  
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    handler();
+  };
 
   return (
-    <div>
+    <form onSubmit={onFormSubmit}>
       <input
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Введите название фильма"
+        placeholder="Enter the name of the movie"
       />
-      <button type="button" disabled={!inputValue} onClick={handler}>
-        Найти
+      <button type="submit" disabled={!inputValue}>
+        Search
       </button>
-    </div>
+    </form>
   );
 }
 

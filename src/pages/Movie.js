@@ -1,15 +1,15 @@
-import { APIFull } from "./../consts";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { getMovie } from "../APIFunctions";
 import { useParams } from "react-router-dom";
 
 const Movie = () => {
-  let { id } = useParams();
+  const { id } = useParams();
   const [movie, setMovie] = useState();
 
-  // useEffect(() => {
-  //     fetchData(id);
-  // }, [id]);
+  useEffect(async () => {
+    const mov = await getMovie(id);
+    setMovie(mov.data);
+  }, [id]);
 
   return (
     <div>

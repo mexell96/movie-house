@@ -1,14 +1,16 @@
 import React from "react";
-import FoundMovies from "../components/FoundMovies";
+import MoviesList from "../components/MoviesList";
 import SearchInput from "../components/SearchInput";
-import PaginationForMovies from "../components/PaginationForMovies";
+import PaginationForMovies from "../components/Pagination";
+import URL from "../components/URL";
 
 const Movies = () => {
   return (
     <div>
       <h1>MOVIES</h1>
+      <URL />
       <SearchInput />
-      <FoundMovies />
+      <MoviesList />
       <PaginationForMovies />
     </div>
   );

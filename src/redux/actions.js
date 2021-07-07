@@ -10,7 +10,7 @@ export function setSearchValue(searchValue) {
 
 export function fetchMovies(inputValue, page) {
   return async (dispatch) => {
-    const data = await getMovies(inputValue, page);
-    dispatch({ type: FETCH_MOVIES, payload: data.data.Search });
+    const movies = await getMovies(inputValue, page);
+    dispatch({ type: FETCH_MOVIES, payload: movies.data });
   };
 }

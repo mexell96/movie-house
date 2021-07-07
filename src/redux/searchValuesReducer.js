@@ -1,13 +1,17 @@
 import { SET_SEARCH_VALUES } from "./types";
 
 const initialState = {
-  requests: [],
+  inputValue: "",
+  page: 1,
 };
 
 export const searchValuesReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_SEARCH_VALUES:
-      return {...state, requests: [...state.requests, action.payload]};
+      return {
+        inputValue: action.payload.inputValue,
+        page: action.payload.page,
+      };
     default:
       return state;
   }

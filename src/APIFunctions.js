@@ -7,6 +7,6 @@ export const getMovies = async (searchValue, page = 1) => {
   );
 };
 
-export const fetchData = async (id) => {
+export const getMovie = async (id) => {
   return await axios.get(`${API_URL}/?apiKey=${API_KEY}&plot=full&i=${id}`);
 };
