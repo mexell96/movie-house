@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import MovieIcon from "@material-ui/icons/Movie";
 import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -19,42 +19,30 @@ const useStyles = makeStyles({
 
 export default function SimpleBottomNavigation() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-  const history = useHistory();
-
-  useEffect(() => {
-    if (value === 0) {
-      history.push("/");
-    } else if (value === 1) {
-      history.push("/movies");
-    } else if (value === 2) {
-      history.push("/previous-searches");
-    }
-  }, [value, history]);
 
   return (
-    <BottomNavigation
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-      showLabels
-      className={classes.root}>
-      <BottomNavigationAction
-        style={{ color: "white" }}
-        label="Home"
-        icon={<HomeIcon />}
-      />
-      <BottomNavigationAction
-        style={{ color: "white" }}
-        label="Movies"
-        icon={<MovieIcon />}
-      />
-      <BottomNavigationAction
-        style={{ color: "white" }}
-        label="Previous search"
-        icon={<SearchIcon />}
-      />
+    <BottomNavigation showLabels className={classes.root}>
+      <Link to="/">
+        <BottomNavigationAction
+          style={{ color: "white" }}
+          label="Home"
+          icon={<HomeIcon />}
+        />
+      </Link>
+      <Link to="/movies">
+        <BottomNavigationAction
+          style={{ color: "white" }}
+          label="Movies"
+          icon={<MovieIcon />}
+        />
+      </Link>
+      <Link to="/previous-searches">
+        <BottomNavigationAction
+          style={{ color: "white" }}
+          label="Previous search"
+          icon={<SearchIcon />}
+        />
+      </Link>
     </BottomNavigation>
   );
 }

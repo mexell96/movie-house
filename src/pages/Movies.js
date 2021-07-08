@@ -1,7 +1,7 @@
 import React from "react";
-import MoviesList from "../components/MoviesList";
+import MoviesList from "../components/MovieList/MoviesList";
 import SearchInput from "../components/SearchInput";
-import PaginationForMovies from "../components/Pagination";
+import PaginationForMovies from "../components/Pagination/Pagination";
 import URL from "../components/URL";
 
 const Movies = () => {
