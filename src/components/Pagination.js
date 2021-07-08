@@ -6,23 +6,22 @@ import Pagination from "@material-ui/lab/Pagination";
 const PaginationForMovies = () => {
   const dispatch = useDispatch();
   const totalResults = useSelector((state) => state.moviesReducer.totalResults);
-  const inputValue = useSelector(
-    (state) => state.searchValuesReducer.inputValue
-  );
-  const page = useSelector((state) => state.searchValuesReducer.page);
-  
+  const request = useSelector((state) => state.searchValuesReducer);
+
   const handleChange = (event, page) => {
-    dispatch(setSearchValue({ inputValue, page }));
+    dispatch(setSearchValue({ inputValue: request.inputValue, page }));
   };
 
   return (
     <div>
-      <Pagination
-        count={Math.ceil(totalResults / 10)}
-        page={+page}
-        onChange={handleChange}
-        color="primary"
-      />
+      {totalResults && (
+        <Pagination
+          count={Math.ceil(totalResults / 10)}
+          page={request.page}
+          onChange={handleChange}
+          color="primary"
+        />
+      )}
     </div>
   );
 };

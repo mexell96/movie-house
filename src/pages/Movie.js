@@ -6,13 +6,17 @@ const Movie = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState();
 
-  useEffect(async () => {
-    const mov = await getMovie(id);
-    setMovie(mov.data);
+  const fetchMovie = async () => {
+    const { data } = await getMovie(id);
+    setMovie(data);
+  };
+
+  useEffect(() => {
+    fetchMovie();
   }, [id]);
 
   return (
-    <div>
+    <>
       {movie && (
         <div>
           <h4>{movie.Title}</h4>
@@ -21,8 +25,8 @@ const Movie = () => {
           <span>{movie.Plot}</span>
         </div>
       )}
-      {!movie && <div>Loading..</div>}
-    </div>
+      {!movie && <div>Loading...</div>}
+    </>
   );
 };
 

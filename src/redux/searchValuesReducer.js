@@ -10,7 +10,7 @@ export const searchValuesReducer = (state = initialState, action) => {
     case SET_SEARCH_VALUES:
       return {
         inputValue: action.payload.inputValue,
-        page: action.payload.page,
+        page: +action.payload.page,
       };
     default:
       return state;

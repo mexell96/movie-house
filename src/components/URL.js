@@ -13,8 +13,8 @@ function URL() {
   const getUrl = () => {
     const searchParams = new URLSearchParams(location.search);
     const searchValue = {
-      inputValue: searchParams.get("s"),
-      page: searchParams.get("page"),
+      inputValue: searchParams.get("s") || "",
+      page: searchParams.get("page") || 1,
     };
     if (location.search) {
       dispatch(setSearchValue(searchValue));
@@ -33,7 +33,7 @@ function URL() {
     if (request.inputValue) {
       changeRouter(request.inputValue, request.page);
     }
-  }, [request.inputValue, request.page]);
+  }, [request]);
 
   return false;
 }
