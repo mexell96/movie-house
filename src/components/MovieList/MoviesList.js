@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from "../../redux/actions";
 import { useLocation } from "react-router";
-import SingleMovie from "../SingleMovie/SingleMovie";
+import { SingleMovie } from "../SingleMovie";
 import "./MovieList.css";
 import Loader from "../Loader";
 
-function MoviesList() {
+const MoviesList = () => {
   const request = useSelector((state) => state.searchValuesReducer);
   const movies = useSelector((state) => state.moviesReducer.movies);
   const loading = useSelector((state) => state.app.loading);
@@ -19,11 +19,9 @@ function MoviesList() {
     }
   }, [request]);
 
-  if (loading) {
-    return <Loader />;
-  }
+  if (loading) return <Loader />;
 
-  return (
+  const body = (
     <div className="trending">
       {location.search && !request.inputValue && (
         <h2>Error: "Invalid request"</h2>
@@ -43,6 +41,12 @@ function MoviesList() {
         ))}
     </div>
   );
-}
+  return (
+    <>
+      {loading && <Loader />}
+      {!loading && !!movies && body}
+    </>
+  );
+};
 
-export default MoviesList;
+export { MoviesList };

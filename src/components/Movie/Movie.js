@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { showLoader, hideLoader } from "./../../redux/actions";
 import { noPicture } from "./../../consts";
 import React, { useEffect, useState } from "react";
-import { getMovie } from "../../APIFunctions";
+import { getMovie } from "../../apiFunctions";
 import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import "./Movie.css";
@@ -59,7 +59,11 @@ const Movie = () => {
       {movie && (
         <div className={classes.paper}>
           <div className="ContentModal">
-            <img src={picture} alt={movie.Title} />
+            <img
+              src={picture}
+              alt={movie.Title}
+              style={{ height: "inherit" }}
+            />
             <div className="ContentModal__about">
               <span className="ContentModal__title">
                 {movie.Title}({movie.Year})

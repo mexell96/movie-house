@@ -2,7 +2,7 @@ import { noPicture } from "./../../consts";
 import "./SingleMovie.css";
 import { Link } from "react-router-dom";
 
-const SingleContent = (movie) => {
+const SingleMovie = (movie) => {
   let picture;
   if (movie.poster === "N/A") {
     picture = noPicture;
@@ -11,18 +11,19 @@ const SingleContent = (movie) => {
   }
 
   return (
-    <div
+    <Link
+      to={`/movies/${movie.imdbID}`}
       key={movie.imdbID}
       className="media"
       onClick={() => window.scroll(0, 0)}>
-      <Link to={`/movies/${movie.imdbID}`}>
-        <img className="poster" src={picture} alt={movie.title} />
+      <img className="poster" src={picture} alt={movie.title} />
+      <div>
         <div className="title">{movie.title}</div>
         <span className="sub-title">{movie.year}</span>
         <span className="sub-title capitalize">{movie.type}</span>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 
-export default SingleContent;
+export { SingleMovie };

@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleBottomNavigation() {
+const Navbar = () => {
   const classes = useStyles();
 
   return (
@@ -52,4 +52,5 @@ export default function SimpleBottomNavigation() {
       </Button>
     </BottomNavigation>
   );
-}
+};
+export { Navbar };

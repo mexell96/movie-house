@@ -1,5 +1,5 @@
 import { HIDE_LOADER } from "./../consts";
-import { getMovies } from "../APIFunctions";
+import { getMovies } from "../apiFunctions";
 import { SHOW_LOADER } from "../consts";
 import { FETCH_MOVIES, SET_SEARCH_VALUES } from "./types";
 

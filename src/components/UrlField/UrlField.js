@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router";
-import { setSearchValue } from "../redux/actions";
+import { setSearchValue } from "../../redux/actions";
 
-function URL() {
+const UrlField = () => {
   const history = useHistory();
   const request = useSelector((state) => state.searchValuesReducer);
   const dispatch = useDispatch();
@@ -36,6 +36,6 @@ function URL() {
   }, [request]);
 
   return false;
-}
+};
 
-export default URL;
+export { UrlField };

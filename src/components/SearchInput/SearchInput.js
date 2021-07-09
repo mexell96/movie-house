@@ -10,7 +10,7 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 
-function SearchInput() {
+const SearchInput = () => {
   const dispatch = useDispatch();
   const request = useSelector((state) => state.searchValuesReducer);
   const [input, setInput] = useState(request.inputValue || "");
@@ -38,33 +38,31 @@ function SearchInput() {
   }, [request.inputValue]);
 
   return (
-    <div>
-      <ThemeProvider theme={darkTheme}>
-        <form
-          className="search"
-          noValidate
-          autoComplete="off"
-          onSubmit={onFormSubmit}>
-          <TextField
-            style={{ flex: 1 }}
-            className="searchBox"
-            label="Search"
-            variant="filled"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Enter the name of the movie"
-          />
-          <Button
-            type="submit"
-            disabled={!input}
-            variant="contained"
-            style={{ marginLeft: 10 }}>
-            <SearchIcon fontSize="large" />
-          </Button>
-        </form>
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <form
+        className="search"
+        noValidate
+        autoComplete="off"
+        onSubmit={onFormSubmit}>
+        <TextField
+          style={{ flex: 1 }}
+          className="searchBox"
+          label="Search"
+          variant="filled"
+          value={input}
+          onChange={({ target: { value } }) => setInput(value)}
+          placeholder="Enter the name of the movie"
+        />
+        <Button
+          type="submit"
+          disabled={!input}
+          variant="contained"
+          style={{ marginLeft: 10 }}>
+          <SearchIcon fontSize="large" />
+        </Button>
+      </form>
+    </ThemeProvider>
   );
-}
+};
 
-export default SearchInput;
+export { SearchInput };
