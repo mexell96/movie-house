@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from "react-redux";
+import { showLoader, hideLoader } from "./../../redux/actions";
 import { noPicture } from "./../../consts";
 import React, { useEffect, useState } from "react";
 import { getMovie } from "../../APIFunctions";
@@ -23,10 +25,18 @@ const Movie = () => {
   const classes = useStyles();
   const { id } = useParams();
   const [movie, setMovie] = useState();
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.app.loading);
 
-  const fetchMovie = async () => {
-    const { data } = await getMovie(id);
-    setMovie(data);
+  const fetchMovie = () => {
+    dispatch(async (dispatch) => {
+      dispatch(showLoader());
+      const { data } = await getMovie(id);
+      setTimeout(() => {
+        setMovie(data);
+        dispatch(hideLoader());
+      }, 500);
+    });
   };
 
   useEffect(() => {
@@ -38,6 +48,10 @@ const Movie = () => {
     picture = noPicture;
   } else {
     picture = movie?.Poster;
+  }
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (
@@ -53,11 +67,6 @@ const Movie = () => {
               <i className="tagline">{movie.Plot}</i>
             </div>
           </div>
-        </div>
-      )}
-      {!movie && (
-        <div>
-          <Loader />
         </div>
       )}
     </>

@@ -11,7 +11,10 @@ const SingleContent = (movie) => {
   }
 
   return (
-    <div key={movie.imdbID} className="media">
+    <div
+      key={movie.imdbID}
+      className="media"
+      onClick={() => window.scroll(0, 0)}>
       <Link to={`/movies/${movie.imdbID}`}>
         <img className="poster" src={picture} alt={movie.title} />
         <div className="title">{movie.title}</div>
