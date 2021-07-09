@@ -19,12 +19,12 @@ function MoviesList() {
 
   return (
     <div>
-      <span className="pageTitle">Results</span>
       <div className="trending">
-        {location.search && !request.inputValue && <div>Invalid request</div>}
-        {location.search && !request.page && <div>Invalid page</div>}
-
-        {!movies && <h5>Not found</h5>}
+        {location.search && !request.inputValue && (
+          <h2>Error: "Invalid request"</h2>
+        )}
+        {location.search && !request.page && <h2>Error: "Invalid page"</h2>}
+        {!movies && <h2>No Movies Found</h2>}
         {movies &&
           movies.map((movie) => (
             <SingleMovie

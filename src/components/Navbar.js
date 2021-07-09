@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import MovieIcon from "@material-ui/icons/Movie";
+import HistoryIcon from "@material-ui/icons/History";
 import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
 import { Link } from "react-router-dom";
@@ -33,14 +33,14 @@ export default function SimpleBottomNavigation() {
         <BottomNavigationAction
           style={{ color: "white" }}
           label="Movies"
-          icon={<MovieIcon />}
+          icon={<SearchIcon />}
         />
       </Link>
       <Link to="/previous-searches">
         <BottomNavigationAction
           style={{ color: "white" }}
           label="Previous search"
-          icon={<SearchIcon />}
+          icon={<HistoryIcon />}
         />
       </Link>
     </BottomNavigation>

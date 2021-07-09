@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 import Pagination from "@material-ui/lab/Pagination";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { MOVIES_NUMBER_ON_ONE_PAGE } from "../../consts";
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -32,7 +33,7 @@ const PaginationForMovies = () => {
         {totalResults && (
           <Pagination
             onChange={handleChange}
-            count={Math.ceil(totalResults / 10)}
+            count={Math.ceil(totalResults / MOVIES_NUMBER_ON_ONE_PAGE)}
             page={request.page}
             color="primary"
             hideNextButton

@@ -1,10 +1,10 @@
 import { Container } from "@material-ui/core";
 import React from "react";
-import "./App.css";
+import "./AppRouter.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import { Movie } from "./pages/Movie";
+import { Movie } from "./components/Movie/Movie";
 import { Movies } from "./pages/Movies";
 import { PreviousSearches } from "./pages/PreviousSearches";
 import Header from "./components/Header/Header";
