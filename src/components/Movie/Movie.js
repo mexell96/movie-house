@@ -1,12 +1,15 @@
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
+
+import "./Movie.css";
+
 import { showLoader, hideLoader } from "./../../redux/actions";
 import { noPicture } from "./../../consts";
-import React, { useEffect, useState } from "react";
 import { getMovie } from "../../apiFunctions";
-import { useParams } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import "./Movie.css";
-import Loader from "../Loader";
+import { Loader } from "../../components";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,7 +29,8 @@ const Movie = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState();
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.app.loading);
+  const loading = useSelector((state) => state.appReducer.loading);
+  const history = useHistory();
 
   const fetchMovie = () => {
     dispatch(async (dispatch) => {
@@ -71,6 +75,9 @@ const Movie = () => {
               <i className="tagline">{movie.Plot}</i>
             </div>
           </div>
+          <Button onClick={() => history.goBack()} variant="contained">
+            Go back
+          </Button>
         </div>
       )}
     </>
