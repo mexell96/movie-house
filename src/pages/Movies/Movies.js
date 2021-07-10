@@ -1,20 +1,19 @@
-import React from "react";
 import {
   MoviesList,
   SearchInput,
   PaginationForMovies,
-  urlField,
+  UrlField,
 } from "../../components";
 
 const Movies = () => {
   return (
-    <div>
+    <>
       <h1>MOVIES</h1>
-      <urlField />
+      <UrlField />
       <SearchInput />
       <MoviesList />
       <PaginationForMovies />
-    </div>
+    </>
   );
 };
 

@@ -1,6 +1,8 @@
-import { noPicture } from "./../../consts";
-import "./SingleMovie.css";
 import { Link } from "react-router-dom";
+
+import "./SingleMovie.css";
+
+import { noPicture } from "./../../consts";
 
 const SingleMovie = (movie) => {
   let picture;

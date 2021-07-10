@@ -1,15 +1,17 @@
-import { Container } from "@material-ui/core";
-import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Container } from "@material-ui/core";
+
 import "./AppRouter.css";
-import { Header, Movie, Navbar } from "./components";
+
 import { Home, Movies, PreviousSearches } from "./pages";
+
+import { Header, Movie, Navbar } from "./components";
 
 const AppRouter = () => {
   return (
     <Router>
       <Header />
-      <div className="app">
+      <div className="app-router">
         <Container>
           <Switch>
             <Route path="/" component={Home} exact />

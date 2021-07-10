@@ -1,14 +1,16 @@
-import { setSearchValue } from "../../redux/actions";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SearchIcon from "@material-ui/icons/Search";
-import "./SearchInput.css";
 import {
   Button,
   createMuiTheme,
   TextField,
   ThemeProvider,
 } from "@material-ui/core";
+
+import "./SearchInput.css";
+
+import { setSearchValue } from "../../redux/actions";
 
 const SearchInput = () => {
   const dispatch = useDispatch();
@@ -45,7 +47,6 @@ const SearchInput = () => {
         autoComplete="off"
         onSubmit={onFormSubmit}>
         <TextField
-          style={{ flex: 1 }}
           className="searchBox"
           label="Search"
           variant="filled"

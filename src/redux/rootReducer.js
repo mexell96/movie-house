@@ -6,5 +6,5 @@ import { appReducer } from "./AppReducer";
 export const rootReducer = combineReducers({
   searchValuesReducer,
   moviesReducer,
-  app: appReducer,
+  appReducer,
 });

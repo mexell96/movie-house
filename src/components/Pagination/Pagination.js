@@ -1,8 +1,11 @@
-import { setSearchValue } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
-import React from "react";
 import Pagination from "@material-ui/lab/Pagination";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+
+import "./Pagination.css";
+
+import { setSearchValue } from "../../redux/actions";
+
 import { MOVIES_NUMBER_ON_ONE_PAGE } from "../../consts";
 
 const darkTheme = createMuiTheme({
@@ -15,7 +18,7 @@ const PaginationForMovies = () => {
   const dispatch = useDispatch();
   const totalResults = useSelector((state) => state.moviesReducer.totalResults);
   const request = useSelector((state) => state.searchValuesReducer);
-  const loading = useSelector((state) => state.app.loading);
+  const loading = useSelector((state) => state.appReducer.loading);
 
   const handleChange = (event, page) => {
     dispatch(setSearchValue({ inputValue: request.inputValue, page }));
@@ -24,13 +27,7 @@ const PaginationForMovies = () => {
 
   if (!loading) {
     return (
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          marginTop: 10,
-        }}>
+      <div className="pagination">
         <ThemeProvider theme={darkTheme}>
           {totalResults && (
             <Pagination

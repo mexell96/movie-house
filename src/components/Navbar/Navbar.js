@@ -1,10 +1,9 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import HistoryIcon from "@material-ui/icons/History";
 import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
-import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({

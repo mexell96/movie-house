@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovies } from "../../redux/actions";
 import { useLocation } from "react-router";
-import { SingleMovie } from "../SingleMovie";
+
 import "./MovieList.css";
-import Loader from "../Loader";
+
+import { Loader, SingleMovie } from "../../components";
+
+import { fetchMovies } from "../../redux/actions";
 
 const MoviesList = () => {
   const request = useSelector((state) => state.searchValuesReducer);
   const movies = useSelector((state) => state.moviesReducer.movies);
-  const loading = useSelector((state) => state.app.loading);
+  const loading = useSelector((state) => state.appReducer.loading);
   const dispatch = useDispatch();
   const location = useLocation();
 
