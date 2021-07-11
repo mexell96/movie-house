@@ -10,15 +10,18 @@ import {
 
 import "./SearchInput.css";
 
-import { setSearchValue } from "../../redux/actions";
+import { setSearchValue, setUrl } from "../../redux/actions";
 
 const SearchInput = () => {
   const dispatch = useDispatch();
-  const request = useSelector((state) => state.searchValuesReducer);
-  const [input, setInput] = useState(request.inputValue || "");
+  const previousSearches = useSelector((state) => state.previousSearches);
+  const urlReducer = useSelector((state) => state.urlReducer);
+  const [input, setInput] = useState(urlReducer.input || "");
+
   const searchValue = {
-    inputValue: input,
+    input: input,
     page: 1,
+    key: input + "_" + 1,
   };
 
   const darkTheme = createMuiTheme({
@@ -30,14 +33,32 @@ const SearchInput = () => {
     },
   });
 
+  const comparisonObjects = () => {
+    const previousSearch = previousSearches.find((item) => {
+      return JSON.stringify(item) === JSON.stringify(urlReducer);
+    });
+
+    if (!!previousSearch) {
+      console.log("already exist");
+    } else {
+      dispatch(setSearchValue(urlReducer));
+    }
+  };
+
   const onFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(setSearchValue(searchValue));
+    dispatch(setUrl(searchValue));
   };
 
   useEffect(() => {
-    setInput(request.inputValue);
-  }, [request.inputValue]);
+    if (urlReducer.input && urlReducer.page) {
+      comparisonObjects();
+    }
+  }, [urlReducer]);
+
+  useEffect(() => {
+    setInput(urlReducer.input);
+  }, [previousSearches]);
 
   return (
     <ThemeProvider theme={darkTheme}>

@@ -1,10 +1,11 @@
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Pagination from "@material-ui/lab/Pagination";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
 import "./Pagination.css";
 
-import { setSearchValue } from "../../redux/actions";
+import { setUrl } from "../../redux/actions";
 
 import { MOVIES_NUMBER_ON_ONE_PAGE } from "../../consts";
 
@@ -16,24 +17,42 @@ const darkTheme = createMuiTheme({
 
 const PaginationForMovies = () => {
   const dispatch = useDispatch();
-  const totalResults = useSelector((state) => state.moviesReducer.totalResults);
-  const request = useSelector((state) => state.searchValuesReducer);
+  const moviesFromState = useSelector((state) => state.resultsMovies);
+  const urlReducer = useSelector((state) => state.urlReducer);
   const loading = useSelector((state) => state.appReducer.loading);
+  const [numberOfPages, setNumberOfPages] = useState(null);
 
   const handleChange = (event, page) => {
-    dispatch(setSearchValue({ inputValue: request.inputValue, page }));
+    dispatch(
+      setUrl({
+        input: urlReducer.input,
+        page: page,
+        key: urlReducer.key,
+      })
+    );
     window.scroll(0, 0);
   };
+
+  useEffect(() => {
+    if (urlReducer.key in moviesFromState) {
+      for (let key of Object.keys(moviesFromState)) {
+        if (key === urlReducer.key) {
+          const arrayMovies = moviesFromState[key];
+          setNumberOfPages(arrayMovies.totalResults);
+        }
+      }
+    }
+  }, [moviesFromState]);
 
   if (!loading) {
     return (
       <div className="pagination">
         <ThemeProvider theme={darkTheme}>
-          {totalResults && (
+          {moviesFromState && (
             <Pagination
               onChange={handleChange}
-              count={Math.ceil(totalResults / MOVIES_NUMBER_ON_ONE_PAGE)}
-              page={request.page}
+              count={Math.ceil(numberOfPages / MOVIES_NUMBER_ON_ONE_PAGE)}
+              page={urlReducer.page}
               color="primary"
               hideNextButton
               hidePrevButton

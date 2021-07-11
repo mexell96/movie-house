@@ -1,6 +1,6 @@
 import { HIDE_LOADER, SHOW_LOADER } from "../consts";
 import { getMovies } from "../apiFunctions";
-import { FETCH_MOVIES, SET_SEARCH_VALUES } from "./types";
+import { FETCH_MOVIES, SET_SEARCH_VALUES, SET_URL } from "./types";
 
 export function setSearchValue(searchValue) {
   return {
@@ -21,14 +21,21 @@ export function hideLoader() {
   };
 }
 
-export function fetchMovies(inputValue, page) {
+export function fetchMovies(input, page, key) {
   return async (dispatch) => {
     dispatch(showLoader());
-    const movies = await getMovies(inputValue, page);
+    const { data } = await getMovies(input, page);
 
     setTimeout(() => {
-      dispatch({ type: FETCH_MOVIES, payload: movies.data });
+      dispatch({ type: FETCH_MOVIES, payload: data, key: key });
       dispatch(hideLoader());
     }, 500);
+  };
+}
+
+export function setUrl(searchValue) {
+  return {
+    type: SET_URL,
+    payload: searchValue,
   };
 }

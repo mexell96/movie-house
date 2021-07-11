@@ -2,27 +2,35 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router";
-import { setSearchValue } from "../../redux/actions";
+import { setUrl } from "../../redux/actions";
 
 const UrlField = () => {
   const history = useHistory();
-  const request = useSelector((state) => state.searchValuesReducer);
+  const previousSearch = useSelector(
+    (state) => state.previousSearches[state.previousSearches.length - 1]
+  );
+  const previousSearches = useSelector((state) => state.previousSearches);
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const getUrl = () => {
+  const getSearchValue = () => {
     const searchParams = new URLSearchParams(location.search);
     const searchValue = {
-      inputValue: searchParams.get("s") || "",
+      input: searchParams.get("s") || "",
       page: searchParams.get("page") || 1,
     };
+    return searchValue;
+  };
+
+  const getUrl = (searchValue) => {
     if (location.search) {
-      dispatch(setSearchValue(searchValue));
+      dispatch(setUrl(searchValue));
     }
   };
 
   useEffect(() => {
-    getUrl();
+    const searchValue = getSearchValue();
+    getUrl(searchValue);
   }, []);
 
   const changeRouter = (movie, page = 1) => {
@@ -30,10 +38,10 @@ const UrlField = () => {
   };
 
   useEffect(() => {
-    if (request.inputValue) {
-      changeRouter(request.inputValue, request.page);
+    if (previousSearch.input && previousSearch.page) {
+      changeRouter(previousSearch.input, previousSearch.page);
     }
-  }, [request]);
+  }, [previousSearches]);
 
   return false;
 };

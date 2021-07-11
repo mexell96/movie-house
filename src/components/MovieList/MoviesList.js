@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 
@@ -9,27 +9,45 @@ import { Loader, SingleMovie } from "../../components";
 import { fetchMovies } from "../../redux/actions";
 
 const MoviesList = () => {
-  const request = useSelector((state) => state.searchValuesReducer);
-  const movies = useSelector((state) => state.moviesReducer.movies);
+  const urlReducer = useSelector((state) => state.urlReducer);
+  const moviesFromState = useSelector((state) => state.resultsMovies);
   const loading = useSelector((state) => state.appReducer.loading);
   const dispatch = useDispatch();
   const location = useLocation();
 
-  useEffect(() => {
-    if (request.inputValue && request.page) {
-      dispatch(fetchMovies(request.inputValue, request.page));
-    }
-  }, [request]);
+  const [movies, setMovies] = useState([]);
 
-  if (loading) return <Loader />;
+  useEffect(() => {
+    if (urlReducer.input && urlReducer.page) {
+      if (urlReducer.key in moviesFromState) {
+        for (let key of Object.keys(moviesFromState)) {
+          if (key === urlReducer.key) {
+            const arrayMovies = moviesFromState[key];
+            setMovies(arrayMovies.movies);
+          }
+        }
+      } else {
+        dispatch(
+          fetchMovies(urlReducer.input, urlReducer.page, urlReducer.key)
+        );
+      }
+    }
+  }, [urlReducer]);
+
+  useEffect(() => {
+    for (let key of Object.keys(moviesFromState)) {
+      const arrayMovies = moviesFromState[key];
+      setMovies(arrayMovies.movies);
+    }
+  }, [moviesFromState]);
 
   const body = (
     <div className="trending">
-      {location.search && !request.inputValue && (
+      {location.search && !urlReducer.input && (
         <h2>Error: "Invalid request"</h2>
       )}
-      {location.search && !request.page && <h2>Error: "Invalid page"</h2>}
-      {!movies && <h2>No Movies Found</h2>}
+      {location.search && !urlReducer.page && <h2>Error: "Invalid page"</h2>}
+      {/* {!movies?.length && <h2>No Movies Found</h2>} */}
       {movies &&
         movies.map((movie) => (
           <SingleMovie
@@ -39,6 +57,7 @@ const MoviesList = () => {
             plot={movie.Plot}
             year={movie.Year}
             type={movie.Type}
+            key={movie.imdbID}
           />
         ))}
     </div>
