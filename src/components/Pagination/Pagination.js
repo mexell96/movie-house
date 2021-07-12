@@ -44,27 +44,29 @@ const PaginationForMovies = () => {
     }
   }, [moviesFromState]);
 
-  if (!loading) {
-    return (
-      <div className="pagination">
-        <ThemeProvider theme={darkTheme}>
-          {moviesFromState && (
-            <Pagination
-              onChange={handleChange}
-              count={Math.ceil(numberOfPages / MOVIES_NUMBER_ON_ONE_PAGE)}
-              page={urlReducer.page}
-              color="primary"
-              hideNextButton
-              hidePrevButton
-            />
-          )}
-        </ThemeProvider>
-      </div>
-    );
-  }
-  if (loading) {
-    return null;
-  }
+  const body = (
+    <div className="pagination">
+      <ThemeProvider theme={darkTheme}>
+        {moviesFromState && (
+          <Pagination
+            onChange={handleChange}
+            count={Math.ceil(numberOfPages / MOVIES_NUMBER_ON_ONE_PAGE)}
+            page={urlReducer.page}
+            color="primary"
+            hideNextButton
+            hidePrevButton
+          />
+        )}
+      </ThemeProvider>
+    </div>
+  );
+
+  return (
+    <>
+      {loading && null}
+      {!loading && body}
+    </>
+  );
 };
 
 export { PaginationForMovies };

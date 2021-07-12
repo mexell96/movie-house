@@ -9,12 +9,11 @@ import { Loader, SingleMovie } from "../../components";
 import { fetchMovies } from "../../redux/actions";
 
 const MoviesList = () => {
+  const location = useLocation();
+  const dispatch = useDispatch();
   const urlReducer = useSelector((state) => state.urlReducer);
   const moviesFromState = useSelector((state) => state.resultsMovies);
   const loading = useSelector((state) => state.appReducer.loading);
-  const dispatch = useDispatch();
-  const location = useLocation();
-
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -47,7 +46,7 @@ const MoviesList = () => {
         <h2>Error: "Invalid request"</h2>
       )}
       {location.search && !urlReducer.page && <h2>Error: "Invalid page"</h2>}
-      {/* {!movies?.length && <h2>No Movies Found</h2>} */}
+      {!movies && urlReducer.input && <h2>No Movies Found</h2>}
       {movies &&
         movies.map((movie) => (
           <SingleMovie
@@ -65,7 +64,7 @@ const MoviesList = () => {
   return (
     <>
       {loading && <Loader />}
-      {!loading && !!movies && body}
+      {!loading && body}
     </>
   );
 };

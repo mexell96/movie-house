@@ -34,15 +34,10 @@ const SearchInput = () => {
   });
 
   const comparisonObjects = () => {
-    const previousSearch = previousSearches.find((item) => {
+    const requestExist = previousSearches.find((item) => {
       return JSON.stringify(item) === JSON.stringify(urlReducer);
     });
-
-    if (!!previousSearch) {
-      console.log("already exist");
-    } else {
-      dispatch(setSearchValue(urlReducer));
-    }
+    !requestExist && dispatch(setSearchValue(urlReducer));
   };
 
   const onFormSubmit = (e) => {
@@ -51,14 +46,9 @@ const SearchInput = () => {
   };
 
   useEffect(() => {
-    if (urlReducer.input && urlReducer.page) {
-      comparisonObjects();
-    }
-  }, [urlReducer]);
-
-  useEffect(() => {
     setInput(urlReducer.input);
-  }, [previousSearches]);
+    comparisonObjects();
+  }, [urlReducer]);
 
   return (
     <ThemeProvider theme={darkTheme}>
