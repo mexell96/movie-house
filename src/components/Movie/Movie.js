@@ -6,10 +6,9 @@ import { Button } from "@material-ui/core";
 
 import "./Movie.css";
 
-import { showLoader, hideLoader } from "./../../redux/actions";
 import { noPicture } from "./../../consts";
-import { getMovie } from "../../apiFunctions";
 import { Loader } from "../../components";
+import { fetchMovie } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,26 +26,32 @@ const useStyles = makeStyles((theme) => ({
 const Movie = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [movie, setMovie] = useState();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.appReducer.loading);
+  const resultMovie = useSelector((state) => state.resultMovie);
   const history = useHistory();
-  const [picture, setPicture] = useState();
-
-  const fetchMovie = () => {
-    dispatch(async (dispatch) => {
-      dispatch(showLoader());
-      const { data } = await getMovie(id);
-      setTimeout(() => {
-        setMovie(data);
-        dispatch(hideLoader());
-      }, 500);
-    });
-  };
+  const [picture, setPicture] = useState("");
+  const [movie, setMovie] = useState({});
 
   useEffect(() => {
-    fetchMovie();
+    if (id in resultMovie) {
+      for (let key of Object.keys(resultMovie)) {
+        if (key === id) {
+          setMovie(resultMovie[key]);
+        }
+      }
+    } else {
+      dispatch(fetchMovie(id));
+    }
   }, [id]);
+
+  useEffect(() => {
+    for (let key of Object.keys(resultMovie)) {
+      if (key === id) {
+        setMovie(resultMovie[key]);
+      }
+    }
+  }, [resultMovie]);
 
   useEffect(() => {
     movie?.Poster === "N/A" ? setPicture(noPicture) : setPicture(movie?.Poster);
