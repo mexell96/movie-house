@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 
@@ -31,6 +31,7 @@ const Movie = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.appReducer.loading);
   const history = useHistory();
+  const [picture, setPicture] = useState();
 
   const fetchMovie = () => {
     dispatch(async (dispatch) => {
@@ -47,18 +48,11 @@ const Movie = () => {
     fetchMovie();
   }, [id]);
 
-  let picture;
-  if (movie?.Poster === "N/A") {
-    picture = noPicture;
-  } else {
-    picture = movie?.Poster;
-  }
+  useEffect(() => {
+    movie?.Poster === "N/A" ? setPicture(noPicture) : setPicture(movie.Poster);
+  }, [movie]);
 
-  if (loading) {
-    return <Loader />;
-  }
-
-  return (
+  const body = (
     <>
       {movie && (
         <div className={classes.paper}>
@@ -80,6 +74,12 @@ const Movie = () => {
           </Button>
         </div>
       )}
+    </>
+  );
+  return (
+    <>
+      {loading && <Loader />}
+      {!loading && body}
     </>
   );
 };

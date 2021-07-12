@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./SingleMovie.css";
@@ -5,12 +6,11 @@ import "./SingleMovie.css";
 import { noPicture } from "./../../consts";
 
 const SingleMovie = (movie) => {
-  let picture;
-  if (movie.poster === "N/A") {
-    picture = noPicture;
-  } else {
-    picture = movie.poster;
-  }
+  const [picture, setPicture] = useState();
+
+  useEffect(() => {
+    movie?.poster === "N/A" ? setPicture(noPicture) : setPicture(movie.poster);
+  }, [movie]);
 
   return (
     <Link
