@@ -49,7 +49,7 @@ const Movie = () => {
   }, [id]);
 
   useEffect(() => {
-    movie?.Poster === "N/A" ? setPicture(noPicture) : setPicture(movie.Poster);
+    movie?.Poster === "N/A" ? setPicture(noPicture) : setPicture(movie?.Poster);
   }, [movie]);
 
   const body = (
