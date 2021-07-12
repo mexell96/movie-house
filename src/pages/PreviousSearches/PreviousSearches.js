@@ -1,31 +1,33 @@
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { Tabs, Tab } from "@material-ui/core";
 
-import "./PreviousSearches.css";
+import { PreviousMovies, PreviousRequests } from "./";
+
+const TabPanel = ({ children, value, index }) => {
+  return <div>{value === index && <h1>{children}</h1>}</div>;
+};
 
 const PreviousSearches = () => {
-  const previousSearches = useSelector((state) => state.previousSearches);
+  const [tab, setTab] = useState(0);
+
+  const handleChange = (event, newTab) => {
+    setTab(newTab);
+  };
 
   return (
     <>
       <h1>PREVIOUS SEARCHES</h1>
-      <div className="previousSearches">
-        {previousSearches &&
-          previousSearches.map((request) => {
-            const body = (
-              <Link
-                to={`/movies?s=${request.input}&page=${request.page}`}
-                key={request.key}
-                className="request"
-                onClick={() => window.scroll(0, 0)}>
-                <div className="information">
-                  Looked for <span>{request.input}</span> on page{" "}
-                  <span>{request.page}</span>
-                </div>
-              </Link>
-            );
-            return request.input && request.page && body;
-          })}
+      <div>
+        <Tabs value={tab} onChange={handleChange}>
+          <Tab label="Previous searches" />
+          <Tab label="Previous movies" />
+        </Tabs>
+        <TabPanel value={tab} index={0}>
+          <PreviousRequests />
+        </TabPanel>
+        <TabPanel value={tab} index={1}>
+          <PreviousMovies />
+        </TabPanel>
       </div>
     </>
   );
