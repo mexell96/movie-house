@@ -4,14 +4,14 @@ const initialState = {
   key: { movies: [], totalResults: "" },
 };
 
-export const resultsMovies = (state = initialState, action) => {
-  switch (action.type) {
+export const resultsMovies = (state = initialState, {type, payload, key}) => {
+  switch (type) {
     case FETCH_MOVIES:
       return {
         ...state,
-        [action.key]: {
-          movies: action.payload.Search,
-          totalResults: action.payload.totalResults,
+        [key]: {
+          movies: payload.Search,
+          totalResults: payload.totalResults,
         },
       };
     default:

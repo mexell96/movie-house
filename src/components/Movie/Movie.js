@@ -27,8 +27,8 @@ const Movie = () => {
   const classes = useStyles();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.appReducer.loading);
-  const resultMovie = useSelector((state) => state.resultMovie);
+  const loading = useSelector(({ appReducer: { loading } }) => loading);
+  const resultMovie = useSelector(({ resultMovie }) => resultMovie);
   const history = useHistory();
   const [picture, setPicture] = useState("");
   const [movie, setMovie] = useState({});

@@ -11,17 +11,17 @@ import { fetchMovies } from "../../redux/actions";
 const MoviesList = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const urlReducer = useSelector((state) => state.urlReducer);
-  const moviesFromState = useSelector((state) => state.resultsMovies);
-  const loading = useSelector((state) => state.appReducer.loading);
+  const urlReducer = useSelector(({ urlReducer }) => urlReducer);
+  const resultsMovies = useSelector(({ resultsMovies }) => resultsMovies);
+  const loading = useSelector(({ appReducer: { loading } }) => loading);
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     if (urlReducer.input && urlReducer.page) {
-      if (urlReducer.key in moviesFromState) {
-        for (let key of Object.keys(moviesFromState)) {
+      if (urlReducer.key in resultsMovies) {
+        for (let key of Object.keys(resultsMovies)) {
           if (key === urlReducer.key) {
-            const arrayMovies = moviesFromState[key];
+            const arrayMovies = resultsMovies[key];
             setMovies(arrayMovies.movies);
           }
         }
@@ -34,11 +34,11 @@ const MoviesList = () => {
   }, [urlReducer]);
 
   useEffect(() => {
-    for (let key of Object.keys(moviesFromState)) {
-      const arrayMovies = moviesFromState[key];
+    for (let key of Object.keys(resultsMovies)) {
+      const arrayMovies = resultsMovies[key];
       setMovies(arrayMovies.movies);
     }
-  }, [moviesFromState]);
+  }, [resultsMovies]);
 
   const body = (
     <div className="trending">

@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { API_KEY, API_URL } from "./consts";
 
 export const getMovies = async (searchValue, page) => {

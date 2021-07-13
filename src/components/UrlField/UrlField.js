@@ -7,12 +7,12 @@ import { setUrl } from "../../redux/actions";
 
 const UrlField = () => {
   const history = useHistory();
-  const location = useLocation();
+  const { search } = useLocation();
   const dispatch = useDispatch();
-  const urlReducer = useSelector((state) => state.urlReducer);
+  const urlReducer = useSelector(({ urlReducer }) => urlReducer);
 
   const getSearchValue = () => {
-    const searchParams = new URLSearchParams(location.search);
+    const searchParams = new URLSearchParams(search);
     const searchValue = {
       input: searchParams.get("s") || "",
       page: searchParams.get("page") || 1,
@@ -21,7 +21,7 @@ const UrlField = () => {
   };
 
   const getUrl = (searchValue) => {
-    if (location.search) {
+    if (search) {
       dispatch(setUrl(searchValue));
     }
   };

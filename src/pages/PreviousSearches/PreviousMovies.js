@@ -5,7 +5,7 @@ import "./PreviousSearches.css";
 
 const PreviousMovies = () => {
   const viewedMovie = [];
-  const resultMovie = useSelector((state) => state.resultMovie);
+  const resultMovie = useSelector(({ resultMovie }) => resultMovie);
 
   for (let key of Object.keys(resultMovie)) {
     const resultMovieNew = resultMovie[key];

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import "./PreviousSearches.css";
 
 const PreviousRequests = () => {
-  const previousSearches = useSelector((state) => state.previousSearches);
+  const previousSearches = useSelector(({previousSearches}) => previousSearches);
 
   return (
       <div className="previousSearches">

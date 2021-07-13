@@ -10,7 +10,7 @@ const TabPanel = ({ children, value, index }) => {
 
 const PreviousSearches = () => {
   const dispatch = useDispatch();
-  const tab = useSelector((state) => state.tabsReducer.tab);
+  const tab = useSelector(({tabsReducer: {tab}}) => tab);
 
   const handleChange = (event, newTab) => {
     dispatch(setTab(newTab));

@@ -4,10 +4,10 @@ const initialState = {
   tab: 0,
 };
 
-export const tabsReducer = (state = initialState, action) => {
-  switch (action.type) {
+export const tabsReducer = (state = initialState, {type, payload}) => {
+  switch (type) {
     case SET_TAB:
-      return { tab: action.payload };
+      return { tab: payload };
     default:
       return state;
   }

@@ -17,9 +17,9 @@ const darkTheme = createMuiTheme({
 
 const PaginationForMovies = () => {
   const dispatch = useDispatch();
-  const moviesFromState = useSelector((state) => state.resultsMovies);
-  const urlReducer = useSelector((state) => state.urlReducer);
-  const loading = useSelector((state) => state.appReducer.loading);
+  const resultsMovies = useSelector(({resultsMovies}) => resultsMovies);
+  const urlReducer = useSelector(({urlReducer}) => urlReducer);
+  const loading = useSelector(({appReducer: {loading}}) => loading);
   const [numberOfPages, setNumberOfPages] = useState(null);
 
   const handleChange = (event, page) => {
@@ -34,20 +34,20 @@ const PaginationForMovies = () => {
   };
 
   useEffect(() => {
-    if (urlReducer.key in moviesFromState) {
-      for (let key of Object.keys(moviesFromState)) {
+    if (urlReducer.key in resultsMovies) {
+      for (let key of Object.keys(resultsMovies)) {
         if (key === urlReducer.key) {
-          const arrayMovies = moviesFromState[key];
+          const arrayMovies = resultsMovies[key];
           setNumberOfPages(arrayMovies.totalResults);
         }
       }
     }
-  }, [moviesFromState]);
+  }, [resultsMovies]);
 
   const body = (
     <div className="pagination">
       <ThemeProvider theme={darkTheme}>
-        {moviesFromState && (
+        {resultsMovies && (
           <Pagination
             onChange={handleChange}
             count={Math.ceil(numberOfPages / MOVIES_NUMBER_ON_ONE_PAGE)}

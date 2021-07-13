@@ -4,8 +4,8 @@ const initialState = {
   loading: false,
 };
 
-export const appReducer = (state = initialState, action) => {
-  switch (action.type) {
+export const appReducer = (state = initialState, {type}) => {
+  switch (type) {
     case SHOW_LOADER:
       return { ...state, loading: true };
     case HIDE_LOADER:

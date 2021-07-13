@@ -6,13 +6,13 @@ const initialState = {
   key: "",
 };
 
-export const urlReducer = (state = initialState, action) => {
-  switch (action.type) {
+export const urlReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
     case SET_URL:
       return {
-        input: action.payload.input,
-        page: +action.payload.page,
-        key: action.payload.input + "_" + +action.payload.page,
+        input: payload.input,
+        page: +payload.page,
+        key: payload.input + "_" + +payload.page,
       };
     default:
       return state;

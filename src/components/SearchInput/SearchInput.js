@@ -14,8 +14,10 @@ import { setSearchValue, setUrl } from "../../redux/actions";
 
 const SearchInput = () => {
   const dispatch = useDispatch();
-  const previousSearches = useSelector((state) => state.previousSearches);
-  const urlReducer = useSelector((state) => state.urlReducer);
+  const previousSearches = useSelector(
+    ({ previousSearches }) => previousSearches
+  );
+  const urlReducer = useSelector(({ urlReducer }) => urlReducer);
   const [input, setInput] = useState(urlReducer.input || "");
 
   const searchValue = {

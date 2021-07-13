@@ -8,15 +8,15 @@ const initialState = [
   },
 ];
 
-export const previousSearches = (state = initialState, action) => {
-  switch (action.type) {
+export const previousSearches = (state = initialState, { type, payload }) => {
+  switch (type) {
     case SET_SEARCH_VALUES:
       return [
         ...state,
         {
-          input: action.payload.input,
-          page: +action.payload.page,
-          key: action.payload.input + "_" + +action.payload.page,
+          input: payload.input,
+          page: +payload.page,
+          key: payload.key,
         },
       ];
     default:
