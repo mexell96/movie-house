@@ -32,11 +32,8 @@ export function fetchMovies(input, page, key) {
   return async (dispatch) => {
     dispatch(showLoader());
     const { data } = await getMovies(input, page);
-
-    setTimeout(() => {
-      dispatch({ type: FETCH_MOVIES, payload: data, key: key });
-      dispatch(hideLoader());
-    }, 500);
+    dispatch({ type: FETCH_MOVIES, payload: data, key: key });
+    dispatch(hideLoader());
   };
 }
 
@@ -44,10 +41,8 @@ export function fetchMovie(id) {
   return async (dispatch) => {
     dispatch(showLoader());
     const { data } = await getMovie(id);
-    setTimeout(() => {
-      dispatch({ type: FETCH_MOVIE, payload: data, key: id });
-      dispatch(hideLoader());
-    }, 500);
+    dispatch({ type: FETCH_MOVIE, payload: data, key: id });
+    dispatch(hideLoader());
   };
 }
 
