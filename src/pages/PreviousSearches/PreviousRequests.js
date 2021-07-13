@@ -1,30 +1,34 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import "./PreviousSearches.css";
+import { Wrapper, Request, Information } from "./styles";
 
 const PreviousRequests = () => {
-  const previousSearches = useSelector(({previousSearches}) => previousSearches);
+  const previousSearches = useSelector(
+    ({ previousSearches }) => previousSearches
+  );
 
   return (
-      <div className="previousSearches">
-        {previousSearches &&
-          previousSearches.map((request) => {
-            const body = (
+    <Wrapper>
+      {previousSearches &&
+        previousSearches.map((request) => {
+          const body = (
+            <Request>
               <Link
                 to={`/movies?s=${request.input}&page=${request.page}`}
                 key={request.key}
                 className="request"
                 onClick={() => window.scroll(0, 0)}>
-                <div className="information">
+                <Information>
                   Looked for <span>{request.input}</span> on page{" "}
                   <span>{request.page}</span>
-                </div>
+                </Information>
               </Link>
-            );
-            return request.input && request.page && body;
-          })}
-      </div>
+            </Request>
+          );
+          return request.input && request.page && body;
+        })}
+    </Wrapper>
   );
 };
 

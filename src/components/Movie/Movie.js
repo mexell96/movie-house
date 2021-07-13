@@ -4,7 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 
-import "./Movie.css";
+import {
+  ContentModal,
+  ContentModalAbout,
+  ContentModalTitle,
+  Tagline,
+} from "./Movie.style";
 
 import { noPicture } from "./../../consts";
 import { Loader } from "../../components";
@@ -61,19 +66,19 @@ const Movie = () => {
     <>
       {movie && (
         <div className={classes.paper}>
-          <div className="ContentModal">
+          <ContentModal>
             <img
               src={picture}
               alt={movie.Title}
               style={{ height: "inherit" }}
             />
-            <div className="ContentModal__about">
-              <span className="ContentModal__title">
+            <ContentModalAbout>
+              <ContentModalTitle>
                 {movie.Title}({movie.Year})
-              </span>
-              <i className="tagline">{movie.Plot}</i>
-            </div>
-          </div>
+              </ContentModalTitle>
+              <Tagline>{movie.Plot}</Tagline>
+            </ContentModalAbout>
+          </ContentModal>
           <Button onClick={() => history.goBack()} variant="contained">
             Go back
           </Button>

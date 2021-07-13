@@ -4,7 +4,7 @@ import { compose, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
-import "./index.css";
+import { GlobalStyles } from "./GlobalStyles";
 
 import { AppRouter } from "./AppRouter";
 
@@ -20,6 +20,7 @@ const store = createStore(
 
 const app = (
   <Provider store={store}>
+    <GlobalStyles />
     <AppRouter />
   </Provider>
 );

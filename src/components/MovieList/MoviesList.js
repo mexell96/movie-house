@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 
-import "./MovieList.css";
+import { Trending } from "./MovieList.style";
 
 import { Loader, SingleMovie } from "../../components";
 
@@ -41,7 +41,7 @@ const MoviesList = () => {
   }, [resultsMovies]);
 
   const body = (
-    <div className="trending">
+    <Trending>
       {location.search && !urlReducer.input && (
         <h2>Error: "Invalid request"</h2>
       )}
@@ -59,7 +59,7 @@ const MoviesList = () => {
             key={movie.imdbID}
           />
         ))}
-    </div>
+    </Trending>
   );
   return (
     <>

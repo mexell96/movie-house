@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Pagination from "@material-ui/lab/Pagination";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
-import "./Pagination.css";
+import { PaginationStyle } from "./Pagination.style";
 
 import { setUrl } from "../../redux/actions";
 
@@ -17,9 +17,9 @@ const darkTheme = createMuiTheme({
 
 const PaginationForMovies = () => {
   const dispatch = useDispatch();
-  const resultsMovies = useSelector(({resultsMovies}) => resultsMovies);
-  const urlReducer = useSelector(({urlReducer}) => urlReducer);
-  const loading = useSelector(({appReducer: {loading}}) => loading);
+  const resultsMovies = useSelector(({ resultsMovies }) => resultsMovies);
+  const urlReducer = useSelector(({ urlReducer }) => urlReducer);
+  const loading = useSelector(({ appReducer: { loading } }) => loading);
   const [numberOfPages, setNumberOfPages] = useState(null);
 
   const handleChange = (event, page) => {
@@ -45,7 +45,7 @@ const PaginationForMovies = () => {
   }, [resultsMovies]);
 
   const body = (
-    <div className="pagination">
+    <PaginationStyle>
       <ThemeProvider theme={darkTheme}>
         {resultsMovies && (
           <Pagination
@@ -58,7 +58,7 @@ const PaginationForMovies = () => {
           />
         )}
       </ThemeProvider>
-    </div>
+    </PaginationStyle>
   );
 
   return (

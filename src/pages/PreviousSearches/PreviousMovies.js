@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import "./PreviousSearches.css";
+import { Wrapper, Request, Information } from "./styles";
 
 const PreviousMovies = () => {
   const viewedMovie = [];
@@ -13,23 +13,24 @@ const PreviousMovies = () => {
   }
 
   return (
-    <div className="previousSearches">
+    <Wrapper>
       {viewedMovie &&
         viewedMovie.map((request) => {
           const body = (
-            <Link
-              to={`/movies/${request.imdbID}`}
-              key={request.imdbID}
-              className="request"
-              onClick={() => window.scroll(0, 0)}>
-              <div className="information">
-                Looked for <span>{request.Title}</span>
-              </div>
-            </Link>
+            <Request>
+              <Link
+                to={`/movies/${request.imdbID}`}
+                key={request.imdbID}
+                onClick={() => window.scroll(0, 0)}>
+                <Information>
+                  Looked for <span>{request.Title}</span>
+                </Information>
+              </Link>
+            </Request>
           );
           return request.Title && body;
         })}
-    </div>
+    </Wrapper>
   );
 };
 

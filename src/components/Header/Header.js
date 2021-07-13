@@ -1,10 +1,8 @@
-import "./Header.css";
+import { HeaderStyle } from "./Header.styled";
 
 const Header = () => {
   return (
-    <span onClick={() => window.scroll(0, 0)} className="header">
-      Movie-house
-    </span>
+    <HeaderStyle onClick={() => window.scroll(0, 0)}>Movie-house</HeaderStyle>
   );
 };
 

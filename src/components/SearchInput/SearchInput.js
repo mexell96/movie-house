@@ -1,14 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SearchIcon from "@material-ui/icons/Search";
-import {
-  Button,
-  createMuiTheme,
-  TextField,
-  ThemeProvider,
-} from "@material-ui/core";
+import { Button, createMuiTheme, ThemeProvider } from "@material-ui/core";
 
-import "./SearchInput.css";
+import { Search, SearchBox } from "./SearchInput.style";
 
 import { setSearchValue, setUrl } from "../../redux/actions";
 
@@ -54,13 +49,8 @@ const SearchInput = () => {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <form
-        className="search"
-        noValidate
-        autoComplete="off"
-        onSubmit={onFormSubmit}>
-        <TextField
-          className="searchBox"
+      <Search noValidate autoComplete="off" onSubmit={onFormSubmit}>
+        <SearchBox
           label="Search"
           variant="filled"
           value={input}
@@ -74,7 +64,7 @@ const SearchInput = () => {
           style={{ marginLeft: 10 }}>
           <SearchIcon fontSize="large" />
         </Button>
-      </form>
+      </Search>
     </ThemeProvider>
   );
 };

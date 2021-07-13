@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Container } from "@material-ui/core";
 
-import "./AppRouter.css";
+import { AppRouterStyle } from "./AppRouter.style";
 
 import { Home, Movies, PreviousSearches } from "./pages";
 
@@ -11,7 +11,7 @@ const AppRouter = () => {
   return (
     <Router>
       <Header />
-      <div className="app-router">
+      <AppRouterStyle>
         <Container>
           <Switch>
             <Route path="/" component={Home} exact />
@@ -24,7 +24,7 @@ const AppRouter = () => {
             />
           </Switch>
         </Container>
-      </div>
+      </AppRouterStyle>
       <Navbar />
     </Router>
   );

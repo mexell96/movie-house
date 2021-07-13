@@ -1,27 +1,31 @@
-.previousSearches {
+import styled from "styled-components";
+
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #39445a;
-}
+`;
 
-.request {
+const Request = styled.div`
   display: flex;
-  padding: 5px;
+  flex-direction: column;
   margin: 5px;
   background-color: #282c34;
   border-radius: 10px;
   position: relative;
   font-family: "Montserrat", sans-serif;
-}
 
-.request:hover {
-  background-color: white;
-  color: black;
-}
+  &:hover {
+    background-color: white;
+    color: black;
+  }
+`;
 
-.information {
+const Information = styled.div`
   width: 100%;
   text-align: center;
   font-size: 17px;
   padding: 8px 0;
-}
+`;
+
+export { Wrapper, Request, Information };

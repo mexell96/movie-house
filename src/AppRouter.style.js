@@ -1,17 +1,15 @@
-* {
-  scroll-behavior: smooth;
-}
+import styled from "styled-components";
 
-.app-router {
+const AppRouterStyle = styled.div`
   min-height: calc(100vh - 220px);
   background-color: #39445a;
   color: white;
   padding-top: 150px;
   padding-bottom: 70px;
-}
 
-@media (max-width: 700px) {
-  .app-router {
+  @media (max-width: 700px) {
     padding-top: 70px;
   }
-}
+`;
+
+export { AppRouterStyle };

@@ -1,4 +1,6 @@
-.media {
+import styled from "styled-components";
+
+const Media = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -9,34 +11,36 @@
   border-radius: 10px;
   position: relative;
   font-family: "Montserrat", sans-serif;
-}
 
-.media:hover {
-  background-color: white;
-  color: black;
-}
+  &:hover {
+    background-color: white;
+    color: black;
+  }
+`;
 
-.poster {
+const Poster = styled.img`
   border-radius: 10px;
   width: 200px;
-}
+`;
 
-.title {
+const Title = styled.div`
   width: 100%;
   text-align: center;
   font-size: 17px;
   padding: 8px 0;
-}
+`;
 
-.sub-title {
+const SubTitle = styled.span`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   padding-bottom: 3px;
   padding: 0 2px;
   padding-bottom: 3px;
-}
+`;
 
-.capitalize {
+const SubTitleCapitalizer = styled(SubTitle)`
   text-transform: capitalize;
-}
+`;
+
+export { Media, Poster, Title, SubTitle, SubTitleCapitalizer };
