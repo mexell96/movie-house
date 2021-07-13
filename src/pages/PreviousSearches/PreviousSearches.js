@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Tabs, Tab } from "@material-ui/core";
 
 import { PreviousMovies, PreviousRequests } from "./";
+import { setTab } from "./../../redux/actions";
 
 const TabPanel = ({ children, value, index }) => {
   return <div>{value === index && <h1>{children}</h1>}</div>;
 };
 
 const PreviousSearches = () => {
-  const [tab, setTab] = useState(0);
+  const dispatch = useDispatch();
+  const tab = useSelector((state) => state.tabsReducer.tab);
 
   const handleChange = (event, newTab) => {
-    setTab(newTab);
+    dispatch(setTab(newTab));
   };
 
   return (

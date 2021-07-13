@@ -1,6 +1,13 @@
-import { HIDE_LOADER, SHOW_LOADER } from "../consts";
 import { getMovies, getMovie } from "../apiFunctions";
-import { FETCH_MOVIES, SET_SEARCH_VALUES, SET_URL, FETCH_MOVIE } from "./types";
+import {
+  FETCH_MOVIES,
+  SET_SEARCH_VALUES,
+  SET_URL,
+  FETCH_MOVIE,
+  HIDE_LOADER,
+  SHOW_LOADER,
+  SET_TAB,
+} from "./types";
 
 export function setSearchValue(searchValue) {
   return {
@@ -48,5 +55,12 @@ export function setUrl(searchValue) {
   return {
     type: SET_URL,
     payload: searchValue,
+  };
+}
+
+export function setTab(tab) {
+  return {
+    type: SET_TAB,
+    payload: tab,
   };
 }

@@ -1,9 +1,10 @@
 import { combineReducers } from "redux";
 import { resultsMovies } from "./resultsMovies";
 import { previousSearches } from "./previousSearches";
-import { appReducer } from "./AppReducer";
+import { appReducer } from "./appReducer";
 import { urlReducer } from "./urlReducer";
 import { resultMovie } from "./resultMovie";
+import { tabsReducer } from "./tabsReducer";
 
 export const rootReducer = combineReducers({
   previousSearches,
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
   appReducer,
   urlReducer,
   resultMovie,
+  tabsReducer,
 });

@@ -1,4 +1,4 @@
-import { SHOW_LOADER, HIDE_LOADER } from "../consts";
+import { SHOW_LOADER, HIDE_LOADER } from "./types";
 
 const initialState = {
   loading: false,
