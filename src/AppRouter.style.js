@@ -8,7 +8,9 @@ const AppRouterStyle = styled.div`
   padding-bottom: 70px;
 
   @media (max-width: 700px) {
+    min-height: calc(100vh - 140px);
     padding-top: 70px;
+    padding-bottom: 70px;
   }
 `;
 

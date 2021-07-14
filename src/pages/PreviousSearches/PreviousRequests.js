@@ -13,10 +13,9 @@ const PreviousRequests = () => {
       {previousSearches &&
         previousSearches.map((request) => {
           const body = (
-            <Request>
+            <Request key={request.key}>
               <Link
                 to={`/movies?s=${request.input}&page=${request.page}`}
-                key={request.key}
                 className="request"
                 onClick={() => window.scroll(0, 0)}>
                 <Information>

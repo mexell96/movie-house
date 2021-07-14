@@ -17,10 +17,9 @@ const PreviousMovies = () => {
       {viewedMovie &&
         viewedMovie.map((request) => {
           const body = (
-            <Request>
+            <Request key={request.imdbID}>
               <Link
                 to={`/movies/${request.imdbID}`}
-                key={request.imdbID}
                 onClick={() => window.scroll(0, 0)}>
                 <Information>
                   Looked for <span>{request.Title}</span>
