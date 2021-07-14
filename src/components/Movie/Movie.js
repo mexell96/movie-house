@@ -9,6 +9,7 @@ import {
   ContentModalAbout,
   ContentModalTitle,
   Tagline,
+  Img,
 } from "./Movie.style";
 
 import { noPicture } from "./../../consts";
@@ -67,11 +68,7 @@ const Movie = () => {
       {movie && (
         <div className={classes.paper}>
           <ContentModal>
-            <img
-              src={picture}
-              alt={movie.Title}
-              style={{ height: "inherit" }}
-            />
+            <Img src={picture} alt={movie.Title} />
             <ContentModalAbout>
               <ContentModalTitle>
                 {movie.Title}({movie.Year})

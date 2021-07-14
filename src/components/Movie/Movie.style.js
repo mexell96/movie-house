@@ -48,4 +48,8 @@ const Tagline = styled.i`
   align-self: center;
 `;
 
-export { ContentModal, ContentModalAbout, ContentModalTitle, Tagline };
+const Img = styled.img`
+  height: inherit;
+`;
+
+export { ContentModal, ContentModalAbout, ContentModalTitle, Tagline, Img };
