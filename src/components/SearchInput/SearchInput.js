@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SearchIcon from "@material-ui/icons/Search";
-import { Button, createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
-import { Search, SearchBox } from "./SearchInput.style";
+import { Search, SearchBox, ButtonStyle } from "./SearchInput.style";
 
 import { setSearchValue, setUrl } from "../../redux/actions";
 
@@ -57,13 +57,9 @@ const SearchInput = () => {
           onChange={({ target: { value } }) => setInput(value)}
           placeholder="Enter the name of the movie"
         />
-        <Button
-          type="submit"
-          disabled={!input}
-          variant="contained"
-          style={{ marginLeft: 10 }}>
+        <ButtonStyle type="submit" disabled={!input} variant="contained">
           <SearchIcon fontSize="large" />
-        </Button>
+        </ButtonStyle>
       </Search>
     </ThemeProvider>
   );
