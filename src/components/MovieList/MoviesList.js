@@ -26,9 +26,7 @@ const MoviesList = () => {
           }
         }
       } else {
-        dispatch(
-          fetchMovies(urlReducer.input, urlReducer.page, urlReducer.key)
-        );
+        dispatch(fetchMovies(urlReducer));
       }
     }
   }, [urlReducer]);

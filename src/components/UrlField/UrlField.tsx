@@ -4,23 +4,27 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 
 import { setUrl } from "../../redux/actions";
+import { RootState } from "../../redux/rootReducer";
+import { IRequest } from "../../redux/interface";
 
 const UrlField = () => {
   const history = useHistory();
   const { search } = useLocation();
   const dispatch = useDispatch();
-  const urlReducer = useSelector(({ urlReducer }) => urlReducer);
+  const urlReducer = useSelector(({ urlReducer }: RootState) => urlReducer);
 
   const getSearchValue = () => {
     const searchParams = new URLSearchParams(search);
+    const input = searchParams.get("s")!;
+    const page = searchParams.get("page")!;
     const searchValue = {
-      input: searchParams.get("s") || "",
-      page: searchParams.get("page") || 1,
+      input: input || "",
+      page: +page || 1,
     };
     return searchValue;
   };
 
-  const getUrl = (searchValue) => {
+  const getUrl = (searchValue: IRequest) => {
     if (search) {
       dispatch(setUrl(searchValue));
     }
@@ -31,7 +35,7 @@ const UrlField = () => {
     getUrl(searchValue);
   }, []);
 
-  const changeRouter = (movie, page) => {
+  const changeRouter = (movie: string, page: number) => {
     history.push(`movies?s=${movie}&page=${page}`);
   };
 
@@ -41,7 +45,7 @@ const UrlField = () => {
     }
   }, [urlReducer]);
 
-  return false;
+  return null;
 };
 
 export { UrlField };

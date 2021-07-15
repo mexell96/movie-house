@@ -14,3 +14,5 @@ export const rootReducer = combineReducers({
   resultMovie,
   tabsReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;

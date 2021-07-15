@@ -12,8 +12,8 @@ import {
   Img,
 } from "./Movie.style";
 
-import { noPicture } from "./../../consts";
-import { Loader } from "../../components";
+import { noPicture } from "../../consts";
+import { Loader } from "..";
 import { fetchMovie } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({

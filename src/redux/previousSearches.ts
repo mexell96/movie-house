@@ -1,3 +1,4 @@
+import { IReducerProps } from "./interface";
 import { SET_SEARCH_VALUES } from "./types";
 
 const initialState = [
@@ -8,7 +9,10 @@ const initialState = [
   },
 ];
 
-export const previousSearches = (state = initialState, { type, payload }) => {
+export const previousSearches = (
+  state = initialState,
+  { type, payload }: IReducerProps
+) => {
   switch (type) {
     case SET_SEARCH_VALUES:
       return [

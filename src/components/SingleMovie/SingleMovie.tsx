@@ -7,12 +7,22 @@ import {
   Title,
   SubTitle,
   SubTitleCapitalizer,
-} from "./SingleMovie.style.js";
+} from "./SingleMovie.style";
 
 import { noPicture } from "./../../consts";
 
-const SingleMovie = (movie) => {
-  const [picture, setPicture] = useState();
+interface IMovie {
+  imdbID: string;
+  title: string;
+  poster: string;
+  plot: string;
+  year: string;
+  type: string;
+  key: string;
+}
+
+const SingleMovie = (movie: IMovie) => {
+  const [picture, setPicture] = useState("");
 
   useEffect(() => {
     movie?.poster === "N/A" ? setPicture(noPicture) : setPicture(movie.poster);

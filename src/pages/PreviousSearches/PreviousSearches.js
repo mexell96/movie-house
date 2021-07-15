@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Tabs, Tab } from "@material-ui/core";
 
-import { PreviousMovies, PreviousRequests } from "./";
-import { setTab } from "./../../redux/actions";
+import { PreviousMovies, PreviousRequests } from ".";
+import { setTab } from "../../redux/actions";
 
 const TabPanel = ({ children, value, index }) => {
   return <div>{value === index && <h1>{children}</h1>}</div>;

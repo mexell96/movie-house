@@ -1,4 +1,5 @@
 import { SET_URL } from "./types";
+import { IReducerProps } from "./interface";
 
 const initialState = {
   input: "",
@@ -6,7 +7,10 @@ const initialState = {
   key: "",
 };
 
-export const urlReducer = (state = initialState, { type, payload }) => {
+export const urlReducer = (
+  state = initialState,
+  { type, payload }: IReducerProps
+) => {
   switch (type) {
     case SET_URL:
       return {
