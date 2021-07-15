@@ -10,6 +10,12 @@ import { AppRouter } from "./AppRouter";
 
 import { rootReducer } from "./redux/rootReducer";
 
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION__: typeof compose;
+  }
+}
+
 const middleware = [
   applyMiddleware(thunk),
   ...(window.__REDUX_DEVTOOLS_EXTENSION__

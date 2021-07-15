@@ -3,16 +3,26 @@ import { Tabs, Tab } from "@material-ui/core";
 
 import { PreviousMovies, PreviousRequests } from ".";
 import { setTab } from "../../redux/actions";
+import { RootState } from "../../redux/rootReducer";
 
-const TabPanel = ({ children, value, index }) => {
+interface IProps {
+  children: React.ReactNode;
+  value: number;
+  index: number;
+}
+
+const TabPanel = ({ children, value, index }: IProps) => {
   return <div>{value === index && <h1>{children}</h1>}</div>;
 };
 
 const PreviousSearches = () => {
   const dispatch = useDispatch();
-  const tab = useSelector(({tabsReducer: {tab}}) => tab);
+  const tab = useSelector(({ tabsReducer: { tab } }: RootState) => tab);
 
-  const handleChange = (event, newTab) => {
+  const handleChange = (
+    event: React.SyntheticEvent<EventTarget>,
+    newTab: number
+  ) => {
     dispatch(setTab(newTab));
   };
 

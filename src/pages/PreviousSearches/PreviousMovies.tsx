@@ -3,9 +3,13 @@ import { useSelector } from "react-redux";
 
 import { Wrapper, Request, Information } from "./styles";
 
+import { RootState } from "../../redux/rootReducer";
+
 const PreviousMovies = () => {
   const viewedMovie = [];
-  const resultMovie = useSelector(({ resultMovie }) => resultMovie);
+  const resultMovie: any = useSelector(
+    ({ resultMovie }: RootState) => resultMovie
+  );
 
   for (let key of Object.keys(resultMovie)) {
     const resultMovieNew = resultMovie[key];
