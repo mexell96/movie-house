@@ -70,7 +70,7 @@ const PaginationForMovies = () => {
   return (
     <>
       {loading && null}
-      {!loading && !numberOfPages && body}
+      {!loading && body}
     </>
   );
 };
