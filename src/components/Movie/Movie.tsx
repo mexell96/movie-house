@@ -15,6 +15,7 @@ import {
 import { noPicture } from "../../consts";
 import { Loader } from "..";
 import { fetchMovie } from "../../redux/actions";
+import { RootState } from "../../redux/rootReducer";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,13 +32,20 @@ const useStyles = makeStyles((theme) => ({
 
 const Movie = () => {
   const classes = useStyles();
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
-  const loading = useSelector(({ appReducer: { loading } }) => loading);
-  const resultMovie = useSelector(({ resultMovie }) => resultMovie);
+  const loading = useSelector(
+    ({ appReducer: { loading } }: RootState) => loading
+  );
+  const resultMovie = useSelector(({ resultMovie }: any) => resultMovie);
   const history = useHistory();
   const [picture, setPicture] = useState("");
-  const [movie, setMovie] = useState({});
+  const [movie, setMovie] = useState({
+    Poster: "",
+    Title: "",
+    Year: "",
+    Plot: "",
+  });
 
   useEffect(() => {
     if (id in resultMovie) {
@@ -60,7 +68,7 @@ const Movie = () => {
   }, [resultMovie]);
 
   useEffect(() => {
-    movie?.Poster === "N/A" ? setPicture(noPicture) : setPicture(movie?.Poster);
+    movie.Poster === "N/A" ? setPicture(noPicture) : setPicture(movie.Poster);
   }, [movie]);
 
   const body = (
