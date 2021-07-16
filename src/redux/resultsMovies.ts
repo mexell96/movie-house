@@ -1,33 +1,34 @@
 import { FETCH_MOVIES } from "./types";
-import { IMovie } from "./interface";
 
-interface IPayload {
+type DataType = {
   Response: string;
-  Search: Array<IMovie>;
+  Search: object[];
   totalResults: string;
-}
+};
 
 interface IReducerProps {
   type: string;
-  payload: IPayload;
+  data: DataType;
   key: string;
 }
 
 const initialState = {
-  key: { movies: [], totalResults: "" },
+  key: { movies: [{}], totalResults: "" },
 };
 
+type InitialStateType = typeof initialState;
+
 export const resultsMovies = (
-  state = initialState,
-  { type, payload, key }: IReducerProps
-) => {
+  state: InitialStateType = initialState,
+  { type, data, key }: IReducerProps
+): InitialStateType => {
   switch (type) {
     case FETCH_MOVIES:
       return {
         ...state,
         [key]: {
-          movies: payload.Search,
-          totalResults: payload.totalResults,
+          movies: data.Search,
+          totalResults: data.totalResults,
         },
       };
     default:

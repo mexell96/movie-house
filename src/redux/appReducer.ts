@@ -8,12 +8,17 @@ const initialState = {
   loading: false,
 };
 
-export const appReducer = (state = initialState, { type }: IReducerProps) => {
+type InitialStateType = typeof initialState;
+
+export const appReducer = (
+  state: InitialStateType = initialState,
+  { type }: IReducerProps
+): InitialStateType => {
   switch (type) {
     case SHOW_LOADER:
-      return { ...state, loading: true };
+      return { loading: true };
     case HIDE_LOADER:
-      return { ...state, loading: false };
+      return { loading: false };
     default:
       return state;
   }

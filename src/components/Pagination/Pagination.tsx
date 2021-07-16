@@ -8,6 +8,7 @@ import { PaginationStyle } from "./Pagination.style";
 import { setUrl } from "../../redux/actions";
 
 import { MOVIES_NUMBER_ON_ONE_PAGE } from "../../consts";
+import { RootState } from "../../redux/rootReducer";
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -17,17 +18,22 @@ const darkTheme = createMuiTheme({
 
 const PaginationForMovies = () => {
   const dispatch = useDispatch();
-  const resultsMovies = useSelector(({ resultsMovies }) => resultsMovies);
-  const urlReducer = useSelector(({ urlReducer }) => urlReducer);
-  const loading = useSelector(({ appReducer: { loading } }) => loading);
-  const [numberOfPages, setNumberOfPages] = useState(null);
+  const resultsMovies = useSelector(({ resultsMovies }: any) => resultsMovies);
+  const urlReducer = useSelector(({ urlReducer }: RootState) => urlReducer);
+  const loading = useSelector(
+    ({ appReducer: { loading } }: RootState) => loading
+  );
+  const [numberOfPages, setNumberOfPages] = useState<any>(null);
 
-  const handleChange = (event, page) => {
+  const handleChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ): void => {
     dispatch(
       setUrl({
         input: urlReducer.input,
         page: page,
-        key: urlReducer.key,
+        key: urlReducer.input + "_" + page,
       })
     );
     window.scroll(0, 0);
@@ -64,7 +70,7 @@ const PaginationForMovies = () => {
   return (
     <>
       {loading && null}
-      {!loading && body}
+      {!loading && !numberOfPages && body}
     </>
   );
 };

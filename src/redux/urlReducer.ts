@@ -1,5 +1,14 @@
 import { SET_URL } from "./types";
-import { IReducerProps } from "./interface";
+
+interface IRequest {
+  input: string;
+  page: number;
+  key: string;
+}
+interface IReducerProps {
+  type: string;
+  searchValue: IRequest;
+}
 
 const initialState = {
   input: "",
@@ -7,16 +16,18 @@ const initialState = {
   key: "",
 };
 
+type InitialStateType = typeof initialState;
+
 export const urlReducer = (
-  state = initialState,
-  { type, payload }: IReducerProps
-) => {
+  state: InitialStateType = initialState,
+  { type, searchValue }: IReducerProps
+): InitialStateType => {
   switch (type) {
     case SET_URL:
       return {
-        input: payload.input,
-        page: +payload.page,
-        key: payload.input + "_" + +payload.page,
+        input: searchValue.input,
+        page: +searchValue.page,
+        key: searchValue.key,
       };
     default:
       return state;

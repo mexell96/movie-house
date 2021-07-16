@@ -6,13 +6,14 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { Search, SearchBox, ButtonStyle } from "./SearchInput.style";
 
 import { setSearchValue, setUrl } from "../../redux/actions";
+import { RootState } from "../../redux/rootReducer";
 
 const SearchInput = () => {
   const dispatch = useDispatch();
   const previousSearches = useSelector(
-    ({ previousSearches }) => previousSearches
+    ({ previousSearches }: RootState) => previousSearches
   );
-  const urlReducer = useSelector(({ urlReducer }) => urlReducer);
+  const urlReducer = useSelector(({ urlReducer }: RootState) => urlReducer);
   const [input, setInput] = useState(urlReducer.input || "");
 
   const searchValue = {
@@ -37,7 +38,7 @@ const SearchInput = () => {
     !requestExist && dispatch(setSearchValue(urlReducer));
   };
 
-  const onFormSubmit = (e) => {
+  const onFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(setUrl(searchValue));
   };

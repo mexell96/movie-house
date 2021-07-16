@@ -1,5 +1,4 @@
 import { getMovies, getMovie } from "../apiFunctions";
-import { IRequest } from "./interface";
 import {
   FETCH_MOVIES,
   SET_SEARCH_VALUES,
@@ -11,53 +10,93 @@ import {
 } from "./types";
 import { Dispatch } from "redux";
 
-export function setSearchValue(searchValue: IRequest) {
-  return {
-    type: SET_SEARCH_VALUES,
-    payload: searchValue,
-  };
+interface IRequest {
+  input: string;
+  page: number;
+  key: string;
 }
 
-export function showLoader() {
+type SetSearchValueType = {
+  type: typeof SET_SEARCH_VALUES;
+  searchValue: IRequest;
+};
+
+export const setSearchValue = (searchValue: IRequest): SetSearchValueType => {
+  return {
+    type: SET_SEARCH_VALUES,
+    searchValue,
+  };
+};
+
+type ShowLoaderType = {
+  type: typeof SHOW_LOADER;
+};
+
+export const showLoader = (): ShowLoaderType => {
   return {
     type: SHOW_LOADER,
   };
-}
+};
 
-export function hideLoader() {
+type HideLoaderType = {
+  type: typeof HIDE_LOADER;
+};
+
+export const hideLoader = (): HideLoaderType => {
   return {
     type: HIDE_LOADER,
   };
-}
+};
 
-export function fetchMovies({ input, page, key }: IRequest) {
+type DataType = {
+  Response: string;
+  Search: object[];
+  totalResults: string;
+};
+
+type NoDataType = {
+  Error: string;
+  Response: string;
+};
+
+export const fetchMovies = ({ input, page, key }: IRequest) => {
   return async (dispatch: Dispatch) => {
     dispatch(showLoader());
-    const data = await getMovies(input, page);
-    dispatch({ type: FETCH_MOVIES, payload: data, key: key });
+    const data: DataType | NoDataType = await getMovies(input, page);
+    dispatch({ type: FETCH_MOVIES, data, key: key });
     dispatch(hideLoader());
   };
-}
+};
 
-export function fetchMovie(id: string) {
+export const fetchMovie = (id: string) => {
   return async (dispatch: Dispatch) => {
     dispatch(showLoader());
-    const data = await getMovie(id);
-    dispatch({ type: FETCH_MOVIE, payload: data, key: id });
+    const data: object = await getMovie(id);
+    dispatch({ type: FETCH_MOVIE, data, key: id });
     dispatch(hideLoader());
   };
-}
+};
 
-export function setUrl(searchValue: IRequest) {
+type SetUrlType = {
+  type: typeof SET_URL;
+  searchValue: IRequest;
+};
+
+export const setUrl = (searchValue: IRequest): SetUrlType => {
   return {
     type: SET_URL,
-    payload: searchValue,
+    searchValue,
   };
-}
+};
 
-export function setTab(tab: number) {
+type SetTabType = {
+  type: typeof SET_TAB;
+  tab: number;
+};
+
+export const setTab = (tab: number): SetTabType => {
   return {
     type: SET_TAB,
-    payload: tab,
+    tab,
   };
-}
+};
