@@ -13,7 +13,7 @@ interface IReducerProps {
 }
 
 const initialState = {
-  key: { movies: [{}], totalResults: "" },
+  key: { movies: [], totalResults: "" },
 };
 
 type InitialStateType = typeof initialState;
