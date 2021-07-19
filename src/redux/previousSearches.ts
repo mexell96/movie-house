@@ -11,18 +11,10 @@ interface IReducerProps {
   searchValue: IRequest;
 }
 
-const initialState = [
-  {
-    input: "",
-    page: 1,
-    key: "",
-  },
-];
-
-type InitialStateType = typeof initialState;
+type InitialStateType = IRequest[];
 
 export const previousSearches = (
-  state: InitialStateType = initialState,
+  state: InitialStateType = [],
   { type, searchValue }: IReducerProps
 ): InitialStateType => {
   switch (type) {
@@ -31,7 +23,7 @@ export const previousSearches = (
         ...state,
         {
           input: searchValue.input,
-          page: +searchValue.page,
+          page: searchValue.page,
           key: searchValue.key,
         },
       ];

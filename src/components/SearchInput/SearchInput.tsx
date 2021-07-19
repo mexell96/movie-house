@@ -7,6 +7,7 @@ import { Search, SearchBox, ButtonStyle } from "./SearchInput.style";
 
 import { setSearchValue, setUrl } from "../../redux/actions";
 import { RootState } from "../../redux/rootReducer";
+import { uniqueKey } from "../../utils";
 
 const SearchInput = () => {
   const dispatch = useDispatch();
@@ -17,9 +18,9 @@ const SearchInput = () => {
   const [input, setInput] = useState(urlReducer.input || "");
 
   const searchValue = {
-    input: input,
+    input: input.trim(),
     page: 1,
-    key: input + "_" + 1,
+    key: uniqueKey(input, 1),
   };
 
   const darkTheme = createMuiTheme({
@@ -32,8 +33,8 @@ const SearchInput = () => {
   });
 
   const comparisonObjects = () => {
-    const requestExist = previousSearches.find((item) => {
-      return JSON.stringify(item) === JSON.stringify(urlReducer);
+    const requestExist = previousSearches.find((item: any) => {
+      return item.key === urlReducer.key;
     });
     !requestExist && dispatch(setSearchValue(urlReducer));
   };

@@ -4,16 +4,7 @@ interface IReducerProps {
   type: string;
 }
 
-const initialState = {
-  loading: false,
-};
-
-type InitialStateType = typeof initialState;
-
-export const appReducer = (
-  state: InitialStateType = initialState,
-  { type }: IReducerProps
-): InitialStateType => {
+export const appReducer = (state = false, { type }: IReducerProps) => {
   switch (type) {
     case SHOW_LOADER:
       return { loading: true };

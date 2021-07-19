@@ -1,3 +1,4 @@
+import { uniqueKey } from "../utils";
 import { SET_URL } from "./types";
 
 interface IRequest {
@@ -13,7 +14,7 @@ interface IReducerProps {
 const initialState = {
   input: "",
   page: 1,
-  key: "",
+  key: uniqueKey(),
 };
 
 type InitialStateType = typeof initialState;
@@ -26,7 +27,7 @@ export const urlReducer = (
     case SET_URL:
       return {
         input: searchValue.input,
-        page: +searchValue.page,
+        page: searchValue.page,
         key: searchValue.key,
       };
     default:

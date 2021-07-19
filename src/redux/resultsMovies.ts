@@ -16,7 +16,14 @@ const initialState = {
   key: { movies: [], totalResults: "" },
 };
 
-type InitialStateType = typeof initialState;
+type IData = {
+  movies: Array<object>;
+  totalResults: string;
+};
+
+type InitialStateType = {
+  key: IData;
+};
 
 export const resultsMovies = (
   state: InitialStateType = initialState,

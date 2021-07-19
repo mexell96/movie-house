@@ -60,6 +60,10 @@ type NoDataType = {
 };
 
 export const fetchMovies = ({ input, page, key }: IRequest) => {
+  // return {
+  //   type: FETCH_MOVIES,
+  //   searchValue,
+  // };
   return async (dispatch: Dispatch) => {
     dispatch(showLoader());
     const data: DataType | NoDataType = await getMovies(input, page);

@@ -9,6 +9,7 @@ import { setUrl } from "../../redux/actions";
 
 import { MOVIES_NUMBER_ON_ONE_PAGE } from "../../consts";
 import { RootState } from "../../redux/rootReducer";
+import { uniqueKey } from "../../utils";
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -33,7 +34,7 @@ const PaginationForMovies = () => {
       setUrl({
         input: urlReducer.input,
         page: page,
-        key: urlReducer.input + "_" + page,
+        key: uniqueKey(urlReducer.input, page),
       })
     );
     window.scroll(0, 0);

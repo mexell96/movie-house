@@ -5,6 +5,7 @@ import { useLocation } from "react-router";
 
 import { setUrl } from "../../redux/actions";
 import { RootState } from "../../redux/rootReducer";
+import { uniqueKey } from "../../utils";
 
 const UrlField = () => {
   const history = useHistory();
@@ -15,12 +16,12 @@ const UrlField = () => {
   const getSearchValue = () => {
     const searchParams = new URLSearchParams(search);
     const input = searchParams.get("s")!;
-    const page = searchParams.get("page")!;
-    const key = input + "_" + page;
+    const page = Number(searchParams.get("page")!);
+    const key = uniqueKey(input, page);
 
     const searchValue = {
       input: input || "",
-      page: +page || 1,
+      page: page || 1,
       key: key || "",
     };
     return searchValue;
