@@ -40,7 +40,7 @@ const SearchInput = () => {
     const requestExist = previousSearches.find((item: any) => {
       return item.key === urlReducer.key;
     });
-    !requestExist && dispatch(setSearchValue(urlReducer));
+    !requestExist && urlReducer.input && dispatch(setSearchValue(urlReducer));
   };
 
   const onFormSubmit = (e: React.FormEvent) => {

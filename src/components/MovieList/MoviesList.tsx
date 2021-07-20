@@ -4,16 +4,16 @@ import { useLocation } from "react-router";
 
 import { MovieListTrendingStyled } from "./MovieList.style";
 
-import { Loader, SingleMovie } from "../../components";
+import { Loader, SingleMovie } from "..";
 
 import { fetchMovies } from "../../redux/actions";
 
 const MoviesList = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const urlReducer = useSelector(({ urlReducer }) => urlReducer);
-  const resultsMovies = useSelector(({ resultsMovies }) => resultsMovies);
-  const loading = useSelector(({ appReducer: { loading } }) => loading);
+  const urlReducer = useSelector(({ urlReducer }: any) => urlReducer);
+  const resultsMovies = useSelector(({ resultsMovies }: any) => resultsMovies);
+  const loading = useSelector(({ appReducer: { loading } }: any) => loading);
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -38,32 +38,31 @@ const MoviesList = () => {
     }
   }, [resultsMovies]);
 
-  const body = (
-    <MovieListTrendingStyled>
-      {location.search && !urlReducer.input && (
-        <h2>Error: "Invalid request"</h2>
-      )}
-      {location.search && !urlReducer.page && <h2>Error: "Invalid page"</h2>}
-      {!movies && urlReducer.input && <h2>No Movies Found</h2>}
-      {movies &&
-        movies.map((movie) => (
-          <SingleMovie
-            imdbID={movie.imdbID}
-            title={movie.Title}
-            poster={movie.Poster}
-            plot={movie.Plot}
-            year={movie.Year}
-            type={movie.Type}
-            key={movie.imdbID}
-          />
-        ))}
-    </MovieListTrendingStyled>
+  const singleMovie = (movie: any) => (
+    <SingleMovie
+      imdbID={movie.imdbID}
+      title={movie.Title}
+      poster={movie.Poster}
+      plot={movie.Plot}
+      year={movie.Year}
+      type={movie.Type}
+      key={movie.imdbID}
+    />
   );
+
+  const moviesBlock = () => {
+    return <>{movies.map((movie) => singleMovie(movie))}</>;
+  };
+  const moviesNotFound = <h2>No Movies Found</h2>;
+  const InvalidRequest = <h2>Error: "Invalid request"</h2>;
+
   return (
-    <>
+    <MovieListTrendingStyled>
       {loading && <Loader />}
-      {!loading && body}
-    </>
+      {!loading && movies && moviesBlock()}
+      {!loading && !movies && urlReducer.input && moviesNotFound}
+      {!loading && location.search && !urlReducer.input && InvalidRequest}
+    </MovieListTrendingStyled>
   );
 };
 

@@ -6,7 +6,6 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { PaginationStyled } from "./Pagination.style";
 
 import { setUrl } from "../../redux/actions";
-
 import { MOVIES_NUMBER_ON_ONE_PAGE } from "../../consts";
 import { RootState } from "../../redux/rootReducer";
 import { uniqueKey } from "../../utils";
@@ -51,7 +50,7 @@ const PaginationForMovies = () => {
     }
   }, [resultsMovies]);
 
-  const body = (
+  const paginationBlock = (
     <PaginationStyled>
       <ThemeProvider theme={darkTheme}>
         {resultsMovies && (
@@ -71,7 +70,7 @@ const PaginationForMovies = () => {
   return (
     <>
       {loading && null}
-      {!loading && body}
+      {!loading && paginationBlock}
     </>
   );
 };

@@ -72,29 +72,26 @@ const Movie = () => {
   }, [movie]);
 
   const body = (
-    <>
-      {movie && (
-        <div className={classes.paper}>
-          <MovieContentModalStyled>
-            <MovieImgStyled src={picture} alt={movie.Title} />
-            <MovieContentModalAboutStyled>
-              <MovieContentModalTitleStyled>
-                {movie.Title}({movie.Year})
-              </MovieContentModalTitleStyled>
-              <MovieTaglineStyled>{movie.Plot}</MovieTaglineStyled>
-            </MovieContentModalAboutStyled>
-          </MovieContentModalStyled>
-          <Button onClick={() => history.goBack()} variant="contained">
-            Go back
-          </Button>
-        </div>
-      )}
-    </>
+    <div className={classes.paper}>
+      <MovieContentModalStyled>
+        <MovieImgStyled src={picture} alt={movie.Title} />
+        <MovieContentModalAboutStyled>
+          <MovieContentModalTitleStyled>
+            {movie.Title}({movie.Year})
+          </MovieContentModalTitleStyled>
+          <MovieTaglineStyled>{movie.Plot}</MovieTaglineStyled>
+        </MovieContentModalAboutStyled>
+      </MovieContentModalStyled>
+      <Button onClick={() => history.goBack()} variant="contained">
+        Go back
+      </Button>
+    </div>
   );
+
   return (
     <>
       {loading && <Loader />}
-      {!loading && body}
+      {!loading && movie && body}
     </>
   );
 };
