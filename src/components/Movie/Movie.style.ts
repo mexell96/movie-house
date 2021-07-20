@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ContentModal = styled.div`
+export const MovieContentModalStyled = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,7 +14,7 @@ const ContentModal = styled.div`
   }
 `;
 
-const ContentModalAbout = styled.div`
+export const MovieContentModalAboutStyled = styled.div`
   padding: 10px;
   width: 95%;
   height: 90%;
@@ -31,7 +31,7 @@ const ContentModalAbout = styled.div`
   }
 `;
 
-const ContentModalTitle = styled.span`
+export const MovieContentModalTitleStyled = styled.span`
   height: 12%;
   font-size: 5vw;
   display: flex;
@@ -43,13 +43,11 @@ const ContentModalTitle = styled.span`
   }
 `;
 
-const Tagline = styled.i`
+export const MovieTaglineStyled = styled.i`
   padding-bottom: 10px;
   align-self: center;
 `;
 
-const Img = styled.img`
+export const MovieImgStyled = styled.img`
   height: inherit;
 `;
-
-export { ContentModal, ContentModalAbout, ContentModalTitle, Tagline, Img };

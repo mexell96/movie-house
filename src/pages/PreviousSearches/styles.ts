@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-const Wrapper = styled.div`
+export const WrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #39445a;
 `;
 
-const Request = styled.div`
+export const RequestStyled = styled.div`
   display: flex;
   flex-direction: column;
   margin: 5px;
@@ -21,11 +21,9 @@ const Request = styled.div`
   }
 `;
 
-const Information = styled.div`
+export const InformationStyled = styled.div`
   width: 100%;
   text-align: center;
   font-size: 17px;
   padding: 8px 0;
 `;
-
-export { Wrapper, Request, Information };

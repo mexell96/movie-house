@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Media = styled.div`
+export const SingleMovieMediaStyled = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -18,19 +18,19 @@ const Media = styled.div`
   }
 `;
 
-const Poster = styled.img`
+export const SingleMoviePosterStyled = styled.img`
   border-radius: 10px;
   width: 200px;
 `;
 
-const Title = styled.div`
+export const SingleMovieTitleStyled = styled.div`
   width: 100%;
   text-align: center;
   font-size: 17px;
   padding: 8px 0;
 `;
 
-const SubTitle = styled.span`
+export const SingleMovieSubTitleStyled = styled.span`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -39,8 +39,8 @@ const SubTitle = styled.span`
   padding-bottom: 3px;
 `;
 
-const SubTitleCapitalizer = styled(SubTitle)`
+export const SingleMovieSubTitleCapitalizerStyled = styled(
+  SingleMovieSubTitleStyled
+)`
   text-transform: capitalize;
 `;
-
-export { Media, Poster, Title, SubTitle, SubTitleCapitalizer };

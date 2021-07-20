@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const HeaderStyle = styled.span`
+export const HeaderStyled = styled.span`
   width: 100%;
   cursor: pointer;
   position: fixed;
@@ -20,5 +20,3 @@ const HeaderStyle = styled.span`
     font-size: 6.4vw;
   }
 `;
-
-export { HeaderStyle };

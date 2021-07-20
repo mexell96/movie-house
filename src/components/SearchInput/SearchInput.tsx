@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import SearchIcon from "@material-ui/icons/Search";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
-import { Search, SearchBox, ButtonStyle } from "./SearchInput.style";
+import {
+  SearchInputStyled,
+  SearchInputBoxStyled,
+  SearchInputButtonStyled,
+} from "./SearchInput.style";
 
 import { setSearchValue, setUrl } from "../../redux/actions";
 import { RootState } from "../../redux/rootReducer";
@@ -51,18 +55,21 @@ const SearchInput = () => {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Search noValidate autoComplete="off" onSubmit={onFormSubmit}>
-        <SearchBox
+      <SearchInputStyled noValidate autoComplete="off" onSubmit={onFormSubmit}>
+        <SearchInputBoxStyled
           label="Search"
           variant="filled"
           value={input}
           onChange={({ target: { value } }) => setInput(value)}
           placeholder="Enter the name of the movie"
         />
-        <ButtonStyle type="submit" disabled={!input} variant="contained">
+        <SearchInputButtonStyled
+          type="submit"
+          disabled={!input}
+          variant="contained">
           <SearchIcon fontSize="large" />
-        </ButtonStyle>
-      </Search>
+        </SearchInputButtonStyled>
+      </SearchInputStyled>
     </ThemeProvider>
   );
 };

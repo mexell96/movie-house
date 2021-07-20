@@ -15,8 +15,8 @@ const UrlField = () => {
 
   const getSearchValue = () => {
     const searchParams = new URLSearchParams(search);
-    const input = searchParams.get("s")!;
-    const page = Number(searchParams.get("page")!);
+    const input = searchParams.get("s")?.trim()!;
+    const page = Number(searchParams.get("page")?.trim()!);
     const key = uniqueKey(input, page);
 
     const searchValue = {

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { Wrapper, Request, Information } from "./styles";
+import { WrapperStyled, RequestStyled, InformationStyled } from "./styles";
 
 import { RootState } from "../../redux/rootReducer";
 
@@ -17,23 +17,23 @@ const PreviousMovies = () => {
   }
 
   return (
-    <Wrapper>
+    <WrapperStyled>
       {viewedMovie &&
         viewedMovie.map((request) => {
           const body = (
-            <Request key={request.imdbID}>
+            <RequestStyled key={request.imdbID}>
               <Link
                 to={`/movies/${request.imdbID}`}
                 onClick={() => window.scroll(0, 0)}>
-                <Information>
+                <InformationStyled>
                   Looked for <span>{request.Title}</span>
-                </Information>
+                </InformationStyled>
               </Link>
-            </Request>
+            </RequestStyled>
           );
           return request.Title && body;
         })}
-    </Wrapper>
+    </WrapperStyled>
   );
 };
 

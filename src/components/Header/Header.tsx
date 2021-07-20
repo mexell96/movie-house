@@ -1,8 +1,8 @@
-import { HeaderStyle } from "./Header.styled";
+import { HeaderStyled } from "./Header.styled";
 
 const Header = () => {
   return (
-    <HeaderStyle onClick={() => window.scroll(0, 0)}>Movie-house</HeaderStyle>
+    <HeaderStyled onClick={() => window.scroll(0, 0)}>Movie-house</HeaderStyled>
   );
 };
 

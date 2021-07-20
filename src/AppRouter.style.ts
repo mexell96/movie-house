@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const AppRouterStyle = styled.div`
+export const AppRouterStyled = styled.div`
   min-height: calc(100vh - 220px);
   background-color: #39445a;
   color: white;
@@ -13,5 +13,3 @@ const AppRouterStyle = styled.div`
     padding-bottom: 70px;
   }
 `;
-
-export { AppRouterStyle };

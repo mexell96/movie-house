@@ -5,11 +5,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 
 import {
-  ContentModal,
-  ContentModalAbout,
-  ContentModalTitle,
-  Tagline,
-  Img,
+  MovieContentModalStyled,
+  MovieContentModalAboutStyled,
+  MovieContentModalTitleStyled,
+  MovieTaglineStyled,
+  MovieImgStyled,
 } from "./Movie.style";
 
 import { noPicture } from "../../consts";
@@ -75,15 +75,15 @@ const Movie = () => {
     <>
       {movie && (
         <div className={classes.paper}>
-          <ContentModal>
-            <Img src={picture} alt={movie.Title} />
-            <ContentModalAbout>
-              <ContentModalTitle>
+          <MovieContentModalStyled>
+            <MovieImgStyled src={picture} alt={movie.Title} />
+            <MovieContentModalAboutStyled>
+              <MovieContentModalTitleStyled>
                 {movie.Title}({movie.Year})
-              </ContentModalTitle>
-              <Tagline>{movie.Plot}</Tagline>
-            </ContentModalAbout>
-          </ContentModal>
+              </MovieContentModalTitleStyled>
+              <MovieTaglineStyled>{movie.Plot}</MovieTaglineStyled>
+            </MovieContentModalAboutStyled>
+          </MovieContentModalStyled>
           <Button onClick={() => history.goBack()} variant="contained">
             Go back
           </Button>

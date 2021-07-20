@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
-  Media,
-  Poster,
-  Title,
-  SubTitle,
-  SubTitleCapitalizer,
+  SingleMovieMediaStyled,
+  SingleMoviePosterStyled,
+  SingleMovieTitleStyled,
+  SingleMovieSubTitleStyled,
+  SingleMovieSubTitleCapitalizerStyled,
 } from "./SingleMovie.style";
 
 import { noPicture } from "./../../consts";
@@ -29,19 +29,21 @@ const SingleMovie = (movie: IMovie) => {
   }, [movie]);
 
   return (
-    <Media>
+    <SingleMovieMediaStyled>
       <Link
         to={`/movies/${movie.imdbID}`}
         key={movie.imdbID}
         onClick={() => window.scroll(0, 0)}>
-        <Poster src={picture} alt={movie.title}></Poster>
+        <SingleMoviePosterStyled src={picture} alt={movie.title} />
         <div>
-          <Title>{movie.title}</Title>
-          <SubTitle>{movie.year}</SubTitle>
-          <SubTitleCapitalizer>{movie.type}</SubTitleCapitalizer>
+          <SingleMovieTitleStyled>{movie.title}</SingleMovieTitleStyled>
+          <SingleMovieSubTitleStyled>{movie.year}</SingleMovieSubTitleStyled>
+          <SingleMovieSubTitleCapitalizerStyled>
+            {movie.type}
+          </SingleMovieSubTitleCapitalizerStyled>
         </div>
       </Link>
-    </Media>
+    </SingleMovieMediaStyled>
   );
 };
 

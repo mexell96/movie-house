@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { Wrapper, Request, Information } from "./styles";
+import { WrapperStyled, RequestStyled, InformationStyled } from "./styles";
 
 const PreviousRequests = () => {
   const previousSearches = useSelector(
@@ -9,25 +9,25 @@ const PreviousRequests = () => {
   );
 
   return (
-    <Wrapper>
+    <WrapperStyled>
       {previousSearches &&
         previousSearches.map((request) => {
           const body = (
-            <Request key={request.key}>
+            <RequestStyled key={request.key}>
               <Link
                 to={`/movies?s=${request.input}&page=${request.page}`}
                 className="request"
                 onClick={() => window.scroll(0, 0)}>
-                <Information>
+                <InformationStyled>
                   Looked for <span>{request.input}</span> on page{" "}
                   <span>{request.page}</span>
-                </Information>
+                </InformationStyled>
               </Link>
-            </Request>
+            </RequestStyled>
           );
           return request.input && request.page && body;
         })}
-    </Wrapper>
+    </WrapperStyled>
   );
 };
 

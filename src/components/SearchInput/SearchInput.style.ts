@@ -1,17 +1,15 @@
 import styled from "styled-components";
 import { TextField, Button } from "@material-ui/core";
 
-const Search = styled.form`
+export const SearchInputStyled = styled.form`
   display: flex;
   margin: 15px 0;
 `;
 
-const SearchBox = styled(TextField)`
+export const SearchInputBoxStyled = styled(TextField)`
   flex: 1;
 `;
 
-const ButtonStyle = styled(Button)`
+export const SearchInputButtonStyled = styled(Button)`
   margin-left: 10;
 `;
-
-export { Search, SearchBox, ButtonStyle };

@@ -1,12 +1,12 @@
-import { LoaderStyle } from "./Loader.style";
+import { LoaderStyled } from "./Loader.style";
 
 import LoaderSvg from "../../img/loader.svg";
 
 const Loader = () => {
   return (
-    <LoaderStyle>
+    <LoaderStyled>
       <img src={LoaderSvg} alt="loader" />
-    </LoaderStyle>
+    </LoaderStyled>
   );
 };
 

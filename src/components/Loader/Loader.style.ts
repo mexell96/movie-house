@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-const LoaderStyle = styled.div`
+export const LoaderStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
-export { LoaderStyle };
+
