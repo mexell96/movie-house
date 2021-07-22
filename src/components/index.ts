@@ -7,3 +7,4 @@ export * from "./Pagination";
 export * from "./SearchInput";
 export * from "./SingleMovie";
 export * from "./UrlField";
+export * from "./CustomPagination";

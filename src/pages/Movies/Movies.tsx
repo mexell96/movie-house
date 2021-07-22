@@ -3,6 +3,7 @@ import {
   SearchInput,
   PaginationForMovies,
   UrlField,
+  CustomPagination,
 } from "../../components";
 
 const Movies = () => {
@@ -13,6 +14,7 @@ const Movies = () => {
       <SearchInput />
       <MoviesList />
       <PaginationForMovies />
+      <CustomPagination />
     </>
   );
 };
