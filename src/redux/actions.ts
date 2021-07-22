@@ -10,63 +10,31 @@ import {
 } from "./types";
 import { Dispatch } from "redux";
 
-interface IRequest {
-  input: string;
-  page: number;
-  key: string;
-}
-
-type SetSearchValueType = {
-  type: typeof SET_SEARCH_VALUES;
-  searchValue: IRequest;
-};
-
-export const setSearchValue = (searchValue: IRequest): SetSearchValueType => {
+export const setSearchValue = (
+  searchValue: SearchInfoType
+): ReducerPropsType => {
   return {
     type: SET_SEARCH_VALUES,
     searchValue,
   };
 };
 
-type ShowLoaderType = {
-  type: typeof SHOW_LOADER;
-};
-
-export const showLoader = (): ShowLoaderType => {
+export const showLoader = () => {
   return {
     type: SHOW_LOADER,
   };
 };
 
-type HideLoaderType = {
-  type: typeof HIDE_LOADER;
-};
-
-export const hideLoader = (): HideLoaderType => {
+export const hideLoader = () => {
   return {
     type: HIDE_LOADER,
   };
 };
 
-type DataType = {
-  Response: string;
-  Search: object[];
-  totalResults: string;
-};
-
-type NoDataType = {
-  Error: string;
-  Response: string;
-};
-
-export const fetchMovies = ({ input, page, key }: IRequest) => {
-  // return {
-  //   type: FETCH_MOVIES,
-  //   searchValue,
-  // };
+export const fetchMovies = ({ input, page, key }: SearchInfoType) => {
   return async (dispatch: Dispatch) => {
     dispatch(showLoader());
-    const data: DataType | NoDataType = await getMovies(input, page);
+    const data: MoviesResponseType = await getMovies(input, page);
     dispatch({ type: FETCH_MOVIES, data, key: key });
     dispatch(hideLoader());
   };
@@ -81,24 +49,14 @@ export const fetchMovie = (id: string) => {
   };
 };
 
-type SetUrlType = {
-  type: typeof SET_URL;
-  searchValue: IRequest;
-};
-
-export const setUrl = (searchValue: IRequest): SetUrlType => {
+export const setUrl = (searchValue: SearchInfoType): ReducerPropsType => {
   return {
     type: SET_URL,
     searchValue,
   };
 };
 
-type SetTabType = {
-  type: typeof SET_TAB;
-  tab: number;
-};
-
-export const setTab = (tab: number): SetTabType => {
+export const setTab = (tab: number): TabsPropsType => {
   return {
     type: SET_TAB,
     tab,

@@ -3,11 +3,7 @@ import { useSelector } from "react-redux";
 
 import { WrapperStyled, RequestStyled, InformationStyled } from "./styles";
 
-// type SingleRequestPropsType = {
-//   request: object;
-// };
-
-const singleRequest = (request: any) => {
+const singleRequest = (request: SearchInfoType) => {
   return (
     <RequestStyled key={request.key}>
       <Link
@@ -23,20 +19,15 @@ const singleRequest = (request: any) => {
   );
 };
 
-const Requests = (previousSearches: any) => {
-  return (
-    <>
-      {previousSearches.map((request: any) => {
-        if (request.input && request.page) return singleRequest(request);
-        return null;
-      })}
-    </>
-  );
-};
+const Requests = (previousSearches: SearchInfoType[]) => (
+  <>
+    {previousSearches.map((request: SearchInfoType) => singleRequest(request))}
+  </>
+);
 
 const PreviousRequests = () => {
-  const previousSearches: any = useSelector(
-    ({ previousSearches }: any) => previousSearches
+  const previousSearches = useSelector(
+    ({ previousSearches }: RootStateType) => previousSearches
   );
 
   return (

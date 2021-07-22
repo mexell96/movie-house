@@ -4,44 +4,32 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 
 import { setUrl } from "../../redux/actions";
-import { RootState } from "../../redux/rootReducer";
 import { uniqueKey } from "../../utils";
 
 const UrlField = () => {
   const history = useHistory();
   const { search } = useLocation();
   const dispatch = useDispatch();
-  const urlReducer = useSelector(({ urlReducer }: RootState) => urlReducer);
+  const urlReducer = useSelector(({ urlReducer }: RootStateType) => urlReducer);
 
   const getSearchValue = () => {
     const searchParams = new URLSearchParams(search);
-    const input = searchParams.get("s")?.trim()!;
-    const page = Number(searchParams.get("page")?.trim()!);
-    const key = uniqueKey(input, page);
+    const input = searchParams.get("s")?.trim()! || "";
+    const page = Number(searchParams.get("page")?.trim()!) || 1;
+    const key = uniqueKey(input, page) || "";
 
-    const searchValue = {
-      input: input || "",
-      page: page || 1,
-      key: key || "",
+    return {
+      input,
+      page,
+      key,
     };
-    return searchValue;
   };
 
-  interface IRequest {
-    input: string;
-    page: number;
-    key: string;
-  }
-
-  const getUrl = (searchValue: IRequest) => {
-    if (search) {
-      dispatch(setUrl(searchValue));
-    }
-  };
+  const getUrl = (searchValue: SearchInfoType) =>
+    search && dispatch(setUrl(searchValue));
 
   useEffect(() => {
-    const searchValue = getSearchValue();
-    getUrl(searchValue);
+    getUrl(getSearchValue());
   }, []);
 
   const changeRouter = (movie: string, page: number) => {

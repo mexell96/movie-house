@@ -3,40 +3,35 @@ import { useSelector } from "react-redux";
 
 import { WrapperStyled, RequestStyled, InformationStyled } from "./styles";
 
+const singleRequest = (request: MovieType) => {
+  return (
+    <RequestStyled key={request.imdbID}>
+      <Link
+        to={`/movies/${request.imdbID}`}
+        onClick={() => window.scroll(0, 0)}>
+        <InformationStyled>
+          Looked for <span>{request.Title}</span>
+        </InformationStyled>
+      </Link>
+    </RequestStyled>
+  );
+};
+
+const Requests = (viewedMovie: MovieType[]) => (
+  <>{viewedMovie.map((request: MovieType) => singleRequest(request))}</>
+);
+
 const PreviousMovies = () => {
-  const viewedMovie: any = [];
-  const resultMovie = useSelector(({ resultMovie }: any) => resultMovie);
-  for (let key of Object.keys(resultMovie)) {
-    const resultMovieNew = resultMovie[key];
-    viewedMovie.push(resultMovieNew);
+  const viewedMovie: MovieType[] = [];
+  const resultsMovie = useSelector(
+    ({ resultsMovie }: RootStateType) => resultsMovie
+  );
+
+  for (let key of Object.keys(resultsMovie)) {
+    viewedMovie.push(resultsMovie[key]);
   }
 
-  const singleRequest = (request: any) => {
-    return (
-      <RequestStyled key={request.imdbID}>
-        <Link
-          to={`/movies/${request.imdbID}`}
-          onClick={() => window.scroll(0, 0)}>
-          <InformationStyled>
-            Looked for <span>{request.Title}</span>
-          </InformationStyled>
-        </Link>
-      </RequestStyled>
-    );
-  };
-
-  const Requests = () => {
-    return (
-      <>
-        {viewedMovie.map((request: any) => {
-          if (request.Title) return singleRequest(request);
-          return null;
-        })}
-      </>
-    );
-  };
-
-  return <WrapperStyled>{viewedMovie && Requests()}</WrapperStyled>;
+  return <WrapperStyled>{viewedMovie && Requests(viewedMovie)}</WrapperStyled>;
 };
 
 export { PreviousMovies };

@@ -1,10 +1,17 @@
 import { SHOW_LOADER, HIDE_LOADER } from "./types";
 
-interface IReducerProps {
+type AppReducerProps = {
   type: string;
-}
+};
 
-export const appReducer = (state = false, { type }: IReducerProps) => {
+const initialState = {
+  loading: false,
+};
+
+export const appReducer = (
+  state = initialState,
+  { type }: AppReducerProps
+): AppReducerType => {
   switch (type) {
     case SHOW_LOADER:
       return { loading: true };

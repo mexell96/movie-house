@@ -10,15 +10,14 @@ import {
 } from "./SearchInput.style";
 
 import { setSearchValue, setUrl } from "../../redux/actions";
-import { RootState } from "../../redux/rootReducer";
 import { uniqueKey } from "../../utils";
 
 const SearchInput = () => {
   const dispatch = useDispatch();
   const previousSearches = useSelector(
-    ({ previousSearches }: RootState) => previousSearches
+    ({ previousSearches }: RootStateType) => previousSearches
   );
-  const urlReducer = useSelector(({ urlReducer }: RootState) => urlReducer);
+  const urlReducer = useSelector(({ urlReducer }: RootStateType) => urlReducer);
   const [input, setInput] = useState(urlReducer.input || "");
 
   const searchValue = {
@@ -36,10 +35,10 @@ const SearchInput = () => {
     },
   });
 
-  const comparisonObjects = () => {
-    const requestExist = previousSearches.find((item: any) => {
-      return item.key === urlReducer.key;
-    });
+  const setValue = () => {
+    const requestExist = previousSearches.find(
+      (item: SearchInfoType) => item.key === urlReducer.key
+    );
     !requestExist && urlReducer.input && dispatch(setSearchValue(urlReducer));
   };
 
@@ -50,7 +49,7 @@ const SearchInput = () => {
 
   useEffect(() => {
     setInput(urlReducer.input);
-    comparisonObjects();
+    setValue();
   }, [urlReducer]);
 
   return (

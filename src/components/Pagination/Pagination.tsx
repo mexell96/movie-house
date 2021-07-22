@@ -7,7 +7,6 @@ import { PaginationStyled } from "./Pagination.style";
 
 import { setUrl } from "../../redux/actions";
 import { MOVIES_NUMBER_ON_ONE_PAGE } from "../../consts";
-import { RootState } from "../../redux/rootReducer";
 import { uniqueKey } from "../../utils";
 
 const darkTheme = createMuiTheme({
@@ -18,12 +17,14 @@ const darkTheme = createMuiTheme({
 
 const PaginationForMovies = () => {
   const dispatch = useDispatch();
-  const resultsMovies = useSelector(({ resultsMovies }: any) => resultsMovies);
-  const urlReducer = useSelector(({ urlReducer }: RootState) => urlReducer);
-  const loading = useSelector(
-    ({ appReducer: { loading } }: RootState) => loading
+  const resultsMovies = useSelector(
+    ({ resultsMovies }: RootStateType) => resultsMovies
   );
-  const [numberOfPages, setNumberOfPages] = useState<any>(null);
+  const urlReducer = useSelector(({ urlReducer }: RootStateType) => urlReducer);
+  const loading = useSelector(
+    ({ appReducer: { loading } }: RootStateType) => loading
+  );
+  const [numberOfPages, setNumberOfPages] = useState(0);
 
   const handleChange = (
     event: React.ChangeEvent<unknown>,
@@ -40,37 +41,30 @@ const PaginationForMovies = () => {
   };
 
   useEffect(() => {
-    if (urlReducer.key in resultsMovies) {
-      for (let key of Object.keys(resultsMovies)) {
-        if (key === urlReducer.key) {
-          const arrayMovies = resultsMovies[key];
-          setNumberOfPages(arrayMovies.totalResults);
-        }
-      }
+    if (resultsMovies[urlReducer.key]) {
+      setNumberOfPages(Number(resultsMovies[urlReducer.key].totalResults));
     }
-  }, [resultsMovies]);
-
-  const paginationBlock = (
-    <PaginationStyled>
-      <ThemeProvider theme={darkTheme}>
-        {resultsMovies && (
-          <Pagination
-            onChange={handleChange}
-            count={Math.ceil(numberOfPages / MOVIES_NUMBER_ON_ONE_PAGE)}
-            page={urlReducer.page}
-            color="primary"
-            hideNextButton
-            hidePrevButton
-          />
-        )}
-      </ThemeProvider>
-    </PaginationStyled>
-  );
+  }, [resultsMovies, urlReducer]);
 
   return (
     <>
       {loading && null}
-      {!loading && paginationBlock}
+      {!loading && (
+        <PaginationStyled>
+          <ThemeProvider theme={darkTheme}>
+            {resultsMovies && (
+              <Pagination
+                onChange={handleChange}
+                count={Math.ceil(numberOfPages / MOVIES_NUMBER_ON_ONE_PAGE)}
+                page={urlReducer.page}
+                color="primary"
+                hideNextButton
+                hidePrevButton
+              />
+            )}
+          </ThemeProvider>
+        </PaginationStyled>
+      )}
     </>
   );
 };

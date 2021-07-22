@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -9,37 +8,21 @@ import {
   SingleMovieSubTitleCapitalizerStyled,
 } from "./SingleMovie.style";
 
-import { noPicture } from "./../../consts";
+import { getPicture } from "../../utils";
 
-interface IMovie {
-  imdbID: string;
-  title: string;
-  poster: string;
-  plot: string;
-  year: string;
-  type: string;
-  key: string;
-}
-
-const SingleMovie = (movie: IMovie) => {
-  const [picture, setPicture] = useState("");
-
-  useEffect(() => {
-    movie?.poster === "N/A" ? setPicture(noPicture) : setPicture(movie.poster);
-  }, [movie]);
-
+const SingleMovie = ({ imdbID, Poster, Title, Year, Type }: MovieType) => {
   return (
     <SingleMovieMediaStyled>
       <Link
-        to={`/movies/${movie.imdbID}`}
-        key={movie.imdbID}
+        to={`/movies/${imdbID}`}
+        key={imdbID}
         onClick={() => window.scroll(0, 0)}>
-        <SingleMoviePosterStyled src={picture} alt={movie.title} />
+        <SingleMoviePosterStyled src={getPicture(Poster)} alt={Title} />
         <div>
-          <SingleMovieTitleStyled>{movie.title}</SingleMovieTitleStyled>
-          <SingleMovieSubTitleStyled>{movie.year}</SingleMovieSubTitleStyled>
+          <SingleMovieTitleStyled>{Title}</SingleMovieTitleStyled>
+          <SingleMovieSubTitleStyled>{Year}</SingleMovieSubTitleStyled>
           <SingleMovieSubTitleCapitalizerStyled>
-            {movie.type}
+            {Type}
           </SingleMovieSubTitleCapitalizerStyled>
         </div>
       </Link>

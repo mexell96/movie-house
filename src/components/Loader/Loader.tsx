@@ -1,11 +1,11 @@
 import { LoaderStyled } from "./Loader.style";
 
-import LoaderSvg from "../../img/loader.svg";
+import { ReactComponent as LoaderSvg } from "../../img/loader.svg";
 
 const Loader = () => {
   return (
     <LoaderStyled>
-      <img src={LoaderSvg} alt="loader" />
+      <LoaderSvg />
     </LoaderStyled>
   );
 };

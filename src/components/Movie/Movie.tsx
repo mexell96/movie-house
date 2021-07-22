@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
+import { History } from "history";
 
 import {
   MovieContentModalStyled,
@@ -12,10 +13,36 @@ import {
   MovieImgStyled,
 } from "./Movie.style";
 
-import { noPicture } from "../../consts";
 import { Loader } from "..";
 import { fetchMovie } from "../../redux/actions";
-import { RootState } from "../../redux/rootReducer";
+import { getPicture } from "../../utils";
+
+type MaterialUIStyleType = {
+  paper: string;
+};
+
+const body = (
+  { Poster, Title, Year, Plot }: MovieType,
+  history: History<unknown>,
+  classes: MaterialUIStyleType
+) => {
+  return (
+    <div className={classes.paper}>
+      <MovieContentModalStyled>
+        <MovieImgStyled src={getPicture(Poster)} alt={Title} />
+        <MovieContentModalAboutStyled>
+          <MovieContentModalTitleStyled>
+            {Title}({Year})
+          </MovieContentModalTitleStyled>
+          <MovieTaglineStyled>{Plot}</MovieTaglineStyled>
+        </MovieContentModalAboutStyled>
+      </MovieContentModalStyled>
+      <Button onClick={() => history.goBack()} variant="contained">
+        Go back
+      </Button>
+    </div>
+  );
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,63 +62,32 @@ const Movie = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
   const loading = useSelector(
-    ({ appReducer: { loading } }: RootState) => loading
+    ({ appReducer: { loading } }: RootStateType) => loading
   );
-  const resultMovie = useSelector(({ resultMovie }: any) => resultMovie);
+  const resultsMovie = useSelector(
+    ({ resultsMovie }: RootStateType) => resultsMovie
+  );
   const history = useHistory();
-  const [picture, setPicture] = useState("");
-  const [movie, setMovie] = useState({
-    Poster: "",
-    Title: "",
-    Year: "",
-    Plot: "",
-  });
+  const [movie, setMovie] = useState<MovieType | null>(null);
 
   useEffect(() => {
-    if (id in resultMovie) {
-      for (let key of Object.keys(resultMovie)) {
-        if (key === id) {
-          setMovie(resultMovie[key]);
-        }
-      }
+    if (resultsMovie[id]) {
+      setMovie(resultsMovie[id]);
     } else {
       dispatch(fetchMovie(id));
     }
   }, [id]);
 
   useEffect(() => {
-    for (let key of Object.keys(resultMovie)) {
-      if (key === id) {
-        setMovie(resultMovie[key]);
-      }
+    if (resultsMovie[id]) {
+      setMovie(resultsMovie[id]);
     }
-  }, [resultMovie]);
-
-  useEffect(() => {
-    movie.Poster === "N/A" ? setPicture(noPicture) : setPicture(movie.Poster);
-  }, [movie]);
-
-  const body = (
-    <div className={classes.paper}>
-      <MovieContentModalStyled>
-        <MovieImgStyled src={picture} alt={movie.Title} />
-        <MovieContentModalAboutStyled>
-          <MovieContentModalTitleStyled>
-            {movie.Title}({movie.Year})
-          </MovieContentModalTitleStyled>
-          <MovieTaglineStyled>{movie.Plot}</MovieTaglineStyled>
-        </MovieContentModalAboutStyled>
-      </MovieContentModalStyled>
-      <Button onClick={() => history.goBack()} variant="contained">
-        Go back
-      </Button>
-    </div>
-  );
+  }, [resultsMovie]);
 
   return (
     <>
       {loading && <Loader />}
-      {!loading && movie && body}
+      {!loading && movie && body(movie, history, classes)}
     </>
   );
 };

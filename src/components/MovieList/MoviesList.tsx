@@ -11,20 +11,20 @@ import { fetchMovies } from "../../redux/actions";
 const MoviesList = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const urlReducer = useSelector(({ urlReducer }: any) => urlReducer);
-  const resultsMovies = useSelector(({ resultsMovies }: any) => resultsMovies);
-  const loading = useSelector(({ appReducer: { loading } }: any) => loading);
-  const [movies, setMovies] = useState([]);
+  const urlReducer = useSelector(({ urlReducer }: RootStateType) => urlReducer);
+  const resultsMovies = useSelector(
+    ({ resultsMovies }: RootStateType) => resultsMovies
+  );
+
+  const loading = useSelector(
+    ({ appReducer: { loading } }: RootStateType) => loading
+  );
+  const [movies, setMovies] = useState<MovieType[]>([]);
 
   useEffect(() => {
-    if (urlReducer.input && urlReducer.page) {
-      if (urlReducer.key in resultsMovies) {
-        for (let key of Object.keys(resultsMovies)) {
-          if (key === urlReducer.key) {
-            const arrayMovies = resultsMovies[key];
-            setMovies(arrayMovies.movies);
-          }
-        }
+    if (urlReducer.input) {
+      if (resultsMovies[urlReducer.key]) {
+        setMovies(resultsMovies[urlReducer.key].movies);
       } else {
         dispatch(fetchMovies(urlReducer));
       }
@@ -32,36 +32,29 @@ const MoviesList = () => {
   }, [urlReducer]);
 
   useEffect(() => {
-    for (let key of Object.keys(resultsMovies)) {
-      const arrayMovies = resultsMovies[key];
-      setMovies(arrayMovies.movies);
+    if (resultsMovies[urlReducer.key]) {
+      setMovies(resultsMovies[urlReducer.key].movies);
     }
   }, [resultsMovies]);
-
-  const singleMovie = (movie: any) => (
-    <SingleMovie
-      imdbID={movie.imdbID}
-      title={movie.Title}
-      poster={movie.Poster}
-      plot={movie.Plot}
-      year={movie.Year}
-      type={movie.Type}
-      key={movie.imdbID}
-    />
-  );
-
-  const moviesBlock = () => {
-    return <>{movies.map((movie) => singleMovie(movie))}</>;
-  };
-  const moviesNotFound = <h2>No Movies Found</h2>;
-  const InvalidRequest = <h2>Error: "Invalid request"</h2>;
 
   return (
     <MovieListTrendingStyled>
       {loading && <Loader />}
-      {!loading && movies && moviesBlock()}
-      {!loading && !movies && urlReducer.input && moviesNotFound}
-      {!loading && location.search && !urlReducer.input && InvalidRequest}
+      {!loading &&
+        movies?.length &&
+        movies.map(({ imdbID, Title, Poster, Year, Type }) => (
+          <SingleMovie
+            imdbID={imdbID}
+            Title={Title}
+            Poster={Poster}
+            Year={Year}
+            Type={Type}
+          />
+        ))}
+      {!loading && !movies && urlReducer.input && <h2>No Movies Found</h2>}
+      {!loading && location.search && !urlReducer.input && (
+        <h2>Error: "Invalid request"</h2>
+      )}
     </MovieListTrendingStyled>
   );
 };

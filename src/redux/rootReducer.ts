@@ -3,16 +3,14 @@ import { resultsMovies } from "./resultsMovies";
 import { previousSearches } from "./previousSearches";
 import { appReducer } from "./appReducer";
 import { urlReducer } from "./urlReducer";
-import { resultMovie } from "./resultMovie";
+import { resultsMovie } from "./resultsMovie";
 import { tabsReducer } from "./tabsReducer";
 
 export const rootReducer = combineReducers({
+  appReducer,
   previousSearches,
   resultsMovies,
-  appReducer,
   urlReducer,
-  resultMovie,
+  resultsMovie,
   tabsReducer,
 });
-
-export type RootState = ReturnType<typeof rootReducer>;

@@ -6,7 +6,7 @@ import logger from "redux-logger";
 import thunk from "redux-thunk";
 import createSagaMiddleware from "redux-saga";
 
-import { GlobalStyles } from "./GlobalStyles";
+import { Styles } from "./styles";
 
 import { AppRouter } from "./AppRouter";
 
@@ -34,7 +34,7 @@ const store = createStore(rootReducer, compose(...middleware));
 
 const app = (
   <Provider store={store}>
-    <GlobalStyles />
+    <Styles />
     <AppRouter />
   </Provider>
 );
