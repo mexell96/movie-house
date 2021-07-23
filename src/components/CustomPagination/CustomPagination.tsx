@@ -2,23 +2,27 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { setUrl } from "../../redux/actions";
-import { MOVIES_NUMBER_ON_ONE_PAGE } from "../../consts";
+import { MOVIES_NUMBER_ON_ONE_PAGE, PORTION_OF_PAGES } from "../../consts";
 import { uniqueKey } from "../../utils";
 import { Pagination } from "./Pagination";
 
 const CustomPagination = () => {
   const dispatch = useDispatch();
-  const resultsMovies = useSelector(({ resultsMovies }) => resultsMovies);
-  const urlReducer = useSelector(({ urlReducer }) => urlReducer);
-  const loading = useSelector(({ appReducer: { loading } }) => loading);
+  const resultsMovies = useSelector(
+    ({ resultsMovies }: RootStateType) => resultsMovies
+  );
+  const urlReducer = useSelector(({ urlReducer }: RootStateType) => urlReducer);
+  const loading = useSelector(
+    ({ appReducer: { loading } }: RootStateType) => loading
+  );
   const [numberOfPages, setNumberOfPages] = useState(0);
 
-  const handleChange = ({ event, page }) => {
+  const handleChange = (currentPage: number) => {
     dispatch(
       setUrl({
         input: urlReducer.input,
-        page: page,
-        key: uniqueKey(urlReducer.input, page),
+        page: currentPage,
+        key: uniqueKey(urlReducer.input, currentPage),
       })
     );
     window.scroll(0, 0);
@@ -33,11 +37,12 @@ const CustomPagination = () => {
   return (
     <>
       {loading && null}
-      {!loading && resultsMovies && (
+      {!loading && urlReducer.input && resultsMovies && (
         <Pagination
-          onChange={handleChange}
+          handleChange={handleChange}
           count={Math.ceil(numberOfPages / MOVIES_NUMBER_ON_ONE_PAGE)}
-          page={urlReducer.page}
+          currentPage={urlReducer.page}
+          portionOfPages={PORTION_OF_PAGES}
         />
       )}
     </>

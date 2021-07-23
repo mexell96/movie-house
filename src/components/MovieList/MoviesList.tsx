@@ -41,7 +41,7 @@ const MoviesList = () => {
     <MovieListTrendingStyled>
       {loading && <Loader />}
       {!loading &&
-        movies?.length &&
+        movies?.length > 0 &&
         movies.map(({ imdbID, Title, Poster, Year, Type }) => (
           <SingleMovie
             imdbID={imdbID}
