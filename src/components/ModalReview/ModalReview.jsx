@@ -57,7 +57,6 @@ const ModalReview = ({ showModal, setShowModal }) => {
                   }, 100);
                 }}>
                 {(props) => {
-                  // console.log(props, "props rating");
                   return (
                     <form onSubmit={props.handleSubmit}>
                       <TextField
@@ -90,16 +89,6 @@ const ModalReview = ({ showModal, setShowModal }) => {
                         }
                         helperText={props.touched.review && props.errors.review}
                       />
-                      {/* <Rating
-                        id="rating"
-                        name="rating"
-                        type="radio"
-                        onChange={props.handleChange}
-                        onBlur={props.handleBlur}
-                        value={props.values.rating}
-                        rating={rating}
-                        setRating={setRating}
-                      /> */}
                       <Field name="rating" component={Rating} />
                       <ModalReviewButtonSubmitStyled type="submit">
                         Submit
