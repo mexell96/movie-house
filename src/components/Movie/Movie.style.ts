@@ -51,3 +51,8 @@ export const MovieTaglineStyled = styled.i`
 export const MovieImgStyled = styled.img`
   height: inherit;
 `;
+
+export const MovieButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

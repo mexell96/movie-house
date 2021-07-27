@@ -11,9 +11,10 @@ import {
   MovieContentModalTitleStyled,
   MovieTaglineStyled,
   MovieImgStyled,
+  MovieButtonsWrapper,
 } from "./Movie.style";
 
-import { Loader } from "..";
+import { Loader, ModalReview } from "..";
 import { fetchMovie } from "../../redux/actions";
 import { getPicture } from "../../utils";
 
@@ -24,7 +25,9 @@ type MaterialUIStyleType = {
 const body = (
   { Poster, Title, Year, Plot }: MovieType,
   history: History<unknown>,
-  classes: MaterialUIStyleType
+  classes: MaterialUIStyleType,
+  showModal: boolean,
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   return (
     <div className={classes.paper}>
@@ -37,9 +40,17 @@ const body = (
           <MovieTaglineStyled>{Plot}</MovieTaglineStyled>
         </MovieContentModalAboutStyled>
       </MovieContentModalStyled>
-      <Button onClick={() => history.goBack()} variant="contained">
-        Go back
-      </Button>
+      <MovieButtonsWrapper>
+        <Button
+          onClick={() => setShowModal((prev) => !prev)}
+          variant="contained">
+          Add review
+        </Button>
+        <Button onClick={() => history.goBack()} variant="contained">
+          Go back
+        </Button>
+      </MovieButtonsWrapper>
+      <ModalReview showModal={showModal} setShowModal={setShowModal} />
     </div>
   );
 };
@@ -69,6 +80,7 @@ const Movie = () => {
   );
   const history = useHistory();
   const [movie, setMovie] = useState<MovieType | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
     if (resultsMovie[id]) {
@@ -87,7 +99,9 @@ const Movie = () => {
   return (
     <>
       {loading && <Loader />}
-      {!loading && movie && body(movie, history, classes)}
+      {!loading &&
+        movie &&
+        body(movie, history, classes, showModal, setShowModal)}
     </>
   );
 };
