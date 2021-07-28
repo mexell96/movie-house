@@ -14,7 +14,7 @@ import {
   MovieButtonsWrapper,
 } from "./Movie.style";
 
-import { Loader, ModalReview } from "..";
+import { Loader, Modal, Review } from "..";
 import { fetchMovie } from "../../redux/actions";
 import { getPicture } from "../../utils";
 
@@ -41,23 +41,24 @@ const body = (
         </MovieContentModalAboutStyled>
       </MovieContentModalStyled>
       <MovieButtonsWrapper>
-        <Button
-          onClick={() => setShowModal((prev) => !prev)}
-          variant="contained">
+        <Button onClick={() => setShowModal(!showModal)} variant="contained">
           Add review
         </Button>
         <Button onClick={() => history.goBack()} variant="contained">
           Go back
         </Button>
       </MovieButtonsWrapper>
-      <ModalReview showModal={showModal} setShowModal={setShowModal} />
+      {showModal && (
+        <Modal setShowModal={setShowModal}>
+          <Review setShowModal={setShowModal} />
+        </Modal>
+      )}
     </div>
   );
 };
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    width: "90%",
     height: "80%",
     backgroundColor: "#39445a",
     border: "1px solid #282c34",

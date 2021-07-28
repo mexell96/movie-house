@@ -7,5 +7,6 @@ export * from "./SearchInput";
 export * from "./SingleMovie";
 export * from "./UrlField";
 export * from "./CustomPagination";
-export * from "./ModalReview";
+export * from "./Modal";
+export * from "./Review";
 export * from "./Rating";
