@@ -1,23 +1,39 @@
 import { useRef } from "react";
+import CancelPresentationIcon from "@material-ui/icons/CancelPresentation";
 
-import { ModalWrapperStyled, ModalStyled } from "./Modal.style";
+import {
+  ModalWrapperStyled,
+  ModalStyled,
+  ReviewHeaderStyled,
+  ReviewHeaderTitleStyled,
+  ReviewButtonCloseStyled,
+} from "./Modal.style";
 
-type PropsType = {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+type ModalPropsType = {
+  close: React.Dispatch<React.SetStateAction<boolean>>;
+  title: string;
   children: JSX.Element;
 };
 
-const Modal: React.FC<PropsType> = ({ setShowModal, children }) => {
+const Modal: React.FC<ModalPropsType> = ({ close, title, children }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeModal = (e: React.SyntheticEvent) => {
     if (modalRef.current === e.target) {
-      setShowModal(false);
+      close(false);
     }
   };
 
   return (
     <ModalWrapperStyled onClick={closeModal} ref={modalRef}>
-      <ModalStyled>{children}</ModalStyled>
+      <ModalStyled>
+        <ReviewHeaderStyled>
+          <ReviewHeaderTitleStyled>{title}</ReviewHeaderTitleStyled>
+          <ReviewButtonCloseStyled onClick={() => close(false)}>
+            <CancelPresentationIcon />
+          </ReviewButtonCloseStyled>
+        </ReviewHeaderStyled>
+        {children}
+      </ModalStyled>
     </ModalWrapperStyled>
   );
 };

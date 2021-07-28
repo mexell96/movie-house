@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 type RatingStarType = {
-  current: boolean;
-  bgColor: number;
+  current?: boolean;
+  positionHover?: number;
 };
 
 export const RatingContainerStyled = styled.div`
@@ -22,15 +22,15 @@ export const RatingStarStyled = styled.div<RatingStarType>`
   cursor: pointer;
   color: ${(props) => {
     if (props.current) {
-      if (props.bgColor === 1) {
+      if (props.positionHover === 1) {
         return "#eb2228";
-      } else if (props.bgColor === 2) {
+      } else if (props.positionHover === 2) {
         return "#fa6837";
-      } else if (props.bgColor === 3) {
+      } else if (props.positionHover === 3) {
         return "#fdae38";
-      } else if (props.bgColor === 4) {
+      } else if (props.positionHover === 4) {
         return "#87d44a";
-      } else if (props.bgColor === 5) {
+      } else if (props.positionHover === 5) {
         return "#2db539";
       }
     } else {

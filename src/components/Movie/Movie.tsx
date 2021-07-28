@@ -41,7 +41,7 @@ const body = (
         </MovieContentModalAboutStyled>
       </MovieContentModalStyled>
       <MovieButtonsWrapper>
-        <Button onClick={() => setShowModal(!showModal)} variant="contained">
+        <Button onClick={() => setShowModal(true)} variant="contained">
           Add review
         </Button>
         <Button onClick={() => history.goBack()} variant="contained">
@@ -49,7 +49,7 @@ const body = (
         </Button>
       </MovieButtonsWrapper>
       {showModal && (
-        <Modal setShowModal={setShowModal}>
+        <Modal close={setShowModal} title="Write a review">
           <Review setShowModal={setShowModal} />
         </Modal>
       )}

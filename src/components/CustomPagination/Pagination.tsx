@@ -5,7 +5,7 @@ import {
   ButtonStyled,
 } from "./Pagination.styled";
 
-type PropsType = {
+type PaginationPropsType = {
   handleChange: any;
   count: number;
   currentPage: number;
@@ -17,7 +17,7 @@ const Pagination = ({
   count,
   currentPage,
   portionOfPages,
-}: PropsType) => {
+}: PaginationPropsType) => {
   const getPreviousPages = (currentPage: number, number: number) => {
     const previousArray = [];
     for (let item = --currentPage; item !== currentPage - number; item--) {

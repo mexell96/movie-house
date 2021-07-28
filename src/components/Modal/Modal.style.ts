@@ -23,3 +23,23 @@ export const ModalStyled = styled.div`
     0px 5px 8px 0px rgb(0 0 0 / 14%), 0px 1px 14px 0px rgb(0 0 0 / 12%);
   padding: 10px;
 `;
+
+export const ReviewHeaderStyled = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const ReviewHeaderTitleStyled = styled.span`
+  font-size: 2vw;
+
+  @media (max-width: 835px) {
+    font-size: 2.5vw;
+  }
+`;
+
+export const ReviewButtonCloseStyled = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+`;

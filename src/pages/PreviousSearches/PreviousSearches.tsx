@@ -4,13 +4,13 @@ import { Tabs, Tab } from "@material-ui/core";
 import { PreviousMovies, PreviousRequests } from ".";
 import { setTab } from "../../redux/actions";
 
-type PropsType = {
+type PreviousSearchesPropsType = {
   children: React.ReactNode;
   value: number;
   index: number;
 };
 
-const TabPanel = ({ children, value, index }: PropsType) => (
+const TabPanel = ({ children, value, index }: PreviousSearchesPropsType) => (
   <div>{value === index && <h1>{children}</h1>}</div>
 );
 
