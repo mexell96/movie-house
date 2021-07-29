@@ -2,6 +2,8 @@ import { Rating } from "..";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import { makeStyles, TextField } from "@material-ui/core";
+import { useParams } from "react-router";
+import { uid } from "uid/secure";
 
 import {
   ReviewContainerStyled,
@@ -22,7 +24,19 @@ type ReviewActionsType = {
   setSubmitting: (isSubmitting: boolean) => void;
 };
 
-const useStyles = makeStyles((theme) => ({
+type ReviewType = {
+  name: string;
+  review: string;
+  rating: string;
+  uid: string;
+  date: number;
+};
+
+type ReviewsType = {
+  [id: string]: ReviewType[];
+};
+
+const useStyles = makeStyles(() => ({
   input: {
     color: "white",
   },
@@ -43,13 +57,36 @@ const initialValues = { name: "", review: "", rating: "" };
 
 const Review = ({ setShowModal }: ReviewPropsType) => {
   const classes = useStyles();
+  const { id } = useParams<{ id: string }>();
 
   const onSubmit = (values: ReviewValuesType, actions: ReviewActionsType) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      actions.setSubmitting(false);
-      setShowModal((prev) => !prev);
-    }, 100);
+    const review: ReviewType = {
+      uid: uid(25),
+      date: Date.now(),
+      ...values,
+    };
+
+    const reviews: ReviewsType = {
+      [id]: [],
+    };
+
+    const reviewsFromLS: string | null = localStorage.getItem("Reviews");
+    const parseReviewsFromLS: ReviewsType | null =
+      reviewsFromLS && JSON.parse(reviewsFromLS);
+
+    if (parseReviewsFromLS && parseReviewsFromLS[id]) {
+      parseReviewsFromLS[id] = [...parseReviewsFromLS[id], review];
+      localStorage.setItem("Reviews", JSON.stringify(parseReviewsFromLS));
+    } else if (parseReviewsFromLS && !parseReviewsFromLS[id]) {
+      parseReviewsFromLS[id] = [review];
+      localStorage.setItem("Reviews", JSON.stringify(parseReviewsFromLS));
+    } else {
+      reviews[id] = [review];
+      localStorage.setItem("Reviews", JSON.stringify(reviews));
+    }
+
+    actions.setSubmitting(false);
+    setShowModal(false);
   };
 
   return (
