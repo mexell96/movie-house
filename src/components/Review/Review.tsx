@@ -12,28 +12,17 @@ import {
 
 type ReviewPropsType = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  dataFromLocalStorage: () => void;
 };
 
 type ReviewValuesType = {
   name: string;
   review: string;
-  rating: string;
+  rating: number;
 };
 
 type ReviewActionsType = {
   setSubmitting: (isSubmitting: boolean) => void;
-};
-
-type ReviewType = {
-  name: string;
-  review: string;
-  rating: string;
-  uid: string;
-  date: number;
-};
-
-type ReviewsType = {
-  [id: string]: ReviewType[];
 };
 
 const useStyles = makeStyles(() => ({
@@ -50,12 +39,12 @@ const validationSchema = Yup.object().shape({
   review: Yup.string()
     .min(10, "Must be 10 characters or more")
     .required("Required"),
-  rating: Yup.string().required("Required"),
+  rating: Yup.number().min(1, "Choose a rating").required("Required"),
 });
 
-const initialValues = { name: "", review: "", rating: "" };
+const initialValues = { name: "", review: "", rating: 0 };
 
-const Review = ({ setShowModal }: ReviewPropsType) => {
+const Review = ({ setShowModal, dataFromLocalStorage }: ReviewPropsType) => {
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
 
@@ -66,27 +55,16 @@ const Review = ({ setShowModal }: ReviewPropsType) => {
       ...values,
     };
 
-    const reviews: ReviewsType = {
-      [id]: [],
-    };
+    const data = JSON.parse(localStorage.getItem("Reviews") || "null"); //---------
+    const reviews: ReviewType[] = (data && data[id]) || []; //----------
 
-    const reviewsFromLS: string | null = localStorage.getItem("Reviews");
-    const parseReviewsFromLS: ReviewsType | null =
-      reviewsFromLS && JSON.parse(reviewsFromLS);
+    reviews.push(review); //---------------
 
-    if (parseReviewsFromLS && parseReviewsFromLS[id]) {
-      parseReviewsFromLS[id] = [...parseReviewsFromLS[id], review];
-      localStorage.setItem("Reviews", JSON.stringify(parseReviewsFromLS));
-    } else if (parseReviewsFromLS && !parseReviewsFromLS[id]) {
-      parseReviewsFromLS[id] = [review];
-      localStorage.setItem("Reviews", JSON.stringify(parseReviewsFromLS));
-    } else {
-      reviews[id] = [review];
-      localStorage.setItem("Reviews", JSON.stringify(reviews));
-    }
+    localStorage.setItem("Reviews", JSON.stringify({ ...data, [id]: reviews })); // -------- убрать в redux
 
     actions.setSubmitting(false);
     setShowModal(false);
+    dataFromLocalStorage();
   };
 
   return (
@@ -96,6 +74,8 @@ const Review = ({ setShowModal }: ReviewPropsType) => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}>
         {(props) => {
+          console.log(props, "777777");
+
           return (
             <form onSubmit={props.handleSubmit}>
               <TextField

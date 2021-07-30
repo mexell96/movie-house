@@ -54,3 +54,15 @@ declare type MoviesResponseType = {
   Search: MovieType[];
   totalResults: string;
 };
+
+declare type ReviewType = {
+  name: string;
+  review: string;
+  rating: number;
+  uid: string;
+  date: number;
+};
+
+declare type ReviewsType = {
+  [id: string]: ReviewType[];
+};

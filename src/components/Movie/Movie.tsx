@@ -12,11 +12,13 @@ import {
   MovieTaglineStyled,
   MovieImgStyled,
   MovieButtonsWrapper,
+  MovieReviewsWrapperStyled,
 } from "./Movie.style";
 
 import { Loader, Modal, Review } from "..";
 import { fetchMovie } from "../../redux/actions";
 import { getPicture } from "../../utils";
+import { ReviewCard } from "..";
 
 type MaterialUIStyleType = {
   paper: string;
@@ -27,7 +29,8 @@ const body = (
   history: History<unknown>,
   classes: MaterialUIStyleType,
   showModal: boolean,
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
+  dataFromLocalStorage: () => void
 ) => {
   return (
     <div className={classes.paper}>
@@ -50,7 +53,10 @@ const body = (
       </MovieButtonsWrapper>
       {showModal && (
         <Modal close={setShowModal} title="Write a review">
-          <Review setShowModal={setShowModal} />
+          <Review
+            setShowModal={setShowModal}
+            dataFromLocalStorage={dataFromLocalStorage}
+          />
         </Modal>
       )}
     </div>
@@ -82,6 +88,7 @@ const Movie = () => {
   const history = useHistory();
   const [movie, setMovie] = useState<MovieType | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [reviews, setReviews] = useState<ReviewType[] | null>(null);
 
   useEffect(() => {
     if (resultsMovie[id]) {
@@ -97,12 +104,40 @@ const Movie = () => {
     }
   }, [resultsMovie]);
 
+  const dataFromLocalStorage = (): void => {
+    const reviewsFromLS: string | null = localStorage.getItem("Reviews");
+    const parseReviewsFromLS: ReviewsType | null =
+      reviewsFromLS && JSON.parse(reviewsFromLS);
+
+    if (parseReviewsFromLS && parseReviewsFromLS[id]) {
+      setReviews(parseReviewsFromLS[id]);
+    }
+  };
+
+  useEffect(() => {
+    dataFromLocalStorage();
+  }, []);
+
   return (
     <>
       {loading && <Loader />}
       {!loading &&
         movie &&
-        body(movie, history, classes, showModal, setShowModal)}
+        body(
+          movie,
+          history,
+          classes,
+          showModal,
+          setShowModal,
+          dataFromLocalStorage
+        )}
+      {reviews && (
+        <MovieReviewsWrapperStyled>
+          {reviews.map((item) => (
+            <ReviewCard review={item} />
+          ))}
+        </MovieReviewsWrapperStyled>
+      )}
     </>
   );
 };

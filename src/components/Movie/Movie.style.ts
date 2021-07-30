@@ -56,3 +56,13 @@ export const MovieButtonsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+export const MovieReviewsWrapperStyled = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  @media (max-width: 835px) {
+    justify-content: center;
+  }
+`;

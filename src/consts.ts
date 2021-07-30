@@ -4,3 +4,4 @@ export const noPicture: string =
   "https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg";
 export const MOVIES_NUMBER_ON_ONE_PAGE: number = 10;
 export const PORTION_OF_PAGES: number = 3;
+export const stars: Number[] = [1, 2, 3, 4, 5];

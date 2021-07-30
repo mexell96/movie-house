@@ -10,3 +10,4 @@ export * from "./CustomPagination";
 export * from "./Modal";
 export * from "./Review";
 export * from "./Rating";
+export * from "./ReviewCard";

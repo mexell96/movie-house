@@ -16,6 +16,8 @@ type RatingType = {
       value: number,
       shouldValidate?: boolean
     ) => void;
+    errors: any;
+    touched: any;
   };
 };
 
@@ -23,11 +25,12 @@ const stars = [1, 2, 3, 4, 5];
 
 const Rating = ({ field, form }: RatingType) => {
   const [hover, setHover] = useState(0);
-  const [error, setError] = useState(false);
+
+  console.log(field, "field");
+  console.log(form?.errors?.rating, "form");
 
   const setValues = () => {
     setHover(Number(field.value));
-    setError(!field.value);
   };
 
   return (
@@ -43,7 +46,9 @@ const Rating = ({ field, form }: RatingType) => {
           </RatingStarStyled>
         ))}
       </RatingContainerStartsStyled>
-      {error && <RatingStarErrorStyled>Choose a rating</RatingStarErrorStyled>}
+      {form?.touched?.rating && (
+        <RatingStarErrorStyled>{form?.errors?.rating}</RatingStarErrorStyled>
+      )}
     </RatingContainerStyled>
   );
 };
