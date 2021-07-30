@@ -13,7 +13,7 @@ type RatingType = {
   form: {
     setFieldValue: (
       field: string,
-      value: any,
+      value: number,
       shouldValidate?: boolean
     ) => void;
   };
@@ -33,17 +33,15 @@ const Rating = ({ field, form }: RatingType) => {
   return (
     <RatingContainerStyled>
       <RatingContainerStartsStyled onMouseLeave={setValues}>
-        {stars.map((star) => {
-          return (
-            <RatingStarStyled
-              current={star <= (hover || field.value)}
-              positionHover={hover || Number(field.value)}
-              onMouseEnter={() => setHover(star)}
-              onClick={() => form.setFieldValue("rating", star)}>
-              <span className="star">&#9733;</span>
-            </RatingStarStyled>
-          );
-        })}
+        {stars.map((star) => (
+          <RatingStarStyled
+            current={star <= (hover || field.value)}
+            positionHover={hover || Number(field.value)}
+            onMouseEnter={() => setHover(star)}
+            onClick={() => form.setFieldValue("rating", star)}>
+            <span className="star">&#9733;</span>
+          </RatingStarStyled>
+        ))}
       </RatingContainerStartsStyled>
       {error && <RatingStarErrorStyled>Choose a rating</RatingStarErrorStyled>}
     </RatingContainerStyled>

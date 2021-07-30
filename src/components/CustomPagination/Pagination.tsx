@@ -6,7 +6,7 @@ import {
 } from "./Pagination.styled";
 
 type PaginationPropsType = {
-  handleChange: any;
+  handleChange: (currentPage: number) => void;
   count: number;
   currentPage: number;
   portionOfPages: number;

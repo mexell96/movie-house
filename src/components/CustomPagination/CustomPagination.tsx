@@ -17,7 +17,7 @@ const CustomPagination = () => {
   );
   const [numberOfPages, setNumberOfPages] = useState(0);
 
-  const handleChange = (currentPage: number) => {
+  const handleChange = (currentPage: number): void => {
     dispatch(
       setUrl({
         input: urlReducer.input,
