@@ -5,6 +5,7 @@ import { appReducer } from "./appReducer";
 import { urlReducer } from "./urlReducer";
 import { resultsMovie } from "./resultsMovie";
 import { tabsReducer } from "./tabsReducer";
+import { reviewsReducer } from "./reviewsReducer";
 
 export const rootReducer = combineReducers({
   appReducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
   urlReducer,
   resultsMovie,
   tabsReducer,
+  reviewsReducer,
 });

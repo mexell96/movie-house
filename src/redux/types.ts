@@ -5,3 +5,4 @@ export const FETCH_MOVIE: string = "FETCH_MOVIE";
 export const SHOW_LOADER: string = "SHOW_LOADER";
 export const HIDE_LOADER: string = "HIDE_LOADER";
 export const SET_TAB: string = "SET_TAB";
+export const SET_REVIEW: string = "SET_REVIEW";

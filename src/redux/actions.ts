@@ -7,6 +7,7 @@ import {
   HIDE_LOADER,
   SHOW_LOADER,
   SET_TAB,
+  SET_REVIEW,
 } from "./types";
 import { Dispatch } from "redux";
 
@@ -60,5 +61,13 @@ export const setTab = (tab: number): TabsPropsType => {
   return {
     type: SET_TAB,
     tab,
+  };
+};
+
+export const setReview = (review: ReviewType, id: string) => {
+  return {
+    type: SET_REVIEW,
+    review,
+    id,
   };
 };

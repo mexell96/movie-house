@@ -9,10 +9,11 @@ import {
   ReviewContainerStyled,
   ReviewButtonSubmitStyled,
 } from "./Review.style";
+import { setReview } from "../../redux/actions";
+import { useDispatch } from "react-redux";
 
 type ReviewPropsType = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  dataFromLocalStorage: () => void;
 };
 
 type ReviewValuesType = {
@@ -44,7 +45,8 @@ const validationSchema = Yup.object().shape({
 
 const initialValues = { name: "", review: "", rating: 0 };
 
-const Review = ({ setShowModal, dataFromLocalStorage }: ReviewPropsType) => {
+const Review = ({ setShowModal }: ReviewPropsType) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
 
@@ -54,17 +56,9 @@ const Review = ({ setShowModal, dataFromLocalStorage }: ReviewPropsType) => {
       date: Date.now(),
       ...values,
     };
-
-    const data = JSON.parse(localStorage.getItem("Reviews") || "null"); //---------
-    const reviews: ReviewType[] = (data && data[id]) || []; //----------
-
-    reviews.push(review); //---------------
-
-    localStorage.setItem("Reviews", JSON.stringify({ ...data, [id]: reviews })); // -------- убрать в redux
-
+    dispatch(setReview(review, id));
     actions.setSubmitting(false);
     setShowModal(false);
-    dataFromLocalStorage();
   };
 
   return (
@@ -74,8 +68,6 @@ const Review = ({ setShowModal, dataFromLocalStorage }: ReviewPropsType) => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}>
         {(props) => {
-          console.log(props, "777777");
-
           return (
             <form onSubmit={props.handleSubmit}>
               <TextField

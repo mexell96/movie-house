@@ -29,8 +29,7 @@ const body = (
   history: History<unknown>,
   classes: MaterialUIStyleType,
   showModal: boolean,
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
-  dataFromLocalStorage: () => void
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   return (
     <div className={classes.paper}>
@@ -53,10 +52,7 @@ const body = (
       </MovieButtonsWrapper>
       {showModal && (
         <Modal close={setShowModal} title="Write a review">
-          <Review
-            setShowModal={setShowModal}
-            dataFromLocalStorage={dataFromLocalStorage}
-          />
+          <Review setShowModal={setShowModal} />
         </Modal>
       )}
     </div>
@@ -85,6 +81,9 @@ const Movie = () => {
   const resultsMovie = useSelector(
     ({ resultsMovie }: RootStateType) => resultsMovie
   );
+  const reviewsReducer = useSelector(
+    ({ reviewsReducer }: RootStateType) => reviewsReducer
+  );
   const history = useHistory();
   const [movie, setMovie] = useState<MovieType | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -104,33 +103,16 @@ const Movie = () => {
     }
   }, [resultsMovie]);
 
-  const dataFromLocalStorage = (): void => {
-    const reviewsFromLS: string | null = localStorage.getItem("Reviews");
-    const parseReviewsFromLS: ReviewsType | null =
-      reviewsFromLS && JSON.parse(reviewsFromLS);
-
-    if (parseReviewsFromLS && parseReviewsFromLS[id]) {
-      setReviews(parseReviewsFromLS[id]);
-    }
-  };
-
   useEffect(() => {
-    dataFromLocalStorage();
-  }, []);
+    setReviews(reviewsReducer[id]);
+  }, [reviewsReducer]);
 
   return (
     <>
       {loading && <Loader />}
       {!loading &&
         movie &&
-        body(
-          movie,
-          history,
-          classes,
-          showModal,
-          setShowModal,
-          dataFromLocalStorage
-        )}
+        body(movie, history, classes, showModal, setShowModal)}
       {reviews && (
         <MovieReviewsWrapperStyled>
           {reviews.map((item) => (

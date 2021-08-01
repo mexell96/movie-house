@@ -16,6 +16,16 @@ declare type SearchInfoType = {
   page: number;
   key: string;
 };
+declare type ReviewType = {
+  name: string;
+  review: string;
+  rating: number;
+  uid: string;
+  date: number;
+};
+declare type ReviewsReducerType = {
+  [key: string]: ReviewType[];
+};
 declare type RootStateType = {
   appReducer: AppReducerType;
   previousSearches: PreviousSearchesType;
@@ -23,6 +33,7 @@ declare type RootStateType = {
   resultsMovies: ResultsMoviesType;
   tabsReducer: TabsType;
   urlReducer: SearchInfoType;
+  reviewsReducer: ReviewsReducerType;
 };
 
 declare type ResultMoviesType = {
@@ -53,16 +64,4 @@ declare type MoviesResponseType = {
   Response: string;
   Search: MovieType[];
   totalResults: string;
-};
-
-declare type ReviewType = {
-  name: string;
-  review: string;
-  rating: number;
-  uid: string;
-  date: number;
-};
-
-declare type ReviewsType = {
-  [id: string]: ReviewType[];
 };
