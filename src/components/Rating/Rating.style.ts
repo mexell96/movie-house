@@ -1,10 +1,5 @@
 import styled from "styled-components";
 
-type RatingStarType = {
-  current?: boolean;
-  positionHover?: number;
-};
-
 export const RatingContainerStyled = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,36 +7,10 @@ export const RatingContainerStyled = styled.div`
   outline: none;
 `;
 
-export const RatingContainerStartsStyled = styled.div`
+export const RatingContainerStarsStyled = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-`;
-
-export const RatingStarStyled = styled.div<RatingStarType>`
-  cursor: pointer;
-  color: ${(props) => {
-    if (props.current) {
-      if (props.positionHover === 1) {
-        return "#eb2228";
-      } else if (props.positionHover === 2) {
-        return "#fa6837";
-      } else if (props.positionHover === 3) {
-        return "#fdae38";
-      } else if (props.positionHover === 4) {
-        return "#87d44a";
-      } else if (props.positionHover === 5) {
-        return "#2db539";
-      }
-    } else {
-      return "#ccc";
-    }
-  }};
-  font-size: 50px;
-
-  @media (max-width: 835px) {
-    font-size: 40px;
-  }
 `;
 
 export const RatingStarErrorStyled = styled.div`

@@ -2,13 +2,13 @@ import {
   ReviewsWindowStyled,
   ReviewsAvatarStyled,
   ReviewsAvatarWrapperStyled,
-  ReviewsRatingStarStyled,
   ReviewsStarsWrapperStyled,
   ReviewsCommentStyled,
   ReviewsInfoWrapperStyled,
 } from "./ReviewCard.style";
 
 import { noPicture, stars } from "../../consts";
+import { Star } from "../index";
 
 type ReviewCardPropsType = { review: ReviewType };
 
@@ -21,15 +21,9 @@ const ReviewCard = ({ review }: ReviewCardPropsType) => {
       <ReviewsInfoWrapperStyled>
         <h2>{review.name}</h2>
         <ReviewsStarsWrapperStyled>
-          {stars.map((star) => {
-            return (
-              <ReviewsRatingStarStyled
-                key={review.rating}
-                rating={star <= review.rating ? review.rating : 0}>
-                <span className="star">&#9733;</span>
-              </ReviewsRatingStarStyled>
-            );
-          })}
+          {stars.map((star) => (
+            <Star star={star} position={review.rating} />
+          ))}
         </ReviewsStarsWrapperStyled>
         <ReviewsCommentStyled>{review.review}</ReviewsCommentStyled>
       </ReviewsInfoWrapperStyled>

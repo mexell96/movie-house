@@ -1,11 +1,5 @@
 import styled from "styled-components";
 
-type RatingStarType = {
-  rating: number;
-};
-
-const colors = ["#ccc", "#eb2228", "#fa6837", "#fdae38", "#87d44a", "#2db539"];
-
 export const ReviewsWindowStyled = styled.div`
   display: flex;
   width: 366px;
@@ -22,22 +16,13 @@ export const ReviewsAvatarWrapperStyled = styled.div`
   margin-right: 10px;
 `;
 
-export const ReviewsInfoWrapperStyled = styled.div``;
-
 export const ReviewsAvatarStyled = styled.img`
   width: 100px;
   height: 100px;
   border-radius: 50%;
 `;
 
-export const ReviewsRatingStarStyled = styled.div<RatingStarType>`
-  color: ${({ rating }) => colors[rating]};
-  font-size: 50px;
-
-  @media (max-width: 835px) {
-    font-size: 40px;
-  }
-`;
+export const ReviewsInfoWrapperStyled = styled.div``;
 
 export const ReviewsStarsWrapperStyled = styled.div`
   display: flex;

@@ -1,10 +1,10 @@
 import {
   RatingContainerStyled,
-  RatingStarStyled,
   RatingStarErrorStyled,
-  RatingContainerStartsStyled,
+  RatingContainerStarsStyled,
 } from "./Rating.style";
 import { useState } from "react";
+import { Star } from "../index";
 
 type RatingType = {
   field: {
@@ -26,26 +26,23 @@ const stars = [1, 2, 3, 4, 5];
 const Rating = ({ field, form }: RatingType) => {
   const [hover, setHover] = useState(0);
 
-  console.log(field, "field");
-  console.log(form?.errors?.rating, "form");
-
   const setValues = () => {
     setHover(Number(field.value));
   };
 
   return (
     <RatingContainerStyled>
-      <RatingContainerStartsStyled onMouseLeave={setValues}>
+      <RatingContainerStarsStyled onMouseLeave={setValues}>
         {stars.map((star) => (
-          <RatingStarStyled
-            current={star <= (hover || field.value)}
-            positionHover={hover || Number(field.value)}
-            onMouseEnter={() => setHover(star)}
-            onClick={() => form.setFieldValue("rating", star)}>
-            <span className="star">&#9733;</span>
-          </RatingStarStyled>
+          <Star
+            star={star}
+            position={hover}
+            setHover={setHover}
+            form={form}
+            pointer
+          />
         ))}
-      </RatingContainerStartsStyled>
+      </RatingContainerStarsStyled>
       {form?.touched?.rating && (
         <RatingStarErrorStyled>{form?.errors?.rating}</RatingStarErrorStyled>
       )}
