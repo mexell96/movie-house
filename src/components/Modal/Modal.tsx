@@ -4,9 +4,9 @@ import CancelPresentationIcon from "@material-ui/icons/CancelPresentation";
 import {
   ModalWrapperStyled,
   ModalStyled,
-  ReviewHeaderStyled,
-  ReviewHeaderTitleStyled,
-  ReviewButtonCloseStyled,
+  ModalHeaderStyled,
+  ModalHeaderTitleStyled,
+  ModalButtonCloseStyled,
 } from "./Modal.style";
 
 type ModalPropsType = {
@@ -26,12 +26,12 @@ const Modal: React.FC<ModalPropsType> = ({ close, title, children }) => {
   return (
     <ModalWrapperStyled onClick={closeModal} ref={modalRef}>
       <ModalStyled>
-        <ReviewHeaderStyled>
-          <ReviewHeaderTitleStyled>{title}</ReviewHeaderTitleStyled>
-          <ReviewButtonCloseStyled onClick={() => close(false)}>
+        <ModalHeaderStyled>
+          <ModalHeaderTitleStyled>{title}</ModalHeaderTitleStyled>
+          <ModalButtonCloseStyled onClick={() => close(false)}>
             <CancelPresentationIcon />
-          </ReviewButtonCloseStyled>
-        </ReviewHeaderStyled>
+          </ModalButtonCloseStyled>
+        </ModalHeaderStyled>
         {children}
       </ModalStyled>
     </ModalWrapperStyled>

@@ -24,12 +24,12 @@ export const ModalStyled = styled.div`
   padding: 10px;
 `;
 
-export const ReviewHeaderStyled = styled.div`
+export const ModalHeaderStyled = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-export const ReviewHeaderTitleStyled = styled.span`
+export const ModalHeaderTitleStyled = styled.span`
   font-size: 2vw;
 
   @media (max-width: 835px) {
@@ -37,7 +37,7 @@ export const ReviewHeaderTitleStyled = styled.span`
   }
 `;
 
-export const ReviewButtonCloseStyled = styled.div`
+export const ModalButtonCloseStyled = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;
