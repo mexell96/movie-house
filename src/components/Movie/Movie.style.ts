@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const MovieContentModalStyled = styled.div`
+export const MovieWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,7 +14,7 @@ export const MovieContentModalStyled = styled.div`
   }
 `;
 
-export const MovieContentModalAboutStyled = styled.div`
+export const MovieAboutStyled = styled.div`
   padding: 10px;
   width: 95%;
   height: 90%;
@@ -31,7 +31,7 @@ export const MovieContentModalAboutStyled = styled.div`
   }
 `;
 
-export const MovieContentModalTitleStyled = styled.span`
+export const MovieTitleStyled = styled.span`
   height: 12%;
   font-size: 5vw;
   display: flex;
@@ -43,7 +43,7 @@ export const MovieContentModalTitleStyled = styled.span`
   }
 `;
 
-export const MovieTaglineStyled = styled.i`
+export const MovieDescriptionStyled = styled.i`
   padding-bottom: 10px;
   align-self: center;
 `;

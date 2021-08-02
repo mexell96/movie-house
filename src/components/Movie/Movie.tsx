@@ -6,19 +6,18 @@ import { Button } from "@material-ui/core";
 import { History } from "history";
 
 import {
-  MovieContentModalStyled,
-  MovieContentModalAboutStyled,
-  MovieContentModalTitleStyled,
-  MovieTaglineStyled,
+  MovieWrapperStyled,
+  MovieAboutStyled,
+  MovieTitleStyled,
+  MovieDescriptionStyled,
   MovieImgStyled,
   MovieButtonsWrapper,
   MovieReviewsWrapperStyled,
 } from "./Movie.style";
 
-import { Loader, Modal, Review } from "..";
+import { Loader, Modal, Review, ReviewCard } from "..";
 import { fetchMovie } from "../../redux/actions";
 import { getPicture } from "../../utils";
-import { ReviewCard } from "..";
 
 type MaterialUIStyleType = {
   paper: string;
@@ -33,15 +32,15 @@ const body = (
 ) => {
   return (
     <div className={classes.paper}>
-      <MovieContentModalStyled>
+      <MovieWrapperStyled>
         <MovieImgStyled src={getPicture(Poster)} alt={Title} />
-        <MovieContentModalAboutStyled>
-          <MovieContentModalTitleStyled>
+        <MovieAboutStyled>
+          <MovieTitleStyled>
             {Title}({Year})
-          </MovieContentModalTitleStyled>
-          <MovieTaglineStyled>{Plot}</MovieTaglineStyled>
-        </MovieContentModalAboutStyled>
-      </MovieContentModalStyled>
+          </MovieTitleStyled>
+          <MovieDescriptionStyled>{Plot}</MovieDescriptionStyled>
+        </MovieAboutStyled>
+      </MovieWrapperStyled>
       <MovieButtonsWrapper>
         <Button onClick={() => setShowModal(true)} variant="contained">
           Add review
@@ -98,9 +97,7 @@ const Movie = () => {
   }, [id]);
 
   useEffect(() => {
-    if (resultsMovie[id]) {
-      setMovie(resultsMovie[id]);
-    }
+    resultsMovie[id] && setMovie(resultsMovie[id]);
   }, [resultsMovie]);
 
   useEffect(() => {
@@ -116,7 +113,7 @@ const Movie = () => {
       {reviews && (
         <MovieReviewsWrapperStyled>
           {reviews.map((item) => (
-            <ReviewCard review={item} />
+            <ReviewCard key={item.uid} review={item} />
           ))}
         </MovieReviewsWrapperStyled>
       )}

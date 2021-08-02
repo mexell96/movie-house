@@ -10,11 +10,14 @@ import {
 import { stars } from "../../consts";
 import { Star } from "../index";
 
-type ReviewCardPropsType = { review: ReviewType };
+type ReviewCardPropsType = {
+  review: ReviewType;
+  key: string;
+};
 
-const ReviewCard = ({ review }: ReviewCardPropsType) => {
+const ReviewCard = ({ key, review }: ReviewCardPropsType) => {
   return (
-    <ReviewsWindowStyled>
+    <ReviewsWindowStyled key={key}>
       <ReviewsAvatarWrapperStyled>
         <ReviewsAvatarStyled src={review.avatar} alt={review.name} />
       </ReviewsAvatarWrapperStyled>
