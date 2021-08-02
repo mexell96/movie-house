@@ -7,7 +7,7 @@ import {
   ReviewsInfoWrapperStyled,
 } from "./ReviewCard.style";
 
-import { noPicture, stars } from "../../consts";
+import { stars } from "../../consts";
 import { Star } from "../index";
 
 type ReviewCardPropsType = { review: ReviewType };
@@ -16,7 +16,7 @@ const ReviewCard = ({ review }: ReviewCardPropsType) => {
   return (
     <ReviewsWindowStyled>
       <ReviewsAvatarWrapperStyled>
-        <ReviewsAvatarStyled src={noPicture} alt={review.name} />
+        <ReviewsAvatarStyled src={review.avatar} alt={review.name} />
       </ReviewsAvatarWrapperStyled>
       <ReviewsInfoWrapperStyled>
         <h2>{review.name}</h2>

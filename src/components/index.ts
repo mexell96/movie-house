@@ -12,3 +12,4 @@ export * from "./Review";
 export * from "./Rating";
 export * from "./ReviewCard";
 export * from "./Star";
+export * from "./Avatar";

@@ -6,24 +6,9 @@ import {
 import { useState } from "react";
 import { Star } from "../index";
 
-type RatingType = {
-  field: {
-    value: string;
-  };
-  form: {
-    setFieldValue: (
-      field: string,
-      value: number,
-      shouldValidate?: boolean
-    ) => void;
-    errors: any;
-    touched: any;
-  };
-};
-
 const stars = [1, 2, 3, 4, 5];
 
-const Rating = ({ field, form }: RatingType) => {
+const Rating = ({ field, form }: FormikPropsType) => {
   const [hover, setHover] = useState(0);
 
   const setValues = () => {

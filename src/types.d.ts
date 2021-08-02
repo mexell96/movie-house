@@ -22,6 +22,7 @@ declare type ReviewType = {
   rating: number;
   uid: string;
   date: number;
+  avatar: string;
 };
 declare type ReviewsReducerType = {
   [key: string]: ReviewType[];
@@ -64,4 +65,26 @@ declare type MoviesResponseType = {
   Response: string;
   Search: MovieType[];
   totalResults: string;
+};
+
+declare type ReviewInfoCheckerType = {
+  name: boolean;
+  review: boolean;
+  rating: boolean;
+  avatar: boolean;
+};
+
+declare type FormikPropsType = {
+  field: {
+    value: string;
+  };
+  form: {
+    setFieldValue: (
+      field: string,
+      value: string | number,
+      shouldValidate?: boolean
+    ) => void;
+    errors: ReviewInfoType;
+    touched: ReviewInfoCheckerType;
+  };
 };

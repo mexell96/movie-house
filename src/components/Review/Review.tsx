@@ -1,29 +1,31 @@
-import { Rating } from "..";
+import { Avatar, Rating } from "..";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import { makeStyles, TextField } from "@material-ui/core";
 import { useParams } from "react-router";
 import { uid } from "uid/secure";
+import { useDispatch } from "react-redux";
 
 import {
   ReviewContainerStyled,
   ReviewButtonSubmitStyled,
 } from "./Review.style";
+
 import { setReview } from "../../redux/actions";
-import { useDispatch } from "react-redux";
 
 type ReviewPropsType = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-type ReviewValuesType = {
+type ReviewActionsType = {
+  setSubmitting: (isSubmitting: boolean) => void;
+};
+
+type ReviewInfoType = {
   name: string;
   review: string;
   rating: number;
-};
-
-type ReviewActionsType = {
-  setSubmitting: (isSubmitting: boolean) => void;
+  avatar: string;
 };
 
 const useStyles = makeStyles(() => ({
@@ -41,16 +43,17 @@ const validationSchema = Yup.object().shape({
     .min(10, "Must be 10 characters or more")
     .required("Required"),
   rating: Yup.number().min(1, "Choose a rating").required("Required"),
+  avatar: Yup.string().required("Required"),
 });
 
-const initialValues = { name: "", review: "", rating: 0 };
+const initialValues = { name: "", review: "", rating: 0, avatar: "" };
 
 const Review = ({ setShowModal }: ReviewPropsType) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
 
-  const onSubmit = (values: ReviewValuesType, actions: ReviewActionsType) => {
+  const onSubmit = (values: ReviewInfoType, actions: ReviewActionsType) => {
     const review: ReviewType = {
       uid: uid(25),
       date: Date.now(),
@@ -105,6 +108,7 @@ const Review = ({ setShowModal }: ReviewPropsType) => {
                 }}
               />
               <Field name="rating" component={Rating} />
+              <Field name="avatar" component={Avatar} />
               <ReviewButtonSubmitStyled type="submit">
                 Submit
               </ReviewButtonSubmitStyled>
