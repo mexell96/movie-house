@@ -1,8 +1,8 @@
 import {
-  WrapperStyled,
-  UlStyled,
-  LIStyled,
-  ButtonStyled,
+  PaginationWrapperStyled,
+  PaginationUlStyled,
+  PaginationLIStyled,
+  PaginationButtonStyled,
 } from "./Pagination.styled";
 
 type PaginationPropsType = {
@@ -35,7 +35,6 @@ const Pagination = ({
         nextArray.push(item);
       }
     }
-
     return nextArray;
   };
 
@@ -43,77 +42,75 @@ const Pagination = ({
   const next = getNextPages(currentPage, portionOfPages);
 
   return (
-    <WrapperStyled>
-      <UlStyled>
-        <LIStyled>
-          <ButtonStyled
+    <PaginationWrapperStyled>
+      <PaginationUlStyled>
+        <PaginationLIStyled>
+          <PaginationButtonStyled
             disabled={currentPage === 1}
             onClick={() => {
               handleChange(--currentPage);
             }}>
             &lt;
-          </ButtonStyled>
-        </LIStyled>
+          </PaginationButtonStyled>
+        </PaginationLIStyled>
         {currentPage > ++portionOfPages && (
           <>
-            <ButtonStyled
+            <PaginationButtonStyled
               onClick={() => handleChange(1)}
               selected={currentPage === 1}>
               1
-            </ButtonStyled>
-            <LIStyled>...</LIStyled>
+            </PaginationButtonStyled>
+            <PaginationLIStyled>...</PaginationLIStyled>
           </>
         )}
-        {previous.map((page) => {
-          return (
-            <LIStyled>
-              <ButtonStyled
-                onClick={() => handleChange(page)}
-                selected={currentPage === page}>
-                {page}
-              </ButtonStyled>
-            </LIStyled>
-          );
-        })}
-        <LIStyled>
-          <ButtonStyled onClick={() => handleChange(currentPage)} selected>
+        {previous.map((page) => (
+          <PaginationLIStyled key={page}>
+            <PaginationButtonStyled
+              onClick={() => handleChange(page)}
+              selected={currentPage === page}>
+              {page}
+            </PaginationButtonStyled>
+          </PaginationLIStyled>
+        ))}
+        <PaginationLIStyled>
+          <PaginationButtonStyled
+            onClick={() => handleChange(currentPage)}
+            selected>
             {currentPage}
-          </ButtonStyled>
-        </LIStyled>
-        {next.map((page) => {
-          return (
-            <LIStyled>
-              <ButtonStyled
-                onClick={() => handleChange(page)}
-                selected={currentPage === page}>
-                {page}
-              </ButtonStyled>
-            </LIStyled>
-          );
-        })}
+          </PaginationButtonStyled>
+        </PaginationLIStyled>
+        {next.map((page) => (
+          <PaginationLIStyled key={page}>
+            <PaginationButtonStyled
+              onClick={() => handleChange(page)}
+              selected={currentPage === page}>
+              {page}
+            </PaginationButtonStyled>
+          </PaginationLIStyled>
+        ))}
         {currentPage <= count - portionOfPages && (
           <>
-            <LIStyled>...</LIStyled>
-            <LIStyled>
-              <ButtonStyled
+            <PaginationLIStyled>...</PaginationLIStyled>
+            <PaginationLIStyled>
+              <PaginationButtonStyled
                 onClick={() => handleChange(count)}
                 selected={currentPage === count}>
                 {count}
-              </ButtonStyled>
-            </LIStyled>
+              </PaginationButtonStyled>
+            </PaginationLIStyled>
           </>
         )}
-        <LIStyled>
-          <ButtonStyled
+        <PaginationLIStyled>
+          <PaginationButtonStyled
             disabled={currentPage === count}
             onClick={() => {
               handleChange(++currentPage);
             }}>
             &gt;
-          </ButtonStyled>
-        </LIStyled>
-      </UlStyled>
-    </WrapperStyled>
+          </PaginationButtonStyled>
+        </PaginationLIStyled>
+      </PaginationUlStyled>
+    </PaginationWrapperStyled>
   );
 };
 

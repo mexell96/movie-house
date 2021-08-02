@@ -1,27 +1,27 @@
 import styled from "styled-components";
 
-export const WrapperStyled = styled.div`
+export const PaginationWrapperStyled = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-export const UlStyled = styled.ul`
+export const PaginationUlStyled = styled.ul`
   padding: 0;
   background: inherit;
 `;
 
-export const LIStyled = styled.li`
+export const PaginationLIStyled = styled.li`
   display: inline;
   list-style-type: none;
 `;
 
-type ButtonType = {
+type PaginationButtonType = {
   selected?: boolean;
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export const ButtonStyled = styled.button<ButtonType>`
+export const PaginationButtonStyled = styled.button<PaginationButtonType>`
   outline: none;
   height: 32px;
   margin: 0 3px;
