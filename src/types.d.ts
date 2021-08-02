@@ -43,6 +43,7 @@ declare type ResultMoviesType = {
 };
 
 declare type MovieType = {
+  key?: string;
   Title: string;
   Year: string;
   imdbID: string;

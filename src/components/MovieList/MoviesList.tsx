@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 
-import { MovieListTrendingStyled } from "./MovieList.style";
+import { MovieListStyled } from "./MovieList.style";
 
 import { Loader, SingleMovie } from "..";
-
 import { fetchMovies } from "../../redux/actions";
 
 const MoviesList = () => {
@@ -15,7 +14,6 @@ const MoviesList = () => {
   const resultsMovies = useSelector(
     ({ resultsMovies }: RootStateType) => resultsMovies
   );
-
   const loading = useSelector(
     ({ appReducer: { loading } }: RootStateType) => loading
   );
@@ -38,12 +36,13 @@ const MoviesList = () => {
   }, [resultsMovies]);
 
   return (
-    <MovieListTrendingStyled>
+    <MovieListStyled>
       {loading && <Loader />}
       {!loading &&
         movies?.length > 0 &&
         movies.map(({ imdbID, Title, Poster, Year, Type }) => (
           <SingleMovie
+            key={imdbID}
             imdbID={imdbID}
             Title={Title}
             Poster={Poster}
@@ -55,7 +54,7 @@ const MoviesList = () => {
       {!loading && location.search && !urlReducer.input && (
         <h2>Error: "Invalid request"</h2>
       )}
-    </MovieListTrendingStyled>
+    </MovieListStyled>
   );
 };
 
