@@ -22,13 +22,6 @@ type ReviewActionsType = {
   setSubmitting: (isSubmitting: boolean) => void;
 };
 
-type ReviewInfoType = {
-  name: string;
-  review: string;
-  rating: number;
-  avatar: string;
-};
-
 const useStyles = makeStyles(() => ({
   input: {
     color: "white",

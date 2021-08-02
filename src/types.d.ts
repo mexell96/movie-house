@@ -74,6 +74,13 @@ declare type ReviewInfoCheckerType = {
   avatar: boolean;
 };
 
+declare type ReviewInfoType = {
+  name: string;
+  review: string;
+  rating: number;
+  avatar: string;
+};
+
 declare type FormikPropsType = {
   field: {
     value: string;
@@ -86,5 +93,6 @@ declare type FormikPropsType = {
     ) => void;
     errors: ReviewInfoType;
     touched: ReviewInfoCheckerType;
+    values: ReviewInfoType;
   };
 };

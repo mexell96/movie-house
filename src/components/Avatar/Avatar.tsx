@@ -1,19 +1,23 @@
-import { Button } from "@material-ui/core";
-
-import { AvatarErrorStyled } from "./Avatar.styled";
+import { AvatarErrorStyled, AvatarButtonStyled } from "./Avatar.styled";
 
 const Avatar = ({ form }: FormikPropsType) => {
   const onFileChange = (input: any) => {
     const file = input.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => form.setFieldValue("avatar", reader.result as string);
-    reader.onerror = () => console.log(reader.error, "error");
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () =>
+        form.setFieldValue("avatar", reader.result as string);
+      reader.onerror = () => console.log(reader.error, "error");
+    }
   };
 
   return (
     <div>
-      <Button variant="contained" component="label">
+      <AvatarButtonStyled
+        variant="contained"
+        component="label"
+        success={form.values.avatar}>
         Upload avatar
         <input
           accept="image/*"
@@ -23,7 +27,7 @@ const Avatar = ({ form }: FormikPropsType) => {
           hidden
           onChange={onFileChange}
         />
-      </Button>
+      </AvatarButtonStyled>
       {form?.touched?.avatar && (
         <AvatarErrorStyled>{form?.errors?.avatar}</AvatarErrorStyled>
       )}

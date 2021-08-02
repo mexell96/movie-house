@@ -1,4 +1,15 @@
 import styled from "styled-components";
+import { Button } from "@material-ui/core";
+
+type AvatarButtonType = {
+  success: string;
+  component: string;
+};
+
+export const AvatarButtonStyled = styled(Button)<AvatarButtonType>`
+  background: ${({ success }) =>
+    success ? "lightGreen" : "contained"} !important;
+`;
 
 export const AvatarErrorStyled = styled.div`
   color: #f44336;
