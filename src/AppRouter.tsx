@@ -1,13 +1,21 @@
+import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Container } from "@material-ui/core";
 
 import { AppRouterStyled } from "./AppRouter.style";
 
 import { Home, Movies, PreviousSearches } from "./pages";
-
 import { Header, Movie, Navbar } from "./components";
+import { setReview } from "./redux/actions";
 
 const AppRouter = () => {
+  const dispatch = useDispatch();
+
+  const reviewsLS = JSON.parse(localStorage.getItem("Reviews") || "null");
+  for (const id in reviewsLS) {
+    dispatch(setReview(reviewsLS[id], id));
+  }
+
   return (
     <Router>
       <Header />

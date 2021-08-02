@@ -64,10 +64,10 @@ export const setTab = (tab: number): TabsPropsType => {
   };
 };
 
-export const setReview = (review: ReviewType, id: string) => {
+export const setReview = (reviews: ReviewType[], id: string) => {
   return {
     type: SET_REVIEW,
-    review,
+    reviews,
     id,
   };
 };

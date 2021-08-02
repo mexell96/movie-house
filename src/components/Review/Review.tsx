@@ -4,7 +4,8 @@ import * as Yup from "yup";
 import { makeStyles, TextField } from "@material-ui/core";
 import { useParams } from "react-router";
 import { uid } from "uid/secure";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 import {
   ReviewContainerStyled,
@@ -50,6 +51,9 @@ const initialValues = { name: "", review: "", rating: 0, avatar: "" };
 
 const Review = ({ setShowModal }: ReviewPropsType) => {
   const dispatch = useDispatch();
+  const reviewsReducer = useSelector(
+    ({ reviewsReducer }: RootStateType) => reviewsReducer
+  );
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
 
@@ -59,10 +63,18 @@ const Review = ({ setShowModal }: ReviewPropsType) => {
       date: Date.now(),
       ...values,
     };
-    dispatch(setReview(review, id));
+
+    const reviews: ReviewType[] = (reviewsReducer && reviewsReducer[id]) || [];
+    reviews.push(review);
+
+    dispatch(setReview(reviews, id));
     actions.setSubmitting(false);
     setShowModal(false);
   };
+
+  useEffect(() => {
+    localStorage.setItem("Reviews", JSON.stringify(reviewsReducer));
+  }, [reviewsReducer]);
 
   return (
     <ReviewContainerStyled>
