@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const RatingContainerStyled = styled.div`
+export const RatingWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
   border: none;
   outline: none;
 `;
 
-export const RatingContainerStarsStyled = styled.div`
+export const RatingWrapperStarsStyled = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;

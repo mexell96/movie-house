@@ -1,12 +1,13 @@
-import {
-  RatingContainerStyled,
-  RatingStarErrorStyled,
-  RatingContainerStarsStyled,
-} from "./Rating.style";
 import { useState } from "react";
-import { Star } from "../index";
 
-const stars = [1, 2, 3, 4, 5];
+import {
+  RatingWrapperStyled,
+  RatingStarErrorStyled,
+  RatingWrapperStarsStyled,
+} from "./Rating.style";
+
+import { Star } from "../index";
+import { stars } from "../../consts";
 
 const Rating = ({ field, form }: FormikPropsType) => {
   const [hover, setHover] = useState(0);
@@ -16,8 +17,8 @@ const Rating = ({ field, form }: FormikPropsType) => {
   };
 
   return (
-    <RatingContainerStyled>
-      <RatingContainerStarsStyled onMouseLeave={setValues}>
+    <RatingWrapperStyled>
+      <RatingWrapperStarsStyled onMouseLeave={setValues}>
         {stars.map((star) => (
           <Star
             star={star}
@@ -27,11 +28,11 @@ const Rating = ({ field, form }: FormikPropsType) => {
             pointer
           />
         ))}
-      </RatingContainerStarsStyled>
+      </RatingWrapperStarsStyled>
       {form?.touched?.rating && (
         <RatingStarErrorStyled>{form?.errors?.rating}</RatingStarErrorStyled>
       )}
-    </RatingContainerStyled>
+    </RatingWrapperStyled>
   );
 };
 
