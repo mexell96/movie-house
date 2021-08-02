@@ -1,6 +1,6 @@
 import { AvatarErrorStyled, AvatarButtonStyled } from "./Avatar.styled";
 
-const Avatar: React.FC<FormikPropsType> = ({ form }) => {
+const Avatar = ({ form }: FormikPropsType) => {
   const onFileChange = (input: any) => {
     const file = input.target.files[0];
     if (file) {

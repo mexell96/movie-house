@@ -15,7 +15,7 @@ type ModalPropsType = {
   children: JSX.Element;
 };
 
-const Modal: React.FC<ModalPropsType> = ({ close, title, children }) => {
+const Modal = ({ close, title, children }: ModalPropsType) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeModal = (e: React.SyntheticEvent) => {
     if (modalRef.current === e.target) {
