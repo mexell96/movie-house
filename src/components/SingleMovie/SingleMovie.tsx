@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import {
-  SingleMovieMediaStyled,
+  SingleMovieStyled,
   SingleMoviePosterStyled,
   SingleMovieTitleStyled,
   SingleMovieSubTitleStyled,
@@ -12,7 +12,7 @@ import { getPicture } from "../../utils";
 
 const SingleMovie = ({ key, imdbID, Poster, Title, Year, Type }: MovieType) => {
   return (
-    <SingleMovieMediaStyled key={key}>
+    <SingleMovieStyled key={key}>
       <Link
         to={`/movies/${imdbID}`}
         key={imdbID}
@@ -26,7 +26,7 @@ const SingleMovie = ({ key, imdbID, Poster, Title, Year, Type }: MovieType) => {
           </SingleMovieSubTitleCapitalizerStyled>
         </div>
       </Link>
-    </SingleMovieMediaStyled>
+    </SingleMovieStyled>
   );
 };
 

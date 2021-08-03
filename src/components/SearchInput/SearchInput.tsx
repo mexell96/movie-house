@@ -4,8 +4,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
 import {
+  SearchInputWrapperStyled,
   SearchInputStyled,
-  SearchInputBoxStyled,
   SearchInputButtonStyled,
 } from "./SearchInput.style";
 
@@ -54,8 +54,8 @@ const SearchInput = () => {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <SearchInputStyled noValidate autoComplete="off" onSubmit={onFormSubmit}>
-        <SearchInputBoxStyled
+      <SearchInputWrapperStyled noValidate autoComplete="off" onSubmit={onFormSubmit}>
+        <SearchInputStyled
           label="Search"
           variant="filled"
           value={input}
@@ -68,7 +68,7 @@ const SearchInput = () => {
           variant="contained">
           <SearchIcon fontSize="large" />
         </SearchInputButtonStyled>
-      </SearchInputStyled>
+      </SearchInputWrapperStyled>
     </ThemeProvider>
   );
 };

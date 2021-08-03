@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ReviewsWindowStyled = styled.div`
+export const ReviewCardWrapperStyled = styled.div`
   display: flex;
   width: 366px;
   padding: 10px;
@@ -12,27 +12,27 @@ export const ReviewsWindowStyled = styled.div`
     0px 5px 8px 0px rgb(0 0 0 / 14%), 0px 1px 14px 0px rgb(0 0 0 / 12%);
 `;
 
-export const ReviewsAvatarWrapperStyled = styled.div`
+export const ReviewCardAvatarWrapperStyled = styled.div`
   display: flex;
   align-items: center;
   margin-right: 10px;
 `;
 
-export const ReviewsAvatarStyled = styled.img`
+export const ReviewCardAvatarStyled = styled.img`
   width: 100px;
   height: 100px;
   border-radius: 50%;
 `;
 
-export const ReviewsInfoWrapperStyled = styled.div``;
+export const ReviewCardInfoStyled = styled.div``;
 
-export const ReviewsStarsWrapperStyled = styled.div`
+export const ReviewCardStarsStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
-export const ReviewsCommentStyled = styled.div`
+export const ReviewCardCommentStyled = styled.div`
   padding: 10px;
   color: white;
   background-color: #39445a;

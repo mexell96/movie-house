@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+
 import { resultsMovies } from "./resultsMovies";
 import { previousSearches } from "./previousSearches";
 import { appReducer } from "./appReducer";

@@ -7,7 +7,7 @@ type RatingStarType = {
 
 const colors = ["#ccc", "#eb2228", "#fa6837", "#fdae38", "#87d44a", "#2db539"];
 
-export const RatingStarStyled = styled.div<RatingStarType>`
+export const StarStyled = styled.div<RatingStarType>`
   cursor: ${({ pointer }) => (pointer ? "pointer" : "auto")};
   color: ${({ rating }) => colors[rating]};
   font-size: 50px;

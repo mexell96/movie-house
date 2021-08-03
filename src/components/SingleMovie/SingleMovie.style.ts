@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SingleMovieMediaStyled = styled.div`
+export const SingleMovieStyled = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

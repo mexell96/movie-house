@@ -1,4 +1,4 @@
-import { RatingStarStyled } from "./Star.style";
+import { StarStyled } from "./Star.style";
 
 type StarPropsType = {
   star: number;
@@ -14,17 +14,15 @@ type StarPropsType = {
   pointer?: boolean;
 };
 
-const Star = ({ star, setHover, form, position, pointer }: StarPropsType) => {
-  return (
-    <RatingStarStyled
-      key={star}
-      onMouseEnter={setHover && (() => setHover(star))}
-      onClick={form && (() => form.setFieldValue("rating", star))}
-      rating={star <= position ? position : 0}
-      pointer={pointer}>
-      <span className="star">&#9733;</span>
-    </RatingStarStyled>
-  );
-};
+const Star = ({ star, setHover, form, position, pointer }: StarPropsType) => (
+  <StarStyled
+    key={star}
+    onMouseEnter={setHover && (() => setHover(star))}
+    onClick={form && (() => form.setFieldValue("rating", star))}
+    rating={star <= position ? position : 0}
+    pointer={pointer}>
+    <span className="star">&#9733;</span>
+  </StarStyled>
+);
 
 export { Star };

@@ -32,9 +32,8 @@ const UrlField = () => {
     getUrl(getSearchValue());
   }, []);
 
-  const changeRouter = (movie: string, page: number) => {
+  const changeRouter = (movie: string, page: number) =>
     history.push(`movies?s=${movie}&page=${page}`);
-  };
 
   useEffect(() => {
     if (urlReducer.input && urlReducer.page) {

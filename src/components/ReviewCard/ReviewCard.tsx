@@ -1,10 +1,10 @@
 import {
-  ReviewsWindowStyled,
-  ReviewsAvatarStyled,
-  ReviewsAvatarWrapperStyled,
-  ReviewsStarsWrapperStyled,
-  ReviewsCommentStyled,
-  ReviewsInfoWrapperStyled,
+  ReviewCardWrapperStyled,
+  ReviewCardAvatarStyled,
+  ReviewCardAvatarWrapperStyled,
+  ReviewCardStarsStyled,
+  ReviewCardCommentStyled,
+  ReviewCardInfoStyled,
 } from "./ReviewCard.style";
 
 import { stars } from "../../consts";
@@ -17,20 +17,20 @@ type ReviewCardPropsType = {
 
 const ReviewCard = ({ key, review }: ReviewCardPropsType) => {
   return (
-    <ReviewsWindowStyled key={key}>
-      <ReviewsAvatarWrapperStyled>
-        <ReviewsAvatarStyled src={review.avatar} alt={review.name} />
-      </ReviewsAvatarWrapperStyled>
-      <ReviewsInfoWrapperStyled>
+    <ReviewCardWrapperStyled key={key}>
+      <ReviewCardAvatarWrapperStyled>
+        <ReviewCardAvatarStyled src={review.avatar} alt={review.name} />
+      </ReviewCardAvatarWrapperStyled>
+      <ReviewCardInfoStyled>
         <h2>{review.name}</h2>
-        <ReviewsStarsWrapperStyled>
+        <ReviewCardStarsStyled>
           {stars.map((star) => (
             <Star star={star} position={review.rating} />
           ))}
-        </ReviewsStarsWrapperStyled>
-        <ReviewsCommentStyled>{review.review}</ReviewsCommentStyled>
-      </ReviewsInfoWrapperStyled>
-    </ReviewsWindowStyled>
+        </ReviewCardStarsStyled>
+        <ReviewCardCommentStyled>{review.review}</ReviewCardCommentStyled>
+      </ReviewCardInfoStyled>
+    </ReviewCardWrapperStyled>
   );
 };
 

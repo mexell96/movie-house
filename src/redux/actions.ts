@@ -1,3 +1,5 @@
+import { Dispatch } from "redux";
+
 import { getMovies, getMovie } from "../apiFunctions";
 import {
   FETCH_MOVIES,
@@ -9,7 +11,6 @@ import {
   SET_TAB,
   SET_REVIEW,
 } from "./types";
-import { Dispatch } from "redux";
 
 export const setSearchValue = (
   searchValue: SearchInfoType

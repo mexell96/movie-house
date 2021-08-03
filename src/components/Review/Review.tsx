@@ -1,18 +1,18 @@
-import { Avatar, Rating } from "..";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import { makeStyles, TextField } from "@material-ui/core";
-import { useParams } from "react-router";
 import { uid } from "uid/secure";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 
 import {
-  ReviewContainerStyled,
+  ReviewWrapperStyled,
   ReviewButtonSubmitStyled,
 } from "./Review.style";
 
 import { setReview } from "../../redux/actions";
+import { Avatar, Rating } from "..";
 
 type ReviewPropsType = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -70,7 +70,7 @@ const Review = ({ setShowModal }: ReviewPropsType) => {
   }, [reviewsReducer]);
 
   return (
-    <ReviewContainerStyled>
+    <ReviewWrapperStyled>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -121,7 +121,7 @@ const Review = ({ setShowModal }: ReviewPropsType) => {
           );
         }}
       </Formik>
-    </ReviewContainerStyled>
+    </ReviewWrapperStyled>
   );
 };
 

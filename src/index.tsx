@@ -9,7 +9,6 @@ import createSagaMiddleware from "redux-saga";
 import { Styles } from "./styles";
 
 import { AppRouter } from "./AppRouter";
-
 import { rootReducer } from "./redux/rootReducer";
 // import { sagaWatcher } from "./redux/sagas";
 
