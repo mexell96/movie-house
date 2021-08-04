@@ -2,21 +2,23 @@ import { FETCH_MOVIES } from "./types";
 
 type ResultsMoviesPropsType = {
   type: string;
-  data: MoviesResponseType;
-  key: string;
+  payload: {
+    data: MoviesResponseType;
+    key: string;
+  };
 };
 
 export const resultsMovies = (
   state: ResultsMoviesType = {},
-  { type, data, key }: ResultsMoviesPropsType
+  { type, payload }: ResultsMoviesPropsType
 ): ResultsMoviesType => {
   switch (type) {
     case FETCH_MOVIES:
       return {
         ...state,
-        [key]: {
-          movies: data.Search,
-          totalResults: data.totalResults,
+        [payload.key]: {
+          movies: payload.data.Search,
+          totalResults: payload.data.totalResults,
         },
       };
     default:

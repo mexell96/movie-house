@@ -43,7 +43,7 @@ export const fetchMovies = ({ input, page, key }: SearchInfoType) => {
   return async (dispatch: Dispatch) => {
     dispatch(showLoader());
     const data: MoviesResponseType = await getMovies(input, page);
-    dispatch({ type: FETCH_MOVIES, data, key: key });
+    dispatch({ type: FETCH_MOVIES, payload: { data, key } });
     dispatch(hideLoader());
   };
 };
