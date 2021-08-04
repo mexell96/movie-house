@@ -23,7 +23,7 @@ export const setSearchValue = (
 ): ReducerPropsType => {
   return {
     type: SET_SEARCH_VALUES,
-    searchValue,
+    payload: searchValue,
   };
 };
 
@@ -60,7 +60,7 @@ export const fetchMovie = (id: string) => {
 export const setUrl = (searchValue: SearchInfoType): ReducerPropsType => {
   return {
     type: SET_URL,
-    searchValue,
+    payload: searchValue,
   };
 };
 

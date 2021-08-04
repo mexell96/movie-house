@@ -9,14 +9,14 @@ const initialState = {
 
 export const urlReducer = (
   state: SearchInfoType = initialState,
-  { type, searchValue }: ReducerPropsType
+  { type, payload }: ReducerPropsType
 ): SearchInfoType => {
   switch (type) {
     case SET_URL:
       return {
-        input: searchValue.input,
-        page: searchValue.page,
-        key: searchValue.key,
+        input: payload.input,
+        page: payload.page,
+        key: payload.key,
       };
     default:
       return state;

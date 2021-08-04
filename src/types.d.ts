@@ -57,7 +57,7 @@ declare type MovieType = {
 
 declare type ReducerPropsType = {
   type: string;
-  searchValue: RequestData;
+  payload: SearchInfoType;
 };
 
 declare type MoviesResponseType = {
