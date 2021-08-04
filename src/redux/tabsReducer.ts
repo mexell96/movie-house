@@ -6,11 +6,11 @@ const initialState = {
 
 export const tabsReducer = (
   state = initialState,
-  { type, tab }: TabsPropsType
+  { type, payload }: TabsPropsType
 ): TabsType => {
   switch (type) {
     case SET_TAB:
-      return { tab };
+      return { tab: payload.tab };
     default:
       return state;
   }

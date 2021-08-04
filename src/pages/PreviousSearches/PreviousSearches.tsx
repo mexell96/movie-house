@@ -22,7 +22,7 @@ const PreviousSearches = () => {
     event: React.SyntheticEvent<EventTarget>,
     newTab: number
   ) => {
-    dispatch(setTab(newTab));
+    dispatch(setTab({ tab: newTab }));
   };
 
   return (

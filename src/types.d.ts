@@ -11,6 +11,10 @@ declare type ResultsMoviesType = {
 declare type TabsType = {
   tab: number;
 };
+declare type TabsPropsType = {
+  type: string;
+  payload: TabsType;
+};
 declare type SearchInfoType = {
   input: string;
   page: number;
@@ -54,11 +58,6 @@ declare type MovieType = {
 declare type ReducerPropsType = {
   type: string;
   searchValue: RequestData;
-};
-
-declare type TabsPropsType = {
-  type: string;
-  tab: number;
 };
 
 declare type MoviesResponseType = {

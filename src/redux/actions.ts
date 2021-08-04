@@ -64,10 +64,10 @@ export const setUrl = (searchValue: SearchInfoType): ReducerPropsType => {
   };
 };
 
-export const setTab = (tab: number): TabsPropsType => {
+export const setTab = (props: TabsType): TabsPropsType => {
   return {
     type: SET_TAB,
-    tab,
+    payload: props,
   };
 };
 
