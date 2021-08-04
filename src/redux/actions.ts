@@ -52,7 +52,7 @@ export const fetchMovie = (id: string) => {
   return async (dispatch: Dispatch) => {
     dispatch(showLoader());
     const data: object = await getMovie(id);
-    dispatch({ type: FETCH_MOVIE, data, key: id });
+    dispatch({ type: FETCH_MOVIE, payload: { data, key: id } });
     dispatch(hideLoader());
   };
 };
