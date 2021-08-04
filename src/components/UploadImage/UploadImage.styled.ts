@@ -1,17 +1,16 @@
 import styled from "styled-components";
 import { Button } from "@material-ui/core";
 
-type AvatarButtonType = {
-  success: string;
+type UploadImageButtonType = {
   component: string;
 };
 
-export const AvatarButtonStyled = styled(Button)<AvatarButtonType>`
-  background: ${({ success }) =>
-    success ? "lightGreen" : "contained"} !important;
+export const UploadImageButtonStyled = styled(Button)<UploadImageButtonType>`
+  border-radius: 50% !important;
+  padding: 0 !important;
 `;
 
-export const AvatarErrorStyled = styled.div`
+export const UploadImageErrorStyled = styled.div`
   color: #f44336;
   margin: 0;
   font-size: 0.75rem;
@@ -21,4 +20,10 @@ export const AvatarErrorStyled = styled.div`
   font-weight: 400;
   line-height: 1.66;
   letter-spacing: 0.03333em;
+`;
+
+export const UploadImageAvatarStyled = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
 `;

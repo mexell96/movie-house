@@ -4,35 +4,66 @@ import {
   RatingWrapperStyled,
   RatingStarErrorStyled,
   RatingWrapperStarsStyled,
+  RatingStarStyled,
 } from "./Rating.style";
 
-import { Star } from "../index";
 import { stars } from "../../consts";
 
-const Rating = ({ field, form }: FormikPropsType) => {
-  const [hover, setHover] = useState(0);
+type RatingPropsType = {
+  value: number;
+  onChange?: (field: string, value: number) => void;
+  errors?: string | undefined;
 
-  const setValues = () => {
-    setHover(Number(field.value));
-  };
+  touched?: boolean | undefined;
+  changeable: boolean;
+};
+
+const Rating = ({
+  onChange,
+  value,
+  errors,
+  touched,
+  changeable,
+}: RatingPropsType) => {
+  const [hoverPosition, setHoverPosition] = useState(value);
 
   return (
-    <RatingWrapperStyled>
-      <RatingWrapperStarsStyled onMouseLeave={setValues}>
-        {stars.map((star) => (
-          <Star
-            star={star}
-            position={hover}
-            setHover={setHover}
-            form={form}
-            pointer
-          />
-        ))}
-      </RatingWrapperStarsStyled>
-      {form?.touched?.rating && (
-        <RatingStarErrorStyled>{form?.errors?.rating}</RatingStarErrorStyled>
+    <>
+      {changeable && (
+        <RatingWrapperStyled>
+          <RatingWrapperStarsStyled
+            onMouseLeave={() => setHoverPosition(value)}>
+            {stars.map((star) => (
+              <RatingStarStyled
+                key={star}
+                onMouseEnter={() => setHoverPosition(star)}
+                onClick={onChange && (() => onChange("rating", star))}
+                rating={star <= hoverPosition ? hoverPosition : 0}
+                pointer={changeable}>
+                <span className="star">&#9733;</span>
+              </RatingStarStyled>
+            ))}
+          </RatingWrapperStarsStyled>
+          {touched && errors && (
+            <RatingStarErrorStyled>{errors}</RatingStarErrorStyled>
+          )}
+        </RatingWrapperStyled>
       )}
-    </RatingWrapperStyled>
+      {!changeable && (
+        <RatingWrapperStyled>
+          <RatingWrapperStarsStyled>
+            {stars.map((star) => (
+              <RatingStarStyled
+                key={star}
+                rating={star <= value ? value : 0}
+                pointer={changeable}>
+                <span className="star">&#9733;</span>
+              </RatingStarStyled>
+            ))}
+          </RatingWrapperStarsStyled>
+        </RatingWrapperStyled>
+      )}
+    </>
   );
 };
 

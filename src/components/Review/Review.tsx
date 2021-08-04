@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Formik, Field } from "formik";
@@ -6,13 +5,10 @@ import * as Yup from "yup";
 import { makeStyles, TextField } from "@material-ui/core";
 import { uid } from "uid/secure";
 
-import {
-  ReviewWrapperStyled,
-  ReviewButtonSubmitStyled,
-} from "./Review.style";
+import { ReviewWrapperStyled, ReviewButtonSubmitStyled } from "./Review.style";
 
 import { setReview } from "../../redux/actions";
-import { Avatar, Rating } from "..";
+import { UploadImage, Rating } from "..";
 
 type ReviewPropsType = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -60,14 +56,10 @@ const Review = ({ setShowModal }: ReviewPropsType) => {
     const reviews: ReviewType[] = (reviewsReducer && reviewsReducer[id]) || [];
     reviews.push(review);
 
-    dispatch(setReview(reviews, id));
+    dispatch(setReview({ reviews, id }));
     actions.setSubmitting(false);
     setShowModal(false);
   };
-
-  useEffect(() => {
-    localStorage.setItem("Reviews", JSON.stringify(reviewsReducer));
-  }, [reviewsReducer]);
 
   return (
     <ReviewWrapperStyled>
@@ -112,8 +104,29 @@ const Review = ({ setShowModal }: ReviewPropsType) => {
                   className: classes.input,
                 }}
               />
-              <Field name="rating" component={Rating} />
-              <Field name="avatar" component={Avatar} />
+              <Field
+                name="rating"
+                component={({ form }: FormikPropsType) => (
+                  <Rating
+                    value={form.values.rating}
+                    onChange={form.setFieldValue}
+                    errors={form.errors.rating}
+                    touched={form.touched.rating}
+                    changeable={true}
+                  />
+                )}
+              />
+              <Field
+                name="avatar"
+                component={({ form }: FormikPropsType) => (
+                  <UploadImage
+                    value={form.values.avatar}
+                    onChange={form.setFieldValue}
+                    errors={form.errors.avatar}
+                    touched={form.touched.avatar}
+                  />
+                )}
+              />
               <ReviewButtonSubmitStyled type="submit">
                 Submit
               </ReviewButtonSubmitStyled>

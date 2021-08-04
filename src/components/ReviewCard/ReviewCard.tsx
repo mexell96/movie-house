@@ -7,26 +7,22 @@ import {
   ReviewCardInfoStyled,
 } from "./ReviewCard.style";
 
-import { stars } from "../../consts";
-import { Star } from "../index";
+import { Rating } from "..";
 
 type ReviewCardPropsType = {
   review: ReviewType;
-  key: string;
 };
 
-const ReviewCard = ({ key, review }: ReviewCardPropsType) => {
+const ReviewCard = ({ review }: ReviewCardPropsType) => {
   return (
-    <ReviewCardWrapperStyled key={key}>
+    <ReviewCardWrapperStyled>
       <ReviewCardAvatarWrapperStyled>
         <ReviewCardAvatarStyled src={review.avatar} alt={review.name} />
       </ReviewCardAvatarWrapperStyled>
       <ReviewCardInfoStyled>
         <h2>{review.name}</h2>
         <ReviewCardStarsStyled>
-          {stars.map((star) => (
-            <Star star={star} position={review.rating} />
-          ))}
+          <Rating value={review.rating} changeable={false} />
         </ReviewCardStarsStyled>
         <ReviewCardCommentStyled>{review.review}</ReviewCardCommentStyled>
       </ReviewCardInfoStyled>

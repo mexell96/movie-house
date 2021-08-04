@@ -10,7 +10,13 @@ import {
   SHOW_LOADER,
   SET_TAB,
   SET_REVIEW,
+  SET_REVIEWS,
 } from "./types";
+
+type ReviewPropsType = {
+  id: string;
+  reviews: ReviewType[];
+};
 
 export const setSearchValue = (
   searchValue: SearchInfoType
@@ -65,10 +71,16 @@ export const setTab = (tab: number): TabsPropsType => {
   };
 };
 
-export const setReview = (reviews: ReviewType[], id: string) => {
+export const setReview = (props: ReviewPropsType) => {
   return {
     type: SET_REVIEW,
-    reviews,
-    id,
+    payload: props,
+  };
+};
+
+export const setReviews = (props: ReviewsReducerType) => {
+  return {
+    type: SET_REVIEWS,
+    payload: props,
   };
 };

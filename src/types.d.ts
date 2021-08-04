@@ -43,7 +43,6 @@ declare type ResultMoviesType = {
 };
 
 declare type MovieType = {
-  key?: string;
   Title: string;
   Year: string;
   imdbID: string;
@@ -75,6 +74,13 @@ declare type ReviewInfoCheckerType = {
   avatar: boolean;
 };
 
+declare type ReviewErrorsType = {
+  name: string;
+  review: string;
+  rating: string;
+  avatar: string;
+};
+
 declare type ReviewInfoType = {
   name: string;
   review: string;
@@ -84,7 +90,7 @@ declare type ReviewInfoType = {
 
 declare type FormikPropsType = {
   field: {
-    value: string;
+    value: number;
   };
   form: {
     setFieldValue: (
@@ -92,7 +98,7 @@ declare type FormikPropsType = {
       value: string | number,
       shouldValidate?: boolean
     ) => void;
-    errors: ReviewInfoType;
+    errors: ReviewErrorsType;
     touched: ReviewInfoCheckerType;
     values: ReviewInfoType;
   };

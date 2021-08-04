@@ -1,23 +1,26 @@
-import { SET_REVIEW } from "./types";
+import { SET_REVIEW, SET_REVIEWS } from "./types";
 
 type ReviewsReducerPropsType = {
   type: string;
-  reviews: ReviewType[];
-  id: string;
+  payload: any;
 };
 
 const initialState = {};
 
 export const reviewsReducer = (
   state: ReviewsReducerType = initialState,
-  { type, reviews, id }: ReviewsReducerPropsType
+  { type, payload }: ReviewsReducerPropsType
 ): ReviewsReducerType => {
   switch (type) {
     case SET_REVIEW:
-      return {
+      const data = {
         ...state,
-        [id]: reviews,
+        [payload.id]: payload.reviews,
       };
+      localStorage.setItem("Reviews", JSON.stringify(data));
+      return data;
+    case SET_REVIEWS:
+      return { ...state, ...payload };
     default:
       return state;
   }

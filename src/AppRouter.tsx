@@ -6,15 +6,12 @@ import { AppRouterStyled } from "./AppRouter.style";
 
 import { Home, Movies, PreviousSearches } from "./pages";
 import { Header, Movie, Navbar } from "./components";
-import { setReview } from "./redux/actions";
+import { setReviews } from "./redux/actions";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
 
-  const reviewsLS = JSON.parse(localStorage.getItem("Reviews") || "null");
-  for (const id in reviewsLS) {
-    dispatch(setReview(reviewsLS[id], id));
-  }
+  dispatch(setReviews(JSON.parse(localStorage.getItem("Reviews") || "null")));
 
   return (
     <Router>

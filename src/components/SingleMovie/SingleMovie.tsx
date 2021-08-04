@@ -10,9 +10,9 @@ import {
 
 import { getPicture } from "../../utils";
 
-const SingleMovie = ({ key, imdbID, Poster, Title, Year, Type }: MovieType) => {
+const SingleMovie = ({ imdbID, Poster, Title, Year, Type }: MovieType) => {
   return (
-    <SingleMovieStyled key={key}>
+    <SingleMovieStyled>
       <Link
         to={`/movies/${imdbID}`}
         key={imdbID}

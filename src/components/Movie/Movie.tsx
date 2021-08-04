@@ -86,7 +86,7 @@ const Movie = () => {
   const history = useHistory();
   const [movie, setMovie] = useState<MovieType | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [reviews, setReviews] = useState<ReviewType[] | null>(null);
+  const [reviews, setReviewsState] = useState<ReviewType[] | null>(null);
 
   useEffect(() => {
     if (resultsMovie[id]) {
@@ -101,7 +101,7 @@ const Movie = () => {
   }, [resultsMovie]);
 
   useEffect(() => {
-    setReviews(reviewsReducer[id]);
+    setReviewsState(reviewsReducer[id]);
   }, [reviewsReducer]);
 
   return (
