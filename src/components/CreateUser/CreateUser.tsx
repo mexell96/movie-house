@@ -19,7 +19,7 @@ const CreateUser = () => {
       JSON.stringify({ ...users, [user.uid]: user })
     );
 
-    history.push("/profile");
+    history.push(`/profile/${user.uid}`);
   };
 
   const onFinishFailed = (errorInfo: any) => {

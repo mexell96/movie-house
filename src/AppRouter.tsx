@@ -33,7 +33,7 @@ const AppRouter = () => {
               component={PreviousSearches}
               exact
             />
-            <Route path="/profile" component={Profile} exact />
+            <Route path="/profile/:id" component={Profile} exact />
             <Route path="/auth" component={Authentication} exact />
           </Switch>
         </Container>
