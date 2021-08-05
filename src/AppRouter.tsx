@@ -34,7 +34,7 @@ const AppRouter = () => {
               exact
             />
             <Route path="/profile" component={Profile} exact />
-            <Route path="/login" component={Authentication} exact />
+            <Route path="/auth" component={Authentication} exact />
           </Switch>
         </Container>
       </AppRouterStyled>

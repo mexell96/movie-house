@@ -5,8 +5,8 @@ export const SingleMovieStyled = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 200px;
+  margin: 5px;
   padding: 5px;
-  margin: 5px 0;
   background-color: #282c34;
   border-radius: 10px;
   position: relative;
@@ -20,7 +20,7 @@ export const SingleMovieStyled = styled.div`
 
 export const SingleMoviePosterStyled = styled.img`
   border-radius: 10px;
-  width: 200px;
+  width: 190px;
 `;
 
 export const SingleMovieTitleStyled = styled.div`

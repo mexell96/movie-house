@@ -2,9 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { compose, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import logger from "redux-logger";
+// import logger from "redux-logger";
 import thunk from "redux-thunk";
 import createSagaMiddleware from "redux-saga";
+import "antd/dist/antd.css";
 
 import { Styles } from "./styles";
 
@@ -38,7 +39,4 @@ const app = (
   </Provider>
 );
 
-ReactDOM.render(
-  <React.StrictMode>{app}</React.StrictMode>,
-  document.getElementById("root")
-);
+ReactDOM.render(app, document.getElementById("root"));

@@ -21,4 +21,13 @@ export const Styles = createGlobalStyle`
   * {
     scroll-behavior: smooth;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: white;
+  }
+
+  a:hover {
+    color: #282c34;
+    background: white;
+  }
 `;
