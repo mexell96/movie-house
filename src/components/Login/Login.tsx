@@ -28,17 +28,14 @@ const Login = () => {
         ]}>
         <Input placeholder="Email" />
       </Form.Item>
-
       <Form.Item
         name="password"
         rules={[{ required: true, message: "Please input your password!" }]}>
         <Input.Password placeholder="Password" />
       </Form.Item>
-
       <Form.Item name="remember" valuePropName="checked">
         <Checkbox>Remember me</Checkbox>
       </Form.Item>
-
       <Form.Item>
         <Button htmlType="submit">Login</Button>
       </Form.Item>

@@ -27,7 +27,7 @@ export const Styles = createGlobalStyle`
   }
 
   a:hover {
-    color: #282c34;
-    background: white;
+    color: rgba(0, 0, 0, 0.87);
+    background-color: #fff;
   }
 `;

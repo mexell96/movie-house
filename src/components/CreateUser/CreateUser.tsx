@@ -1,8 +1,25 @@
 import { Form, Input, Button } from "antd";
+import { uid } from "uid/secure";
+import { useHistory } from "react-router-dom";
 
 const CreateUser = () => {
+  const history = useHistory();
+
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+    const user = {
+      uid: uid(25),
+      ...values,
+    };
+    console.log("Received values of form: ", user);
+
+    const data = JSON.parse(localStorage.getItem("Users") || "null");
+    const users: any = data || {};
+    localStorage.setItem(
+      "Users",
+      JSON.stringify({ ...users, [user.uid]: user })
+    );
+
+    history.push("/profile");
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -27,7 +44,6 @@ const CreateUser = () => {
         ]}>
         <Input placeholder="Name" />
       </Form.Item>
-
       <Form.Item
         name="email"
         rules={[
@@ -42,7 +58,6 @@ const CreateUser = () => {
         ]}>
         <Input placeholder="Email" />
       </Form.Item>
-
       <Form.Item
         name="password"
         rules={[
@@ -54,7 +69,6 @@ const CreateUser = () => {
         hasFeedback>
         <Input.Password placeholder="Password" />
       </Form.Item>
-
       <Form.Item
         name="confirm"
         dependencies={["password"]}
@@ -69,7 +83,6 @@ const CreateUser = () => {
               if (!value || getFieldValue("password") === value) {
                 return Promise.resolve();
               }
-
               return Promise.reject(
                 new Error("The two passwords that you entered do not match!")
               );
@@ -78,7 +91,6 @@ const CreateUser = () => {
         ]}>
         <Input.Password placeholder="Confirm Password" />
       </Form.Item>
-
       <Form.Item>
         <Button htmlType="submit">Register</Button>
       </Form.Item>
