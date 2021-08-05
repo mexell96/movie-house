@@ -17,6 +17,7 @@
     "@types/react-router": "^5.1.16",
     "@types/react-router-dom": "^5.1.8",
     "@types/styled-components": "^5.1.11",
+    "antd": "^4.16.10",
     "axios": "^0.21.1",
     "formik": "^2.2.9",
     "react": "^17.0.2",
