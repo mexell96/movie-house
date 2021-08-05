@@ -13,7 +13,6 @@ type RatingPropsType = {
   value: number;
   onChange?: (field: string, value: number) => void;
   errors?: string | undefined;
-
   touched?: boolean | undefined;
   changeable: boolean;
 };

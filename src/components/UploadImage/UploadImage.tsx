@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   UploadImageErrorStyled,
   UploadImageButtonStyled,
@@ -5,7 +7,6 @@ import {
 } from "./UploadImage.styled";
 
 import { MEGABYTE, noPicture } from "../../consts";
-import { useState } from "react";
 
 type UploadImagePropsType = {
   value: string;

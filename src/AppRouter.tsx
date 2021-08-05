@@ -4,7 +4,13 @@ import { Container } from "@material-ui/core";
 
 import { AppRouterStyled } from "./AppRouter.style";
 
-import { Home, Movies, PreviousSearches } from "./pages";
+import {
+  Home,
+  Authentication,
+  Movies,
+  PreviousSearches,
+  Profile,
+} from "./pages";
 import { Header, Movie, Navbar } from "./components";
 import { setReviews } from "./redux/actions";
 
@@ -27,6 +33,8 @@ const AppRouter = () => {
               component={PreviousSearches}
               exact
             />
+            <Route path="/profile" component={Profile} exact />
+            <Route path="/login" component={Authentication} exact />
           </Switch>
         </Container>
       </AppRouterStyled>
