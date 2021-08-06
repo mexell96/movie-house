@@ -9,17 +9,17 @@ const Login = () => {
 
   const onFinish = (values: any) => {
     const { email, password, remember } = values;
-    console.log("Success:", values);
-
     const data = JSON.parse(localStorage.getItem("Users") || "null");
-    const user = data[email];
-    console.log(user, "user 444");
 
-    if (user && password === user.password) {
-      dispatch(login(user));
-      message.success("Сonfirmed");
-      history.push(`/`);
-    } else {
+    for (const user in data) {
+      console.log(data[user].email, "1111");
+
+      if (data[user].email === email && data[user].password === password) {
+        dispatch(login(data[user]));
+        message.success("Сonfirmed");
+        history.push(`/`);
+        return;
+      }
       message.error("Error - wrong data");
     }
   };

@@ -25,10 +25,10 @@ const CreateUser = () => {
     const users: any = data || {};
     localStorage.setItem(
       "Users",
-      JSON.stringify({ ...users, [user.email]: user })
+      JSON.stringify({ ...users, [user.uid]: user })
     );
 
-    history.push(`/profile/${user.email}`);
+    history.push(`/profile/${user.uid}`);
   };
 
   const onFinishFailed = (errorInfo: any) => {

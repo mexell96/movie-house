@@ -14,7 +14,6 @@ import { logout } from "../../redux/actions";
 const Header = () => {
   const dispatch = useDispatch();
   const authReducer = useSelector(({ authReducer }: any) => authReducer);
-  console.log(authReducer.isAuth, "222");
 
   return (
     <HeaderStyled onClick={() => window.scroll(0, 0)}>
@@ -27,7 +26,7 @@ const Header = () => {
         )}
         {authReducer.isAuth && (
           <>
-            <HeaderImgLinkStyled to={`/profile/${authReducer.user.email}`}>
+            <HeaderImgLinkStyled to={`/profile/${authReducer.user.uid}`}>
               <HeaderImgStyled src={noPicture} alt="avatar" />
             </HeaderImgLinkStyled>
             <Button onClick={() => dispatch(logout())}>

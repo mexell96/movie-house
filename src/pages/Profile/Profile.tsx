@@ -17,11 +17,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = () => {
   const classes = useStyles();
-  const { email } = useParams<{ email: string }>();
+  const { id } = useParams<{ id: string }>();
 
   const data = JSON.parse(localStorage.getItem("Users") || "null");
-  const user = data[email];
-  console.log(user, "user");
+  const user = data[id];
 
   return (
     <div className={classes.paper}>

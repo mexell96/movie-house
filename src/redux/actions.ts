@@ -88,8 +88,6 @@ export const setReviews = (props: ReviewsReducerType) => {
 };
 
 export const login = (user: any) => {
-  console.log(user, "user 55");
-
   return {
     type: LOGIN,
     payload: user,
