@@ -1,7 +1,10 @@
+import { useDispatch } from "react-redux";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import { useHistory } from "react-router-dom";
+import { login } from "../../redux/actions";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const onFinish = (values: any) => {
@@ -13,6 +16,7 @@ const Login = () => {
     console.log(user, "user 444");
 
     if (user && password === user.password) {
+      dispatch(login(user));
       message.success("Сonfirmed");
       history.push(`/`);
     } else {
