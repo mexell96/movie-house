@@ -1,6 +1,15 @@
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import { uid } from "uid/secure";
 import { useHistory } from "react-router-dom";
+
+const normFile = (e: any) => {
+  console.log("Upload event:", e);
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e && e.fileList;
+};
 
 const CreateUser = () => {
   const history = useHistory();
@@ -16,10 +25,10 @@ const CreateUser = () => {
     const users: any = data || {};
     localStorage.setItem(
       "Users",
-      JSON.stringify({ ...users, [user.uid]: user })
+      JSON.stringify({ ...users, [user.email]: user })
     );
 
-    history.push(`/profile/${user.uid}`);
+    history.push(`/profile/${user.email}`);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -90,6 +99,14 @@ const CreateUser = () => {
           }),
         ]}>
         <Input.Password placeholder="Confirm Password" />
+      </Form.Item>
+      <Form.Item
+        name="upload"
+        valuePropName="fileList"
+        getValueFromEvent={normFile}>
+        <Upload name="logo" listType="picture">
+          <Button icon={<UploadOutlined />}>Click to upload</Button>
+        </Upload>
       </Form.Item>
       <Form.Item>
         <Button htmlType="submit">Register</Button>

@@ -1,8 +1,23 @@
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, message } from "antd";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
+  const history = useHistory();
+
   const onFinish = (values: any) => {
+    const { email, password, remember } = values;
     console.log("Success:", values);
+
+    const data = JSON.parse(localStorage.getItem("Users") || "null");
+    const user = data[email];
+    console.log(user, "user 444");
+
+    if (user && password === user.password) {
+      message.success("Сonfirmed");
+      history.push(`/`);
+    } else {
+      message.error("Error - wrong data");
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -18,7 +33,7 @@ const Login = () => {
       scrollToFirstError>
       <h2>Login</h2>
       <Form.Item
-        name="Email"
+        name="email"
         rules={[
           {
             type: "email",
