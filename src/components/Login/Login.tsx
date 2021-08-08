@@ -1,27 +1,36 @@
-import { useDispatch } from "react-redux";
+import { useContext, useEffect } from "react";
 import { Form, Input, Button, Checkbox, message } from "antd";
-import { useHistory } from "react-router-dom";
-import { login } from "../../redux/actions";
+
+import { useHttp } from "../../hooks/http.hook";
+import { AuthContext } from "../../context/AuthContext";
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const authentication: any = useContext(AuthContext);
+  const { loading, error, request, clearError } = useHttp();
 
-  const onFinish = (values: any) => {
-    const { email, password, remember } = values;
-    const data = JSON.parse(localStorage.getItem("Users") || "null");
-
-    for (const user in data) {
-      console.log(data[user].email, "1111");
-
-      if (data[user].email === email && data[user].password === password) {
-        dispatch(login(data[user]));
-        message.success("Сonfirmed");
-        history.push(`/`);
-        return;
-      }
-      message.error("Error - wrong data");
+  useEffect(() => {
+    if (error !== null) {
+      message.error(`${error}`);
+      clearError();
     }
+  }, [error, clearError]);
+
+  const onFinish = ({ email, password, remember }: any) => {
+    const loginHandler = async () => {
+      try {
+        const data = await request("/api/auth/login", "POST", {
+          email,
+          password,
+          remember,
+        });
+        console.log("DATA loginPage ---", data);
+        message.success(data.message);
+        authentication.login(data.token, data.userId);
+      } catch (e) {
+        console.log(e, "E message loginPage");
+      }
+    };
+    loginHandler();
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -56,7 +65,9 @@ const Login = () => {
         <Checkbox>Remember me</Checkbox>
       </Form.Item>
       <Form.Item>
-        <Button htmlType="submit">Login</Button>
+        <Button htmlType="submit" disabled={loading}>
+          Login
+        </Button>
       </Form.Item>
     </Form>
   );

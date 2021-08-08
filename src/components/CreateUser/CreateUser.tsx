@@ -1,7 +1,8 @@
-import { Form, Input, Button, Upload } from "antd";
+import { useEffect } from "react";
+import { Form, Input, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { uid } from "uid/secure";
-import { useHistory } from "react-router-dom";
+
+import { useHttp } from "../../hooks/http.hook";
 
 const normFile = (e: any) => {
   console.log("Upload event:", e);
@@ -12,23 +13,30 @@ const normFile = (e: any) => {
 };
 
 const CreateUser = () => {
-  const history = useHistory();
+  const { loading, error, request, clearError } = useHttp();
 
-  const onFinish = (values: any) => {
-    const user = {
-      uid: uid(25),
-      ...values,
+  useEffect(() => {
+    if (error !== null) {
+      message.error(`${error}`);
+      clearError();
+    }
+  }, [error, clearError]);
+
+  const onFinish = ({ email, name, password }: any) => {
+    const registerHandler = async () => {
+      try {
+        const data = await request("/api/auth/register", "POST", {
+          email,
+          name,
+          password,
+        });
+        console.log("DATA ---", data);
+        message.success(data.message);
+      } catch (e) {
+        console.log(e, "E message createUserPage");
+      }
     };
-    console.log("Received values of form: ", user);
-
-    const data = JSON.parse(localStorage.getItem("Users") || "null");
-    const users: any = data || {};
-    localStorage.setItem(
-      "Users",
-      JSON.stringify({ ...users, [user.uid]: user })
-    );
-
-    history.push(`/profile/${user.uid}`);
+    registerHandler();
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -50,6 +58,7 @@ const CreateUser = () => {
             message: "Please input your name!",
             whitespace: true,
           },
+          { min: 2, message: "Username must be minimum 2 characters." },
         ]}>
         <Input placeholder="Name" />
       </Form.Item>
@@ -74,14 +83,13 @@ const CreateUser = () => {
             required: true,
             message: "Please input your password!",
           },
-        ]}
-        hasFeedback>
+          { min: 6, message: "Password must be minimum 6 characters." },
+        ]}>
         <Input.Password placeholder="Password" />
       </Form.Item>
       <Form.Item
         name="confirm"
         dependencies={["password"]}
-        hasFeedback
         rules={[
           {
             required: true,
@@ -109,7 +117,9 @@ const CreateUser = () => {
         </Upload>
       </Form.Item>
       <Form.Item>
-        <Button htmlType="submit">Register</Button>
+        <Button htmlType="submit" disabled={loading}>
+          Register
+        </Button>
       </Form.Item>
     </Form>
   );

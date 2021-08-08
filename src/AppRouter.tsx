@@ -1,45 +1,44 @@
 import { useDispatch } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { Container } from "@material-ui/core";
 
 import { AppRouterStyled } from "./AppRouter.style";
 
-import {
-  Home,
-  Authentication,
-  Movies,
-  PreviousSearches,
-  Profile,
-} from "./pages";
-import { Header, Movie, Navbar } from "./components";
+import { Header, Loader, Navbar } from "./components";
 import { setReviews } from "./redux/actions";
+import { useRoutes } from "./routes";
+import { useAuth } from "./hooks/auth.hook";
+import { AuthContext } from "./context/AuthContext";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
+  const { token, login, logout, userId, ready } = useAuth();
+  const isAuthenticated = !!token;
+  const routes = useRoutes(isAuthenticated);
 
   dispatch(setReviews(JSON.parse(localStorage.getItem("Reviews") || "null")));
 
+  if (!ready) {
+    return <Loader />;
+  }
+
   return (
-    <Router>
-      <Header />
-      <AppRouterStyled>
-        <Container>
-          <Switch>
-            <Route path="/" component={Home} exact />
-            <Route path="/movies/:id" component={Movie} exact />
-            <Route path="/movies" component={Movies} exact />
-            <Route
-              path="/previous-searches"
-              component={PreviousSearches}
-              exact
-            />
-            <Route path="/profile/:id" component={Profile} exact />
-            <Route path="/auth" component={Authentication} exact />
-          </Switch>
-        </Container>
-      </AppRouterStyled>
-      <Navbar />
-    </Router>
+    <AuthContext.Provider
+      value={{
+        token,
+        login,
+        logout,
+        userId,
+        isAuthenticated,
+      }}>
+      <Router>
+        <Header />
+        <AppRouterStyled>
+          <Container>{routes}</Container>
+        </AppRouterStyled>
+        <Navbar />
+      </Router>
+    </AuthContext.Provider>
   );
 };
 

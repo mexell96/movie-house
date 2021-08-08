@@ -19,15 +19,11 @@ const Profile = () => {
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
 
-  const data = JSON.parse(localStorage.getItem("Users") || "null");
-  const user = data[id];
-
   return (
     <div className={classes.paper}>
       <h2>Profile</h2>
-      <div>{user.name}</div>
+      <div>{id}</div>
       {/* <ProfileImgStyled src={user.avatar} alt="avatar" /> */}
-      <div>{user.email}</div>
     </div>
   );
 };

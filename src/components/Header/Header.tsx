@@ -1,35 +1,42 @@
+import { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { Button } from "antd";
+
 import {
   HeaderStyled,
   HeaderAvatarStyled,
   HeaderImgStyled,
   HeaderImgLinkStyled,
 } from "./Header.styled";
-import { Button } from "antd";
-import { Link } from "react-router-dom";
+
 import { noPicture } from "../../consts";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { logout } from "../../redux/actions";
+import { AuthContext } from "../../context/AuthContext";
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const authReducer = useSelector(({ authReducer }: any) => authReducer);
+  const auth: any = useContext(AuthContext);
+  const history = useHistory();
+
+  const logoutHandler = (event: any) => {
+    event.preventDefault();
+    auth.logout();
+    history.push("/");
+  };
 
   return (
     <HeaderStyled onClick={() => window.scroll(0, 0)}>
       <div>Movie-house</div>
       <HeaderAvatarStyled>
-        {!authReducer.isAuth && (
+        {!auth.isAuthenticated && (
           <Button>
             <Link to={`/auth`}>Login</Link>
           </Button>
         )}
-        {authReducer.isAuth && (
+        {auth.isAuthenticated && (
           <>
-            <HeaderImgLinkStyled to={`/profile/${authReducer.user.uid}`}>
+            <HeaderImgLinkStyled to={`/profile/${auth.userId}`}>
               <HeaderImgStyled src={noPicture} alt="avatar" />
             </HeaderImgLinkStyled>
-            <Button onClick={() => dispatch(logout())}>
+            <Button onClick={logoutHandler}>
               <Link to={`/`}>Logout</Link>
             </Button>
           </>
