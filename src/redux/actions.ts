@@ -11,8 +11,6 @@ import {
   SET_TAB,
   SET_REVIEW,
   SET_REVIEWS,
-  LOGIN,
-  LOGOUT,
 } from "./types";
 
 type ReviewPropsType = {
@@ -84,18 +82,5 @@ export const setReviews = (props: ReviewsReducerType) => {
   return {
     type: SET_REVIEWS,
     payload: props,
-  };
-};
-
-export const login = (user: any) => {
-  return {
-    type: LOGIN,
-    payload: user,
-  };
-};
-
-export const logout = () => {
-  return {
-    type: LOGOUT,
   };
 };
