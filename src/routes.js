@@ -6,6 +6,7 @@ import {
   Movies,
   PreviousSearches,
   Profile,
+  Profiles,
 } from "./pages";
 
 import { Movie } from "./components";
@@ -19,6 +20,7 @@ const useRoutes = (isAuthenticated) => {
         <Route path="/movies" component={Movies} exact />
         <Route path="/previous-searches" component={PreviousSearches} exact />
         <Route path="/profile/:id" component={Profile} exact />
+        <Route path="/profiles" component={Profiles} exact />
         <Route path="/auth" component={Authentication} exact />
         <Redirect to="/auth" />
       </Switch>

@@ -29,17 +29,16 @@ const CreateUser = () => {
   const onFinish = ({ email, name, password }: any) => {
     const registerHandler = async () => {
       try {
-        const data = await request("/api/auth/register", "POST", {
+        const data = await request("/api/register", "POST", {
           email,
           name,
           password,
         });
         message.success(data.message);
-        const dataLogin = await request("/api/auth/login", "POST", {
+        const dataLogin = await request("/api/login", "POST", {
           email,
           password,
         });
-        console.log(dataLogin.userId, "dataLogin userId");
         authentication.login(dataLogin.token, dataLogin.userId);
         history.push(`/profile/${dataLogin.userId}`);
       } catch (e) {

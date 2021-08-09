@@ -1,8 +1,7 @@
 import { useCallback, useContext, useState, useEffect } from "react";
-import { useParams } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { ProfileImgStyled } from "./Profile.style";
+import { ProfileImgStyled } from "./Profiles.style";
 
 import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
@@ -25,35 +24,41 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 1, 3),
   },
 }));
+
 const body = (data: any, classes: MaterialUIStyleType) => {
-  return (
-    <div className={classes.paper}>
-      <h2>Profile</h2>
-      <div>{data._id}</div>
-      <div>{data.name}</div>
-      <div>{data.email}</div>
-      <ProfileImgStyled src={data.avatar || noPicture} alt="avatar" />
-    </div>
-  );
+  if (data.length > 0) {
+    return (
+      <>
+        {data.map((user: any) => (
+          <div className={classes.paper} key={user._id}>
+            <h2>Profile</h2>
+            <div>{user._id}</div>
+            <div>{user.name}</div>
+            <div>{user.email}</div>
+            <ProfileImgStyled src={user.avatar || noPicture} alt="avatar" />
+          </div>
+        ))}
+      </>
+    );
+  }
 };
 
-const Profile = () => {
+const Profiles = () => {
   const { token } = useContext(AuthContext);
   const { request, loading } = useHttp();
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const classes = useStyles();
-  const { id } = useParams<{ id: string }>();
 
   const getName = useCallback(async () => {
     try {
-      const user = await request(`/api/profile/${id}`, "GET", null, {
+      const users = await request(`/api/profiles`, "GET", null, {
         Authorization: `Bearer ${token}`,
       });
-      setData(user);
+      setData(users);
     } catch (e) {
-      console.log(e, "Error profile");
+      console.log(e, "Error profiles");
     }
-  }, [token, id, request]);
+  }, [token, request]);
 
   useEffect(() => {
     getName();
@@ -63,7 +68,7 @@ const Profile = () => {
     return <Loader />;
   }
 
-  return <>{!loading && id && body(data, classes)}</>;
+  return <>{!loading && body(data, classes)}</>;
 };
 
-export { Profile };
+export { Profiles };

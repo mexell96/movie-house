@@ -20,7 +20,7 @@ const Login = () => {
   const onFinish = ({ email, password, remember }: any) => {
     const loginHandler = async () => {
       try {
-        const data = await request("/api/auth/login", "POST", {
+        const data = await request("/api/login", "POST", {
           email,
           password,
           remember,
