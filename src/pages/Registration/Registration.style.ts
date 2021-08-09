@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const AuthenticationWrapperStyled = styled.div`
+export const RegistrationWrapperStyled = styled.div`
   display: flex;
   justify-content: space-around;
 

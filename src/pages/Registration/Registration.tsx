@@ -1,8 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { AuthenticationWrapperStyled } from "./Authentication.style";
+import { RegistrationWrapperStyled } from "./Registration.style";
 
-import { CreateUser, Login } from "../../components";
+import { CreateUser } from "../../components";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -17,19 +17,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Authentication = () => {
+const Registration = () => {
   const classes = useStyles();
 
   return (
-    <AuthenticationWrapperStyled>
-      <div className={classes.paper}>
-        <Login />
-      </div>
+    <RegistrationWrapperStyled>
       <div className={classes.paper}>
         <CreateUser />
       </div>
-    </AuthenticationWrapperStyled>
+    </RegistrationWrapperStyled>
   );
 };
 
-export { Authentication };
+export { Registration };

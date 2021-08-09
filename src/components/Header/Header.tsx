@@ -5,6 +5,7 @@ import { Button } from "antd";
 import {
   HeaderStyled,
   HeaderAvatarStyled,
+  HeaderButtonsStyled,
   HeaderImgStyled,
   HeaderImgLinkStyled,
 } from "./Header.styled";
@@ -25,23 +26,28 @@ const Header = () => {
   return (
     <HeaderStyled onClick={() => window.scroll(0, 0)}>
       <div>Movie-house</div>
-      <HeaderAvatarStyled>
+      <>
         {!auth.isAuthenticated && (
-          <Button>
-            <Link to={`/auth`}>Login</Link>
-          </Button>
+          <HeaderButtonsStyled>
+            <Button>
+              <Link to={`/login`}>Login</Link>
+            </Button>
+            <Button>
+              <Link to={`/registration`}>Registration</Link>
+            </Button>
+          </HeaderButtonsStyled>
         )}
         {auth.isAuthenticated && (
-          <>
+          <HeaderAvatarStyled>
             <HeaderImgLinkStyled to={`/profile/${auth.userId}`}>
               <HeaderImgStyled src={noPicture} alt="avatar" />
             </HeaderImgLinkStyled>
             <Button onClick={logoutHandler}>
               <Link to={`/`}>Logout</Link>
             </Button>
-          </>
+          </HeaderAvatarStyled>
         )}
-      </HeaderAvatarStyled>
+      </>
     </HeaderStyled>
   );
 };

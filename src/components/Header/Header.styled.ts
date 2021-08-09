@@ -30,6 +30,15 @@ export const HeaderAvatarStyled = styled.div`
   cursor: auto;
 `;
 
+export const HeaderButtonsStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-items: stretch;
+  cursor: auto;
+`;
+
 export const HeaderImgLinkStyled = styled(Link)`
   height: 5vw;
   margin-right: 10px;

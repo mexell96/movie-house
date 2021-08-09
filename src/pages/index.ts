@@ -3,4 +3,5 @@ export * from "./Movies";
 export * from "./PreviousSearches";
 export * from "./Profile";
 export * from "./Profiles";
-export * from "./Authentication";
+export * from "./AuthLogin";
+export * from "./Registration";
