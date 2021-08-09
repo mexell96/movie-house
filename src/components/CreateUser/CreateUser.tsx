@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Form, Input, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 
 import { useHttp } from "../../hooks/http.hook";
+import { AuthContext } from "../../context/AuthContext";
 
 const normFile = (e: any) => {
   console.log("Upload event:", e);
@@ -13,6 +15,8 @@ const normFile = (e: any) => {
 };
 
 const CreateUser = () => {
+  const history = useHistory();
+  const authentication: any = useContext(AuthContext);
   const { loading, error, request, clearError } = useHttp();
 
   useEffect(() => {
@@ -30,8 +34,14 @@ const CreateUser = () => {
           name,
           password,
         });
-        console.log("DATA ---", data);
         message.success(data.message);
+        const dataLogin = await request("/api/auth/login", "POST", {
+          email,
+          password,
+        });
+        console.log(dataLogin.userId, "dataLogin userId");
+        authentication.login(dataLogin.token, dataLogin.userId);
+        history.push(`/profile/${dataLogin.userId}`);
       } catch (e) {
         console.log(e, "E message createUserPage");
       }
