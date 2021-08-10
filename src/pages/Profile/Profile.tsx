@@ -1,17 +1,11 @@
 import { useCallback, useContext, useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
-
-import { ProfileImgStyled } from "./Profile.style";
+import { Button } from "@material-ui/core";
 
 import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
-import { Loader } from "../../components";
-import { noPicture } from "../../consts";
-
-type MaterialUIStyleType = {
-  paper: string;
-};
+import { Loader, ProfileData, ProfileDataForm } from "../../components";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,45 +19,53 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 1, 3),
   },
 }));
-const body = (data: any, classes: MaterialUIStyleType) => {
-  return (
-    <div className={classes.paper}>
-      <h2>Profile</h2>
-      <div>{data._id}</div>
-      <div>{data.name}</div>
-      <div>{data.email}</div>
-      <ProfileImgStyled src={data.avatar || noPicture} alt="avatar" />
-    </div>
-  );
-};
 
 const Profile = () => {
   const { token } = useContext(AuthContext);
   const { request, loading } = useHttp();
-  const [data, setData] = useState({});
+  const [user, setUser] = useState({});
+  const [editMode, setEditMode] = useState(false);
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
 
-  const getName = useCallback(async () => {
+  const getUser = useCallback(async () => {
     try {
       const user = await request(`/api/profile/${id}`, "GET", null, {
         Authorization: `Bearer ${token}`,
       });
-      setData(user);
+      setUser(user);
     } catch (e) {
       console.log(e, "Error profile");
     }
   }, [token, id, request]);
 
   useEffect(() => {
-    getName();
-  }, [getName]);
+    getUser();
+  }, [getUser]);
 
   if (loading) {
     return <Loader />;
   }
 
-  return <>{!loading && id && body(data, classes)}</>;
+  return (
+    <>
+      <Button variant="contained" onClick={() => setEditMode(!editMode)}>
+        Edit mode
+      </Button>
+      {!loading && id && !editMode && (
+        <ProfileData user={user} classes={classes} />
+      )}
+      {!loading && id && editMode && (
+        <ProfileDataForm
+          user={user}
+          classes={classes}
+          setEditMode={setEditMode}
+          getUser={getUser}
+          token={token}
+        />
+      )}
+    </>
+  );
 };
 
 export { Profile };

@@ -14,3 +14,5 @@ export * from "./ReviewCard";
 export * from "./UploadImage";
 export * from "./Login";
 export * from "./CreateUser";
+export * from "./ProfileData";
+export * from "./ProfileDataForm";

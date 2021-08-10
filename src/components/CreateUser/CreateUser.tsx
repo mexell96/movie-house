@@ -29,12 +29,12 @@ const CreateUser = () => {
   const onFinish = ({ email, name, password }: any) => {
     const registerHandler = async () => {
       try {
-        const data = await request("/api/register", "POST", {
+        const response = await request("/api/register", "POST", {
           email,
           name,
           password,
         });
-        message.success(data.message);
+        message.success(response.message);
         const dataLogin = await request("/api/login", "POST", {
           email,
           password,
