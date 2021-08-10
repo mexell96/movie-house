@@ -34,7 +34,7 @@ const ProfileDataForm = ({
     }
   }, [error, clearError]);
 
-  const onFinish = ({ name, email }: any) => {
+  const onFinish = ({ name, email, oldPassword, newPassword }: any) => {
     const registerHandler = async () => {
       try {
         const response = await request(
@@ -43,6 +43,8 @@ const ProfileDataForm = ({
           {
             name,
             email,
+            oldPassword,
+            newPassword,
           },
           {
             Authorization: `Bearer ${token}`,
@@ -103,6 +105,49 @@ const ProfileDataForm = ({
             },
           ]}>
           <Input placeholder="Email" value={user.email} />
+        </Form.Item>
+        <Form.Item
+          name="oldPassword"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+            { min: 6, message: "Password must be minimum 6 characters." },
+          ]}>
+          <Input.Password placeholder="Current password" />
+        </Form.Item>
+        <Form.Item
+          name="newPassword"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+            { min: 6, message: "Password must be minimum 6 characters." },
+          ]}>
+          <Input.Password placeholder="New password" />
+        </Form.Item>
+        <Form.Item
+          name="confirm"
+          dependencies={["newPassword"]}
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("newPassword") === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error("The two passwords that you entered do not match!")
+                );
+              },
+            }),
+          ]}>
+          <Input.Password placeholder="Confirm password" />
         </Form.Item>
         <Form.Item>
           <Button htmlType="submit" disabled={loading}>
