@@ -1,5 +1,13 @@
 import { createContext } from "react";
 
+type AuthContextType = {
+  token: string | null;
+  userId: string | null;
+  login: () => void;
+  logout: () => void;
+  isAuthenticated: boolean;
+};
+
 function noop() {}
 
 export const AuthContext = createContext({
@@ -8,4 +16,4 @@ export const AuthContext = createContext({
   login: noop,
   logout: noop,
   isAuthenticated: false,
-});
+} as AuthContextType);

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export const ProfileImgStyled = styled.img`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
+export const ProfileTableStyled = styled.table`
+  border: 1px solid black;
+  background-color: #282c34;
+  width: 100%;
 `;

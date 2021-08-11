@@ -1,11 +1,28 @@
 import { useCallback, useContext, useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
+
+import { ProfileTableStyled } from "./Profile.style";
 
 import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
-import { Loader, ProfileData, ProfileDataForm } from "../../components";
+import {
+  FormId,
+  FormName,
+  FormEmail,
+  Loader,
+  FormImage,
+  FormPassword,
+} from "../../components";
+
+type UserType = {
+  email: string;
+  name: string;
+  password: string;
+  role: string;
+  _id: string;
+  avatar: string;
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -23,8 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
   const { token } = useContext(AuthContext);
   const { request, loading } = useHttp();
-  const [user, setUser] = useState({});
-  const [editMode, setEditMode] = useState(false);
+  const [user, setUser] = useState<UserType | null>(null);
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
 
@@ -49,20 +65,27 @@ const Profile = () => {
 
   return (
     <>
-      <Button variant="contained" onClick={() => setEditMode(!editMode)}>
-        Edit mode
-      </Button>
-      {!loading && id && !editMode && (
-        <ProfileData user={user} classes={classes} />
-      )}
-      {!loading && id && editMode && (
-        <ProfileDataForm
-          user={user}
-          classes={classes}
-          setEditMode={setEditMode}
-          getUser={getUser}
-          token={token}
-        />
+      {!loading && id && user && token && (
+        <div className={classes.paper}>
+          <h2>Profile</h2>
+          <ProfileTableStyled>
+            <FormId id={user._id} />
+            <FormName
+              name={user.name}
+              id={user._id}
+              token={token}
+              getUser={getUser}
+            />
+            <FormEmail
+              email={user.email}
+              id={user._id}
+              token={token}
+              getUser={getUser}
+            />
+            <FormPassword id={user._id} token={token} getUser={getUser} />
+            <FormImage avatar={user.avatar} />
+          </ProfileTableStyled>
+        </div>
       )}
     </>
   );
