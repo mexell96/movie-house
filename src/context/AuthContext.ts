@@ -3,7 +3,7 @@ import { createContext } from "react";
 type AuthContextType = {
   token: string | null;
   userId: string | null;
-  login: () => void;
+  login: (jwtToken: string, id: string) => void;
   logout: () => void;
   isAuthenticated: boolean;
 };
