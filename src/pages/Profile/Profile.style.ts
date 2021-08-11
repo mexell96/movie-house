@@ -5,3 +5,5 @@ export const ProfileTableStyled = styled.table`
   background-color: #282c34;
   width: 100%;
 `;
+
+export const ProfileTbodyStyled = styled.tbody``;

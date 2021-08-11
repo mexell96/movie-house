@@ -116,12 +116,14 @@ const FormPassword = ({ id, token, getUser }: FormPasswordPropType) => {
           </Form>
         </FormPasswordTdStyled>
       )}
-      {!editPassword && (
-        <Button onClick={() => setEditPassword(true)}>Change</Button>
-      )}
-      {editPassword && (
-        <Button onClick={() => setEditPassword(false)}>Cancel</Button>
-      )}
+      <FormPasswordTdStyled>
+        {!editPassword && (
+          <Button onClick={() => setEditPassword(true)}>Change</Button>
+        )}
+        {editPassword && (
+          <Button onClick={() => setEditPassword(false)}>Cancel</Button>
+        )}
+      </FormPasswordTdStyled>
     </FormPasswordTrStyled>
   );
 };

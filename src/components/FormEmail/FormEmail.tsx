@@ -85,8 +85,14 @@ const FormEmail = ({ email, id, token, getUser }: FormEmailPropType) => {
           </Form>
         </FormEmailTdStyled>
       )}
-      {!editEmail && <Button onClick={() => setEditEmail(true)}>Change</Button>}
-      {editEmail && <Button onClick={() => setEditEmail(false)}>Cancel</Button>}
+      <FormEmailTdStyled>
+        {!editEmail && (
+          <Button onClick={() => setEditEmail(true)}>Change</Button>
+        )}
+        {editEmail && (
+          <Button onClick={() => setEditEmail(false)}>Cancel</Button>
+        )}
+      </FormEmailTdStyled>
     </FormEmailTrStyled>
   );
 };

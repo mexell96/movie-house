@@ -83,8 +83,10 @@ const FormName = ({ name, id, token, getUser }: FormNamePropType) => {
           </Form>
         </FormNameTdStyled>
       )}
-      {!editName && <Button onClick={() => setEditName(true)}>Change</Button>}
-      {editName && <Button onClick={() => setEditName(false)}>Cancel</Button>}
+      <FormNameTdStyled>
+        {!editName && <Button onClick={() => setEditName(true)}>Change</Button>}
+        {editName && <Button onClick={() => setEditName(false)}>Cancel</Button>}
+      </FormNameTdStyled>
     </FormNameTrStyled>
   );
 };

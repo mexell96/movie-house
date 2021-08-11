@@ -2,7 +2,7 @@ import { useCallback, useContext, useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { ProfileTableStyled } from "./Profile.style";
+import { ProfileTableStyled, ProfileTbodyStyled } from "./Profile.style";
 
 import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
@@ -68,22 +68,29 @@ const Profile = () => {
       {!loading && id && user && token && (
         <div className={classes.paper}>
           <h2>Profile</h2>
+          <FormImage
+            avatar={user.avatar}
+            id={user._id}
+            token={token}
+            getUser={getUser}
+          />
           <ProfileTableStyled>
-            <FormId id={user._id} />
-            <FormName
-              name={user.name}
-              id={user._id}
-              token={token}
-              getUser={getUser}
-            />
-            <FormEmail
-              email={user.email}
-              id={user._id}
-              token={token}
-              getUser={getUser}
-            />
-            <FormPassword id={user._id} token={token} getUser={getUser} />
-            <FormImage avatar={user.avatar} />
+            <ProfileTbodyStyled>
+              <FormId id={user._id} />
+              <FormName
+                name={user.name}
+                id={user._id}
+                token={token}
+                getUser={getUser}
+              />
+              <FormEmail
+                email={user.email}
+                id={user._id}
+                token={token}
+                getUser={getUser}
+              />
+              <FormPassword id={user._id} token={token} getUser={getUser} />
+            </ProfileTbodyStyled>
           </ProfileTableStyled>
         </div>
       )}
