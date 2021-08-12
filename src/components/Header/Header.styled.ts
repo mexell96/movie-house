@@ -57,3 +57,9 @@ export const HeaderImgStyled = styled.img`
     margin-bottom: 6.4vw;
   }
 `;
+
+export const HeaderNameStyled = styled.div`
+  font-size: 3vw;
+  margin: 0 10px;
+  text-transform: none;
+`;

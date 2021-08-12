@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "antd";
 
@@ -8,14 +9,17 @@ import {
   HeaderButtonsStyled,
   HeaderImgStyled,
   HeaderImgLinkStyled,
+  HeaderNameStyled,
 } from "./Header.styled";
 
-import { noPicture } from "../../consts";
 import { AuthContext } from "../../context/AuthContext";
 
 const Header = () => {
   const auth: any = useContext(AuthContext);
   const history = useHistory();
+  const userReducer = useSelector(
+    ({ userReducer }: RootStateType) => userReducer
+  );
 
   const logoutHandler = (event: any) => {
     event.preventDefault();
@@ -40,8 +44,9 @@ const Header = () => {
         {auth.isAuthenticated && (
           <HeaderAvatarStyled>
             <HeaderImgLinkStyled to={`/profile/${auth.userId}`}>
-              <HeaderImgStyled src={noPicture} alt="avatar" />
+              <HeaderImgStyled src={userReducer.avatar} alt="avatar" />
             </HeaderImgLinkStyled>
+            <HeaderNameStyled>{userReducer.name}</HeaderNameStyled>
             <Button onClick={logoutHandler}>
               <Link to={`/`}>Logout</Link>
             </Button>

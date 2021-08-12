@@ -116,3 +116,8 @@ declare type UserType = {
   _id: string;
   avatar: string;
 };
+
+declare type DataLSType = {
+  userId: string;
+  token: string;
+};

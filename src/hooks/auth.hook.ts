@@ -1,10 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
 
-type DataLSType = {
-  userId: string;
-  token: string;
-};
-
 const useAuth = () => {
   const [token, setToken] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
