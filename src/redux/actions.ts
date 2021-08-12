@@ -11,6 +11,7 @@ import {
   SET_TAB,
   SET_REVIEW,
   SET_REVIEWS,
+  SET_USER,
 } from "./types";
 
 type ReviewPropsType = {
@@ -82,5 +83,12 @@ export const setReviews = (props: ReviewsReducerType) => {
   return {
     type: SET_REVIEWS,
     payload: props,
+  };
+};
+
+export const setUser = (user: UserType): UserReducerPropsType => {
+  return {
+    type: SET_USER,
+    payload: user,
   };
 };

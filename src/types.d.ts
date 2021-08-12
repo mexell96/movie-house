@@ -31,6 +31,10 @@ declare type ReviewType = {
 declare type ReviewsReducerType = {
   [key: string]: ReviewType[];
 };
+declare type UserReducerPropsType = {
+  type: string;
+  payload: UserType;
+};
 declare type RootStateType = {
   appReducer: AppReducerType;
   previousSearches: PreviousSearchesType;
@@ -39,6 +43,7 @@ declare type RootStateType = {
   tabsReducer: TabsType;
   urlReducer: SearchInfoType;
   reviewsReducer: ReviewsReducerType;
+  userReducer: UserType;
 };
 
 declare type ResultMoviesType = {
@@ -101,4 +106,13 @@ declare type FormikPropsType = {
     touched: ReviewInfoCheckerType;
     values: ReviewInfoType;
   };
+};
+
+declare type UserType = {
+  email: string;
+  name: string;
+  password: string;
+  role: string;
+  _id: string;
+  avatar: string;
 };

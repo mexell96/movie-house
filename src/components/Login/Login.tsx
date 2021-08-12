@@ -1,14 +1,17 @@
 import { useContext, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import { useHistory } from "react-router-dom";
 
 import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
+import { setUser } from "../../redux/actions";
 
 const Login = () => {
   const history = useHistory();
   const authentication: any = useContext(AuthContext);
   const { loading, error, request, clearError } = useHttp();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (error !== null) {
@@ -28,6 +31,7 @@ const Login = () => {
         console.log("DATA loginPage ---", data);
         message.success(data.message);
         authentication.login(data.token, data.userId);
+        dispatch(setUser(data.user));
         history.push(`/`);
       } catch (e) {
         console.log(e, "E message loginPage");

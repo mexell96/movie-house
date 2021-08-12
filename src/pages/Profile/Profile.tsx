@@ -15,15 +15,6 @@ import {
   FormPassword,
 } from "../../components";
 
-type UserType = {
-  email: string;
-  name: string;
-  password: string;
-  role: string;
-  _id: string;
-  avatar: string;
-};
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     width: "100%",

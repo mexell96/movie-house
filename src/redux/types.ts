@@ -7,3 +7,4 @@ export const HIDE_LOADER: string = "HIDE_LOADER";
 export const SET_TAB: string = "SET_TAB";
 export const SET_REVIEW: string = "SET_REVIEW";
 export const SET_REVIEWS: string = "SET_REVIEWS";
+export const SET_USER: string = "SET_USER";
