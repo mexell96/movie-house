@@ -6,14 +6,6 @@ import { useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
 
-const normFile = (e: any) => {
-  console.log("Upload event:", e);
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e && e.fileList;
-};
-
 const CreateUser = () => {
   const history = useHistory();
   const authentication: any = useContext(AuthContext);
@@ -26,13 +18,14 @@ const CreateUser = () => {
     }
   }, [error, clearError]);
 
-  const onFinish = ({ email, name, password }: any) => {
+  const onFinish = ({ email, name, password, upload }: any) => {
     const registerHandler = async () => {
       try {
         const response = await request("/api/register", "POST", {
           email,
           name,
           password,
+          upload,
         });
         message.success(response.message);
         const dataLogin = await request("/api/login", "POST", {
@@ -50,6 +43,16 @@ const CreateUser = () => {
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
+  };
+
+  const beforeUpload = (file: any) => {
+    const imgType = ["image/png", "image/jpeg", "image/jpeg"];
+    if (imgType.includes(file.type)) {
+      return false;
+    } else {
+      message.error(`${file.name} is not a png, jpg, jpeg file`);
+      return Upload.LIST_IGNORE;
+    }
   };
 
   return (
@@ -117,12 +120,13 @@ const CreateUser = () => {
         ]}>
         <Input.Password placeholder="Confirm Password" />
       </Form.Item>
-      <Form.Item
-        name="upload"
-        valuePropName="fileList"
-        getValueFromEvent={normFile}>
-        <Upload name="logo" listType="picture">
-          <Button icon={<UploadOutlined />}>Click to upload</Button>
+      <Form.Item name="upload" valuePropName="file">
+        <Upload
+          name="logo"
+          maxCount={1}
+          listType="picture"
+          beforeUpload={beforeUpload}>
+          <Button icon={<UploadOutlined />}>Click to upload photo</Button>
         </Upload>
       </Form.Item>
       <Form.Item>
