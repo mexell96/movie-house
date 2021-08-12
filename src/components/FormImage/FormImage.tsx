@@ -30,6 +30,7 @@ const FormImage = ({ avatar, id, token, getUser }: FormImagePropType) => {
       reader.readAsDataURL(file);
       reader.onload = () => {
         setEditAvatar(true);
+        setSizeError(false);
         setNewAvatar(reader.result as string);
       };
       reader.onerror = () => console.log(reader.error, "error");
