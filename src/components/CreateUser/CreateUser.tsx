@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
+import { MEGABYTE } from "../../consts";
 
 const CreateUser = () => {
   const history = useHistory();
@@ -47,8 +48,11 @@ const CreateUser = () => {
 
   const beforeUpload = (file: any) => {
     const imgType = ["image/png", "image/jpeg", "image/jpeg"];
-    if (imgType.includes(file.type)) {
+    if (imgType.includes(file.type) && file.size <= MEGABYTE) {
       return false;
+    } else if (imgType.includes(file.type) && file.size > MEGABYTE) {
+      message.error(`${file.name} is too big file size`);
+      return Upload.LIST_IGNORE;
     } else {
       message.error(`${file.name} is not a png, jpg, jpeg file`);
       return Upload.LIST_IGNORE;

@@ -7,7 +7,7 @@ import {
   FormImageAvatarStyled,
 } from "./FormImage.style";
 
-import { noPicture, MEGABYTE } from "../../consts";
+import { MEGABYTE } from "../../consts";
 import { useHttp } from "../../hooks/http.hook";
 
 type FormImagePropType = {
@@ -20,8 +20,8 @@ type FormImagePropType = {
 const FormImage = ({ avatar, id, token, getUser }: FormImagePropType) => {
   const [sizeError, setSizeError] = useState(false);
   const [editAvatar, setEditAvatar] = useState(false);
-  const [logo, setLogo] = useState("");
   const { loading, error, request, clearError } = useHttp();
+  const [newAvatar, setNewAvatar] = useState("");
 
   const onFileChange = (input: any) => {
     const file = input.target.files[0];
@@ -29,9 +29,8 @@ const FormImage = ({ avatar, id, token, getUser }: FormImagePropType) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        console.log("avatar", reader.result as string);
         setEditAvatar(true);
-        setLogo(reader.result as string);
+        setNewAvatar(reader.result as string);
       };
       reader.onerror = () => console.log(reader.error, "error");
     } else {
@@ -46,13 +45,13 @@ const FormImage = ({ avatar, id, token, getUser }: FormImagePropType) => {
     }
   }, [error, clearError]);
 
-  const changeAvatar = ({ logo }: any) => {
+  const changeAvatar = (newAvatar: any) => {
     (async () => {
       try {
         const response = await request(
-          `/api/profile-name/${id}`,
+          `/api/profile-avatar/${id}`,
           "PATCH",
-          { logo },
+          { avatar: newAvatar },
           { Authorization: `Bearer ${token}` }
         );
         message.success(response.message);
@@ -64,10 +63,15 @@ const FormImage = ({ avatar, id, token, getUser }: FormImagePropType) => {
     })();
   };
 
+  const cancel = () => {
+    setNewAvatar("");
+    setEditAvatar(false);
+  };
+
   return (
     <div>
       <FormImageButtonStyled component="label">
-        <FormImageAvatarStyled src={logo || noPicture} alt="avatar" />
+        <FormImageAvatarStyled src={newAvatar || avatar} alt="avatar" />
         <input
           accept="image/*"
           id="avatar"
@@ -83,13 +87,11 @@ const FormImage = ({ avatar, id, token, getUser }: FormImagePropType) => {
         </FormImageErrorStyled>
       )}
       {editAvatar && (
-        <Button onClick={() => changeAvatar(logo)} disabled={loading}>
+        <Button onClick={() => changeAvatar(newAvatar)} disabled={loading}>
           Save
         </Button>
       )}
-      {editAvatar && (
-        <Button onClick={() => setEditAvatar(false)}>Cancel</Button>
-      )}
+      {editAvatar && <Button onClick={() => cancel()}>Cancel</Button>}
     </div>
   );
 };
