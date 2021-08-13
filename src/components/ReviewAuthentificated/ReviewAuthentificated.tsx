@@ -4,6 +4,7 @@ import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import { makeStyles, TextField } from "@material-ui/core";
 import { uid } from "uid/secure";
+import { message } from "antd";
 
 import {
   ReviewAuthentificatedWrapperStyled,
@@ -14,6 +15,9 @@ import {
 
 import { setReview } from "../../redux/actions";
 import { Rating } from "..";
+import { useHttp } from "../../hooks/http.hook";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 type ReviewPropsType = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -46,6 +50,8 @@ const ReviewAuthentificated = ({ setShowModal }: ReviewPropsType) => {
   );
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
+  const { request } = useHttp();
+  const auth = useContext(AuthContext);
 
   const initialValues = {
     name: userReducer.name,
@@ -54,17 +60,32 @@ const ReviewAuthentificated = ({ setShowModal }: ReviewPropsType) => {
     avatar: userReducer.avatar,
   };
 
-  const onSubmit = (values: ReviewInfoType, actions: ReviewActionsType) => {
-    const review: ReviewType = {
+  const onSubmit = async (
+    values: ReviewInfoType,
+    actions: ReviewActionsType
+  ) => {
+    const newReview: ReviewType = {
       uid: uid(25),
       date: Date.now(),
       ...values,
     };
+    console.log(newReview, "newReview");
 
-    const reviews: ReviewType[] = (reviewsReducer && reviewsReducer[id]) || [];
-    reviews.push(review);
+    try {
+      const response = await request("/api/create-review", "POST", newReview, {
+        Authorization: `Bearer ${auth.token}`,
+      });
+      console.log(response, "response 99999");
+      message.success(response.message);
 
-    dispatch(setReview({ reviews, id }));
+      const reviews: ReviewType[] =
+        (reviewsReducer && reviewsReducer[id]) || [];
+      reviews.push(response.review);
+      dispatch(setReview({ reviews, id }));
+    } catch (e) {
+      console.log(e, "E message createUserPage");
+    }
+
     actions.setSubmitting(false);
     setShowModal(false);
   };
