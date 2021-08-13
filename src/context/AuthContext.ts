@@ -6,9 +6,14 @@ type AuthContextType = {
   login: (jwtToken: string, id: string) => void;
   logout: () => void;
   isAuthenticated: boolean;
+  getUser: () => Promise<void>;
 };
 
-function noop() {}
+const noop = () => {};
+
+const asyncFunction: () => Promise<void> = async () => {
+  await new Promise((res, rej) => {});
+};
 
 export const AuthContext = createContext({
   token: null,
@@ -16,4 +21,5 @@ export const AuthContext = createContext({
   login: noop,
   logout: noop,
   isAuthenticated: false,
+  getUser: asyncFunction,
 } as AuthContextType);

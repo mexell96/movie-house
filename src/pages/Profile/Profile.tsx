@@ -1,5 +1,5 @@
-import { useCallback, useContext, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -7,7 +7,6 @@ import { ProfileTableStyled, ProfileTbodyStyled } from "./Profile.style";
 
 import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
-import { setUser } from "../../redux/actions";
 import {
   FormId,
   FormName,
@@ -31,29 +30,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = () => {
-  const dispatch = useDispatch();
-  const { token } = useContext(AuthContext);
-  const { request, loading } = useHttp();
+  const { token, getUser } = useContext(AuthContext);
+  const { loading } = useHttp();
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
-
-  const getUser = useCallback(async () => {
-    try {
-      const user: UserType = await request(`/api/profile/${id}`, "GET", null, {
-        Authorization: `Bearer ${token}`,
-      });
-      dispatch(setUser(user));
-    } catch (e) {
-      console.log(e, "Error profile");
-    }
-  }, [token, id, request]);
-
-  useEffect(() => {
-    getUser();
-  }, [getUser]);
 
   if (loading) {
     return <Loader />;

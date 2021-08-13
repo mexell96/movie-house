@@ -1,9 +1,34 @@
 import { useState, useCallback, useEffect } from "react";
+import { setUser } from "../redux/actions";
+import { useDispatch } from "react-redux";
+import { useHttp } from "./http.hook";
+
+const data: DataLSType = JSON.parse(localStorage.getItem("userData") || "null");
 
 const useAuth = () => {
   const [token, setToken] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const { request } = useHttp();
+
+  const getUser = useCallback(async () => {
+    if (data) {
+      try {
+        const user: any = await request(
+          `/api/profile/${data.userId}`,
+          "GET",
+          null,
+          {
+            Authorization: `Bearer ${data.token}`,
+          }
+        );
+        dispatch(setUser(user));
+      } catch (e) {
+        console.log(e, "Error profile");
+      }
+    }
+  }, []);
 
   const login = useCallback((jwtToken: string, id: string) => {
     setToken(jwtToken);
@@ -31,7 +56,7 @@ const useAuth = () => {
     setReady(true);
   }, [login]);
 
-  return { login, logout, token, userId, ready };
+  return { login, logout, token, userId, ready, getUser };
 };
 
 export { useAuth };

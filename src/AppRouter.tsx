@@ -6,43 +6,23 @@ import { Container } from "@material-ui/core";
 import { AppRouterStyled } from "./AppRouter.style";
 
 import { Header, Loader, Navbar } from "./components";
-import { setReviews, setUser } from "./redux/actions";
+import { setReviews } from "./redux/actions";
 import { useRoutes } from "./routes";
 import { useAuth } from "./hooks/auth.hook";
-import { useHttp } from "./hooks/http.hook";
 import { AuthContext } from "./context/AuthContext";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
-  const { token, login, logout, userId, ready } = useAuth();
+  const { token, login, logout, userId, ready, getUser } = useAuth();
   const isAuthenticated = !!token;
   const routes = useRoutes(isAuthenticated);
-  const { request } = useHttp();
-
-  dispatch(setReviews(JSON.parse(localStorage.getItem("Reviews") || "null")));
-
-  const data: DataLSType = JSON.parse(
-    localStorage.getItem("userData") || "null"
-  );
 
   useEffect(() => {
-    (async () => {
-      try {
-        if (data) {
-          const user = await request(
-            `/api/profile/${data.userId}`,
-            "GET",
-            null,
-            {
-              Authorization: `Bearer ${data.token}`,
-            }
-          );
-          dispatch(setUser(user));
-        }
-      } catch (e) {
-        console.log(e, "Error profile");
-      }
-    })();
+    dispatch(setReviews(JSON.parse(localStorage.getItem("Reviews") || "null")));
+  }, []);
+
+  useEffect(() => {
+    getUser();
   }, []);
 
   if (!ready) {
@@ -57,6 +37,7 @@ const AppRouter = () => {
         logout,
         userId,
         isAuthenticated,
+        getUser,
       }}>
       <Router>
         <Header />
