@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ReviewWrapperStyled = styled.div`
+export const ReviewAuthentificatedWrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,7 +10,7 @@ export const ReviewWrapperStyled = styled.div`
   margin-top: 10px;
 `;
 
-export const ReviewButtonSubmitStyled = styled.button`
+export const ReviewAuthentificatedButtonSubmitStyled = styled.button`
   appearance: none;
   padding: 10px;
   margin: 10px 0;
@@ -23,7 +23,12 @@ export const ReviewButtonSubmitStyled = styled.button`
   cursor: pointer;
 `;
 
-export const ReviewAvatarStyled = styled.div`
-  display: flex;
-  justify-content: center;
+export const ReviewAuthentificatedImgStyled = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+`;
+
+export const ReviewAuthentificatedNameStyled = styled.div`
+  font-size: 3vw;
 `;

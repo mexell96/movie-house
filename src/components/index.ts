@@ -9,6 +9,7 @@ export * from "./UrlField";
 export * from "./CustomPagination";
 export * from "./Modal";
 export * from "./Review";
+export * from "./ReviewAuthentificated";
 export * from "./Rating";
 export * from "./ReviewCard";
 export * from "./UploadImage";

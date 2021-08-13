@@ -15,9 +15,10 @@ import {
   MovieReviewsWrapperStyled,
 } from "./Movie.style";
 
-import { Loader, Modal, Review, ReviewCard } from "..";
+import { Loader, Modal, Review, ReviewAuthentificated, ReviewCard } from "..";
 import { fetchMovie } from "../../redux/actions";
 import { getPicture } from "../../utils";
+import { useAuth } from "../../hooks/auth.hook";
 
 type MaterialUIStyleType = {
   paper: string;
@@ -28,7 +29,8 @@ const body = (
   history: History<unknown>,
   classes: MaterialUIStyleType,
   showModal: boolean,
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
+  isAuthenticated: boolean
 ) => {
   return (
     <div className={classes.paper}>
@@ -51,7 +53,12 @@ const body = (
       </MovieButtonsWrapper>
       {showModal && (
         <Modal close={setShowModal} title="Write a review">
-          <Review setShowModal={setShowModal} />
+          <>
+            {!isAuthenticated && <Review setShowModal={setShowModal} />}
+            {isAuthenticated && (
+              <ReviewAuthentificated setShowModal={setShowModal} />
+            )}
+          </>
         </Modal>
       )}
     </div>
@@ -87,6 +94,8 @@ const Movie = () => {
   const [movie, setMovie] = useState<MovieType | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [reviews, setReviewsState] = useState<ReviewType[] | null>(null);
+  const { token } = useAuth();
+  const isAuthenticated = !!token;
 
   useEffect(() => {
     if (resultsMovie[id]) {
@@ -109,7 +118,7 @@ const Movie = () => {
       {loading && <Loader />}
       {!loading &&
         movie &&
-        body(movie, history, classes, showModal, setShowModal)}
+        body(movie, history, classes, showModal, setShowModal, isAuthenticated)}
       {reviews && (
         <MovieReviewsWrapperStyled>
           {reviews.map((item) => (
