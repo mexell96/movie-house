@@ -1,4 +1,5 @@
 import { useEffect, useContext } from "react";
+import { useDispatch } from "react-redux";
 import { Form, Input, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
@@ -6,11 +7,13 @@ import { useHistory } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
 import { MEGABYTE } from "../../consts";
+import { setUser } from "../../redux/actions";
 
 const CreateUser = () => {
   const history = useHistory();
   const authentication: any = useContext(AuthContext);
   const { loading, error, request, clearError } = useHttp();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (error !== null) {
@@ -33,6 +36,7 @@ const CreateUser = () => {
           email,
           password,
         });
+        dispatch(setUser(dataLogin.user));
         authentication.login(dataLogin.token, dataLogin.userId);
         history.push(`/profile/${dataLogin.userId}`);
       } catch (e) {

@@ -3,8 +3,6 @@ import { setUser } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import { useHttp } from "./http.hook";
 
-const data: DataLSType = JSON.parse(localStorage.getItem("userData") || "null");
-
 const useAuth = () => {
   const [token, setToken] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
@@ -13,6 +11,9 @@ const useAuth = () => {
   const { request } = useHttp();
 
   const getUser = useCallback(async () => {
+    const data: DataLSType = JSON.parse(
+      localStorage.getItem("userData") || "null"
+    );
     if (data) {
       try {
         const user: any = await request(

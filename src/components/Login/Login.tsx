@@ -28,10 +28,9 @@ const Login = () => {
           password,
           remember,
         });
-        console.log("DATA loginPage ---", data);
         message.success(data.message);
-        authentication.login(data.token, data.userId);
         dispatch(setUser(data.user));
+        authentication.login(data.token, data.userId);
         history.push(`/`);
       } catch (e) {
         console.log(e, "E message loginPage");
