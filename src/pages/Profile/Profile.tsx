@@ -3,7 +3,11 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { ProfileTableStyled, ProfileTbodyStyled } from "./Profile.style";
+import {
+  ProfileTableStyled,
+  ProfileTbodyStyled,
+  ProfileAvatarWrapperStyled,
+} from "./Profile.style";
 
 import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
@@ -47,12 +51,14 @@ const Profile = () => {
       {!loading && id && userReducer && token && (
         <div className={classes.paper}>
           <h2>Profile</h2>
-          <FormImage
-            avatar={userReducer.avatar}
-            id={userReducer._id}
-            token={token}
-            getUser={getUser}
-          />
+          <ProfileAvatarWrapperStyled>
+            <FormImage
+              avatar={userReducer.avatar}
+              id={userReducer._id}
+              token={token}
+              getUser={getUser}
+            />
+          </ProfileAvatarWrapperStyled>
           <ProfileTableStyled>
             <ProfileTbodyStyled>
               <FormId id={userReducer._id} />

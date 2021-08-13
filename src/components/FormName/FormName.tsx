@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { Form, Input, Button, message } from "antd";
 
-import { FormNameTrStyled, FormNameTdStyled } from "./FormName.style";
+import {
+  FormNameTrStyled,
+  FormNameTdStyled,
+  FormNameDivStyled,
+} from "./FormName.style";
 
 import { useHttp } from "../../hooks/http.hook";
 
@@ -63,18 +67,20 @@ const FormName = ({ name, id, token, getUser }: FormNamePropType) => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             scrollToFirstError>
-            <Form.Item
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your name!",
-                  whitespace: true,
-                },
-                { min: 2, message: "Username must be minimum 2 characters." },
-              ]}>
-              <Input placeholder="Name" />
-            </Form.Item>
+            <FormNameDivStyled>
+              <Form.Item
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your name!",
+                    whitespace: true,
+                  },
+                  { min: 2, message: "Username must be minimum 2 characters." },
+                ]}>
+                <Input placeholder="Name" />
+              </Form.Item>
+            </FormNameDivStyled>
             <Form.Item>
               <Button htmlType="submit" disabled={loading}>
                 Save

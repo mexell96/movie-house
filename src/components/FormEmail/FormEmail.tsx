@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { Form, Input, Button, message } from "antd";
 
-import { FormEmailTrStyled, FormEmailTdStyled } from "./FormEmail.style";
+import {
+  FormEmailTrStyled,
+  FormEmailTdStyled,
+  FormEmailDivStyled,
+} from "./FormEmail.style";
 
 import { useHttp } from "../../hooks/http.hook";
 
@@ -63,20 +67,22 @@ const FormEmail = ({ email, id, token, getUser }: FormEmailPropType) => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             scrollToFirstError>
-            <Form.Item
-              name="email"
-              rules={[
-                {
-                  type: "email",
-                  message: "The input is not valid E-mail!",
-                },
-                {
-                  required: true,
-                  message: "Please input your E-mail!",
-                },
-              ]}>
-              <Input placeholder="Email" />
-            </Form.Item>
+            <FormEmailDivStyled>
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    type: "email",
+                    message: "The input is not valid E-mail!",
+                  },
+                  {
+                    required: true,
+                    message: "Please input your E-mail!",
+                  },
+                ]}>
+                <Input placeholder="Email" />
+              </Form.Item>
+            </FormEmailDivStyled>
             <Form.Item>
               <Button htmlType="submit" disabled={loading}>
                 Save

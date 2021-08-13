@@ -7,6 +7,7 @@ import {
 } from "./FormPassword.style";
 
 import { useHttp } from "../../hooks/http.hook";
+import { FormPasswordDivStyled } from "./FormPassword.style";
 
 type FormPasswordPropType = {
   id: string;
@@ -63,51 +64,53 @@ const FormPassword = ({ id, token, getUser }: FormPasswordPropType) => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             scrollToFirstError>
-            <Form.Item
-              name="oldPassword"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-                { min: 6, message: "Password must be minimum 6 characters." },
-              ]}>
-              <Input.Password placeholder="Current password" />
-            </Form.Item>
-            <Form.Item
-              name="newPassword"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-                { min: 6, message: "Password must be minimum 6 characters." },
-              ]}>
-              <Input.Password placeholder="New password" />
-            </Form.Item>
-            <Form.Item
-              name="confirm"
-              dependencies={["newPassword"]}
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue("newPassword") === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error(
-                        "The two passwords that you entered do not match!"
-                      )
-                    );
+            <FormPasswordDivStyled>
+              <Form.Item
+                name="oldPassword"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
                   },
-                }),
-              ]}>
-              <Input.Password placeholder="Confirm password" />
-            </Form.Item>
+                  { min: 6, message: "Password must be minimum 6 characters." },
+                ]}>
+                <Input.Password placeholder="Current password" />
+              </Form.Item>
+              <Form.Item
+                name="newPassword"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                  { min: 6, message: "Password must be minimum 6 characters." },
+                ]}>
+                <Input.Password placeholder="New password" />
+              </Form.Item>
+              <Form.Item
+                name="confirm"
+                dependencies={["newPassword"]}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("newPassword") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error(
+                          "The two passwords that you entered do not match!"
+                        )
+                      );
+                    },
+                  }),
+                ]}>
+                <Input.Password placeholder="Confirm password" />
+              </Form.Item>
+            </FormPasswordDivStyled>
             <Form.Item>
               <Button htmlType="submit" disabled={loading}>
                 Save

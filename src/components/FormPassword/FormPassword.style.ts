@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
 export const FormPasswordTrStyled = styled.tr`
-  border: 1px solid black;
+  background-color: rgba(40, 44, 52, 0.7);
 `;
 
 export const FormPasswordTdStyled = styled.td`
-  border: 1px solid black;
+  text-align: center;
+`;
+
+export const FormPasswordDivStyled = styled.div`
+  margin-top: 24px;
 `;
