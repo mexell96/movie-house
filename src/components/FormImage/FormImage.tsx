@@ -9,6 +9,7 @@ import {
 
 import { MEGABYTE } from "../../consts";
 import { useHttp } from "../../hooks/http.hook";
+import { FormImageWrapperStyled } from "./FormImage.style";
 
 type FormImagePropType = {
   avatar: string;
@@ -70,7 +71,7 @@ const FormImage = ({ avatar, id, token, getUser }: FormImagePropType) => {
   };
 
   return (
-    <div>
+    <FormImageWrapperStyled>
       <FormImageButtonStyled component="label">
         <FormImageAvatarStyled src={newAvatar || avatar} alt="avatar" />
         <input
@@ -88,12 +89,19 @@ const FormImage = ({ avatar, id, token, getUser }: FormImagePropType) => {
         </FormImageErrorStyled>
       )}
       {editAvatar && (
-        <Button onClick={() => changeAvatar(newAvatar)} disabled={loading}>
+        <Button
+          style={{ width: "100px" }}
+          onClick={() => changeAvatar(newAvatar)}
+          disabled={loading}>
           Save
         </Button>
       )}
-      {editAvatar && <Button onClick={() => cancel()}>Cancel</Button>}
-    </div>
+      {editAvatar && (
+        <Button style={{ width: "100px" }} onClick={() => cancel()}>
+          Cancel
+        </Button>
+      )}
+    </FormImageWrapperStyled>
   );
 };
 

@@ -27,3 +27,9 @@ export const FormImageAvatarStyled = styled.img`
   height: 100px;
   border-radius: 50%;
 `;
+
+export const FormImageWrapperStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
