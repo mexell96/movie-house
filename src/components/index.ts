@@ -20,3 +20,4 @@ export * from "./FormName";
 export * from "./FormEmail";
 export * from "./FormImage";
 export * from "./FormPassword";
+export * from "./FormWrapper";
