@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Button } from "antd";
 
 export const ProfileTableStyled = styled.table`
   width: 100%;
@@ -13,4 +14,13 @@ export const ProfileTbodyStyled = styled.tbody``;
 
 export const ProfileAvatarWrapperStyled = styled.div`
   margin: 10px 0;
+`;
+
+export const ProfileButtonDeleteAccountStyled = styled(Button)`
+  margin: 10px 0;
+`;
+
+export const ProfileModalButtonsWrapperStyled = styled.div`
+  display: flex;
+  justify-content: space-around;
 `;

@@ -38,7 +38,7 @@ export const ModalHeaderTitleStyled = styled.span`
 `;
 
 export const ModalButtonCloseStyled = styled.div`
-  position: absolute;
+  margin: 5px;
   top: 10px;
   right: 10px;
   cursor: pointer;
