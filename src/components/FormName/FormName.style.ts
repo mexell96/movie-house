@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const FormNameTrStyled = styled.tr`
-  background-color: rgba(40, 44, 52, 0.7);
+  background-color: ${(props) => props.theme.card};
 `;
 
 export const FormNameTdStyled = styled.td`

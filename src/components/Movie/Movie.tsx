@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import { History } from "history";
 
 import {
+  MovieStyled,
   MovieWrapperStyled,
   MovieAboutStyled,
   MovieTitleStyled,
@@ -20,21 +20,16 @@ import { fetchMovie } from "../../redux/actions";
 import { getPicture } from "../../utils";
 import { useAuth } from "../../hooks/auth.hook";
 
-type MaterialUIStyleType = {
-  paper: string;
-};
-
 const body = (
   { Poster, Title, Year, Plot }: MovieType,
   history: History<unknown>,
-  classes: MaterialUIStyleType,
   showModal: boolean,
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
   isAuthenticated: boolean
 ) => {
   return (
-    <div className={classes.paper}>
-      <MovieWrapperStyled>
+    <MovieWrapperStyled>
+      <MovieStyled>
         <MovieImgStyled src={getPicture(Poster)} alt={Title} />
         <MovieAboutStyled>
           <MovieTitleStyled>
@@ -42,7 +37,7 @@ const body = (
           </MovieTitleStyled>
           <MovieDescriptionStyled>{Plot}</MovieDescriptionStyled>
         </MovieAboutStyled>
-      </MovieWrapperStyled>
+      </MovieStyled>
       <MovieButtonsWrapper>
         <Button onClick={() => setShowModal(true)} variant="contained">
           Add review
@@ -61,24 +56,11 @@ const body = (
           </>
         </Modal>
       )}
-    </div>
+    </MovieWrapperStyled>
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    height: "80%",
-    backgroundColor: "#39445a",
-    border: "1px solid #282c34",
-    borderRadius: 10,
-    color: "white",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(1, 1, 3),
-  },
-}));
-
 const Movie = () => {
-  const classes = useStyles();
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
   const loading = useSelector(
@@ -118,7 +100,7 @@ const Movie = () => {
       {loading && <Loader />}
       {!loading &&
         movie &&
-        body(movie, history, classes, showModal, setShowModal, isAuthenticated)}
+        body(movie, history, showModal, setShowModal, isAuthenticated)}
       {reviews && (
         <MovieReviewsWrapperStyled>
           {reviews.map((item) => (

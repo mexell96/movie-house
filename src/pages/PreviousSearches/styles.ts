@@ -3,14 +3,14 @@ import styled from "styled-components";
 export const WrapperStyled = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #39445a;
+  background-color: ${(props) => props.theme.body};
 `;
 
 export const RequestStyled = styled.div`
   display: flex;
   flex-direction: column;
   margin: 5px;
-  background-color: #282c34;
+  background-color: ${(props) => props.theme.card};
   border-radius: 10px;
   position: relative;
   font-family: "Montserrat", sans-serif;

@@ -9,7 +9,7 @@ export const HeaderStyled = styled.div`
   justify-content: space-around;
   align-items: center;
   text-transform: uppercase;
-  background-color: #39445a;
+  background-color: ${(props) => props.theme.body};
   font-family: "Montserrat", sans-serif;
   font-size: 5vw;
   padding: 10px;

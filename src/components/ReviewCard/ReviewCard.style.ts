@@ -35,7 +35,7 @@ export const ReviewCardStarsStyled = styled.div`
 export const ReviewCardCommentStyled = styled.div`
   padding: 10px;
   color: white;
-  background-color: #39445a;
+  background-color: ${(props) => props.theme.body};
   font-weight: 300;
   border-radius: 10px;
   font-family: "Roboto", sans-serif;

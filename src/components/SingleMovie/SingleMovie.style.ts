@@ -7,7 +7,7 @@ export const SingleMovieStyled = styled.div`
   width: 200px;
   margin: 5px;
   padding: 5px;
-  background-color: #282c34;
+  background-color: ${(props) => props.theme.card};
   border-radius: 10px;
   position: relative;
   font-family: "Montserrat", sans-serif;

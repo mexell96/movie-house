@@ -2,7 +2,6 @@ import { useContext, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import { message, Button } from "antd";
 
 import {
@@ -11,6 +10,7 @@ import {
   ProfileAvatarWrapperStyled,
   ProfileButtonDeleteAccountStyled,
   ProfileModalButtonsWrapperStyled,
+  ProfileWrapperStyled,
 } from "./Profile.style";
 
 import { useHttp } from "../../hooks/http.hook";
@@ -26,24 +26,10 @@ import {
   FormPassword,
 } from "../../components";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    width: "100%",
-    margin: "10px",
-    backgroundColor: "#39445a",
-    border: "1px solid #282c34",
-    borderRadius: 10,
-    color: "white",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(1, 1, 3),
-  },
-}));
-
 const Profile = () => {
   const history = useHistory();
   const { token, getUser, logout } = useContext(AuthContext);
   const { request, loading } = useHttp();
-  const classes = useStyles();
   const { id } = useParams<{ id: string }>();
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
@@ -70,7 +56,7 @@ const Profile = () => {
   return (
     <>
       {!loading && id && userReducer && token && (
-        <div className={classes.paper}>
+        <ProfileWrapperStyled>
           <h2>Profile</h2>
           <ProfileAvatarWrapperStyled>
             <FormImage
@@ -121,7 +107,7 @@ const Profile = () => {
               </ProfileModalButtonsWrapperStyled>
             </Modal>
           )}
-        </div>
+        </ProfileWrapperStyled>
       )}
     </>
   );

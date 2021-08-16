@@ -15,7 +15,7 @@ export const ModalWrapperStyled = styled.div`
 
 export const ModalStyled = styled.div`
   position: relative;
-  background-color: #39445a;
+  background-color: ${(props) => props.theme.body};
   border: 1px solid #282c34;
   border-radius: 10px;
   color: white;
