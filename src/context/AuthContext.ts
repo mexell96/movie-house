@@ -7,9 +7,22 @@ type AuthContextType = {
   logout: () => void;
   isAuthenticated: boolean;
   getUser: () => Promise<void>;
+  getTheme: () => {
+    body: string;
+    text: string;
+    toggleBorder: string;
+    background: string;
+  };
 };
 
 const noop = () => {};
+
+const theme = () => ({
+  body: "",
+  text: "",
+  toggleBorder: "",
+  background: "",
+});
 
 const asyncFunction: () => Promise<void> = async () => {
   await new Promise((res, rej) => {});
@@ -22,4 +35,5 @@ export const AuthContext = createContext({
   logout: noop,
   isAuthenticated: false,
   getUser: asyncFunction,
+  getTheme: theme,
 } as AuthContextType);

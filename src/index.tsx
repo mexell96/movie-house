@@ -5,9 +5,8 @@ import { Provider } from "react-redux";
 // import logger from "redux-logger";
 import thunk from "redux-thunk";
 import createSagaMiddleware from "redux-saga";
-import "antd/dist/antd.css";
 
-import { Styles } from "./styles";
+import "antd/dist/antd.css";
 
 import { AppRouter } from "./AppRouter";
 import { rootReducer } from "./redux/rootReducer";
@@ -34,7 +33,6 @@ const store = createStore(rootReducer, compose(...middleware));
 
 const app = (
   <Provider store={store}>
-    <Styles />
     <AppRouter />
   </Provider>
 );

@@ -86,7 +86,7 @@ export const setReviews = (props: ReviewsReducerType) => {
   };
 };
 
-export const setUser = (user: UserType): UserReducerPropsType => {
+export const setUser = (user: UserType | {}): UserReducerPropsType => {
   return {
     type: SET_USER,
     payload: user,

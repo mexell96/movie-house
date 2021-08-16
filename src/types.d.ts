@@ -33,7 +33,7 @@ declare type ReviewsReducerType = {
 };
 declare type UserReducerPropsType = {
   type: string;
-  payload: UserType;
+  payload: UserType | {};
 };
 declare type RootStateType = {
   appReducer: AppReducerType;
@@ -115,6 +115,7 @@ declare type UserType = {
   role: string;
   _id: string;
   avatar: string;
+  theme: string;
 };
 
 declare type DataLSType = {

@@ -1,7 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { setUser } from "../redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHttp } from "./http.hook";
+import { lightTheme, darkTheme } from "../Themes";
 
 const useAuth = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -9,6 +10,14 @@ const useAuth = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const dispatch = useDispatch();
   const { request } = useHttp();
+
+  const userReducer = useSelector(
+    ({ userReducer }: RootStateType) => userReducer
+  );
+
+  const getTheme = () => {
+    return userReducer.theme === "light" ? lightTheme : darkTheme;
+  };
 
   const getUser = useCallback(async () => {
     const data: DataLSType = JSON.parse(
@@ -44,6 +53,8 @@ const useAuth = () => {
   const logout = useCallback(() => {
     setToken(null);
     setUserId(null);
+    getTheme();
+    dispatch(setUser({}));
     localStorage.removeItem("userData");
   }, []);
 
@@ -57,7 +68,7 @@ const useAuth = () => {
     setReady(true);
   }, [login]);
 
-  return { login, logout, token, userId, ready, getUser };
+  return { login, logout, token, userId, ready, getUser, getTheme };
 };
 
 export { useAuth };

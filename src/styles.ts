@@ -1,12 +1,15 @@
 import { createGlobalStyle } from "styled-components";
 
-export const Styles = createGlobalStyle`
+export const GlobalStyles = createGlobalStyle`
   a {
     text-decoration: none;
     color: inherit;
   }
 
   body {
+    background: ${({ theme }: any) => theme.body};
+    color: ${({ theme }) => theme.text};
+    transition: all 0.50s linear;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
       "Droid Sans", "Helvetica Neue", sans-serif;

@@ -21,3 +21,4 @@ export * from "./FormEmail";
 export * from "./FormImage";
 export * from "./FormPassword";
 export * from "./FormWrapper";
+export * from "./FormTheme";

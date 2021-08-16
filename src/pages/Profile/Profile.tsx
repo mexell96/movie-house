@@ -20,6 +20,7 @@ import {
   FormId,
   FormName,
   FormEmail,
+  FormSelect,
   Loader,
   FormImage,
   FormPassword,
@@ -95,6 +96,12 @@ const Profile = () => {
                 getUser={getUser}
               />
               <FormPassword
+                id={userReducer._id}
+                token={token}
+                getUser={getUser}
+              />
+              <FormSelect
+                theme={userReducer.theme}
                 id={userReducer._id}
                 token={token}
                 getUser={getUser}
