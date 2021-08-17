@@ -53,7 +53,7 @@ const Review = ({ setShowModal }: ReviewPropsType) => {
   const onSubmit = (values: ReviewInfoType, actions: ReviewActionsType) => {
     const review: ReviewType = {
       uid: uid(25),
-      date: Date.now(),
+      movieId: id,
       ...values,
     };
 

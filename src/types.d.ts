@@ -25,7 +25,7 @@ declare type ReviewType = {
   review: string;
   rating: number;
   uid: string;
-  date: number;
+  movieId: string;
   avatar: string;
 };
 declare type ReviewsReducerType = {

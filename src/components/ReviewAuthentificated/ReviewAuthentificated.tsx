@@ -66,7 +66,7 @@ const ReviewAuthentificated = ({ setShowModal }: ReviewPropsType) => {
   ) => {
     const newReview: ReviewType = {
       uid: uid(25),
-      date: Date.now(),
+      movieId: id,
       ...values,
     };
     console.log(newReview, "newReview");
@@ -75,7 +75,6 @@ const ReviewAuthentificated = ({ setShowModal }: ReviewPropsType) => {
       const response = await request("/api/create-review", "POST", newReview, {
         Authorization: `Bearer ${auth.token}`,
       });
-      console.log(response, "response 99999");
       message.success(response.message);
 
       const reviews: ReviewType[] =
