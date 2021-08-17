@@ -9,15 +9,9 @@ import {
   HIDE_LOADER,
   SHOW_LOADER,
   SET_TAB,
-  SET_REVIEW,
-  SET_REVIEWS,
   SET_USER,
 } from "./types";
 
-type ReviewPropsType = {
-  id: string;
-  reviews: ReviewType[];
-};
 
 export const setSearchValue = (
   searchValue: SearchInfoType
@@ -68,20 +62,6 @@ export const setUrl = (searchValue: SearchInfoType): ReducerPropsType => {
 export const setTab = (props: TabsType): TabsPropsType => {
   return {
     type: SET_TAB,
-    payload: props,
-  };
-};
-
-export const setReview = (props: ReviewPropsType) => {
-  return {
-    type: SET_REVIEW,
-    payload: props,
-  };
-};
-
-export const setReviews = (props: ReviewsReducerType) => {
-  return {
-    type: SET_REVIEWS,
     payload: props,
   };
 };
