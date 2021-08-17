@@ -15,6 +15,7 @@ type AuthContextType = {
   };
   setReview: (newReview: ReviewType) => Promise<void>;
   getReviews: (id: string) => Promise<void>;
+  getUserReviews: (id: string, token: string) => Promise<void>;
 };
 
 const noop = () => {};
@@ -40,4 +41,5 @@ export const AuthContext = createContext({
   getTheme: theme,
   setReview: asyncFunction,
   getReviews: asyncFunction,
+  getUserReviews: asyncFunction,
 } as AuthContextType);

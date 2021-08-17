@@ -1,4 +1,4 @@
-import { useContext, useCallback, useState } from "react";
+import { useContext, useCallback, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
@@ -11,11 +11,12 @@ import {
   ProfileButtonDeleteAccountStyled,
   ProfileModalButtonsWrapperStyled,
   ProfileWrapperStyled,
+  ProfileCardWrapperStyled,
 } from "./Profile.style";
 
 import { useHttp } from "../../hooks/http.hook";
+import { useAuth } from "../../hooks/auth.hook";
 import { AuthContext } from "../../context/AuthContext";
-import { Modal } from "../../components/index";
 import {
   FormId,
   FormName,
@@ -24,17 +25,21 @@ import {
   Loader,
   FormImage,
   FormPassword,
+  ReviewCard,
+  Modal,
 } from "../../components";
 
 const Profile = () => {
   const history = useHistory();
   const { token, getUser, logout } = useContext(AuthContext);
   const { request, loading } = useHttp();
+  const { getUserReviews } = useAuth();
   const { id } = useParams<{ id: string }>();
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
   const [showModal, setShowModal] = useState(false);
+  const [userReviews, setUserReviews] = useState<ReviewType[] | null>(null);
 
   const deleteUser = useCallback(async () => {
     try {
@@ -47,6 +52,15 @@ const Profile = () => {
     } catch (e) {
       console.log(e, "Error profiles");
     }
+  }, []);
+
+  const getUserReviewsFromDB = async () => {
+    const userReviewsDB = await getUserReviews(id, token);
+    setUserReviews(userReviewsDB);
+  };
+
+  useEffect(() => {
+    getUserReviewsFromDB();
   }, []);
 
   if (loading) {
@@ -108,6 +122,17 @@ const Profile = () => {
             </Modal>
           )}
         </ProfileWrapperStyled>
+      )}
+      {userReviews && (
+        <ProfileCardWrapperStyled>
+          {userReviews.map((item) => (
+            <ReviewCard
+              key={item.uid}
+              review={item}
+              getUserReviewsFromDB={getUserReviewsFromDB}
+            />
+          ))}
+        </ProfileCardWrapperStyled>
       )}
     </>
   );

@@ -123,7 +123,11 @@ const Movie = () => {
       {reviews && (
         <MovieReviewsWrapperStyled>
           {reviews.map((item) => (
-            <ReviewCard key={item.uid} review={item} />
+            <ReviewCard
+              key={item.uid}
+              review={item}
+              getReviewsFromDB={getReviewsFromDB}
+            />
           ))}
         </MovieReviewsWrapperStyled>
       )}

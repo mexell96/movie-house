@@ -22,6 +22,7 @@ const AppRouter = () => {
     getTheme,
     setReview,
     getReviews,
+    getUserReviews,
   } = useAuth();
   const isAuthenticated = !!token;
   const routes = useRoutes(isAuthenticated);
@@ -48,6 +49,7 @@ const AppRouter = () => {
           getTheme,
           setReview,
           getReviews,
+          getUserReviews,
         }}>
         <Router>
           <Header />

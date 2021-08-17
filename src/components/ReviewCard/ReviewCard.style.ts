@@ -5,7 +5,7 @@ export const ReviewCardWrapperStyled = styled.div`
   width: 366px;
   padding: 10px;
   margin: 10px 0;
-  background-color: #282c34;
+  background-color: ${(props) => props.theme.card};
   border-radius: 10px;
   font-family: "Montserrat", sans-serif;
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%),
@@ -40,4 +40,16 @@ export const ReviewCardCommentStyled = styled.div`
   border-radius: 10px;
   font-family: "Roboto", sans-serif;
   font-style: italic;
+`;
+
+export const ReviewCardDeleteReviewStyled = styled.div`
+  margin: 5px;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+`;
+
+export const ReviewCardHeaderStyled = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
