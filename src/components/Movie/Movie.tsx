@@ -25,7 +25,8 @@ const body = (
   history: History<unknown>,
   showModal: boolean,
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
-  isAuthenticated: boolean
+  isAuthenticated: boolean,
+  getReviewsFromDB: () => Promise<void>
 ) => {
   return (
     <MovieWrapperStyled>
@@ -49,9 +50,17 @@ const body = (
       {showModal && (
         <Modal close={setShowModal} title="Write a review">
           <>
-            {!isAuthenticated && <Review setShowModal={setShowModal} />}
+            {!isAuthenticated && (
+              <Review
+                setShowModal={setShowModal}
+                getReviewsFromDB={getReviewsFromDB}
+              />
+            )}
             {isAuthenticated && (
-              <ReviewAuthentificated setShowModal={setShowModal} />
+              <ReviewAuthentificated
+                setShowModal={setShowModal}
+                getReviewsFromDB={getReviewsFromDB}
+              />
             )}
           </>
         </Modal>
@@ -69,14 +78,12 @@ const Movie = () => {
   const resultsMovie = useSelector(
     ({ resultsMovie }: RootStateType) => resultsMovie
   );
-  const reviewsReducer = useSelector(
-    ({ reviewsReducer }: RootStateType) => reviewsReducer
-  );
+
   const history = useHistory();
   const [movie, setMovie] = useState<MovieType | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [reviews, setReviewsState] = useState<ReviewType[] | null>(null);
-  const { token } = useAuth();
+  const { token, getReviews } = useAuth();
   const isAuthenticated = !!token;
 
   useEffect(() => {
@@ -91,16 +98,28 @@ const Movie = () => {
     resultsMovie[id] && setMovie(resultsMovie[id]);
   }, [resultsMovie]);
 
+  const getReviewsFromDB = async () => {
+    const reviewsBD = await getReviews(id);
+    setReviewsState(reviewsBD);
+  };
+
   useEffect(() => {
-    setReviewsState(reviewsReducer[id]);
-  }, [reviewsReducer]);
+    getReviewsFromDB();
+  }, []);
 
   return (
     <>
       {loading && <Loader />}
       {!loading &&
         movie &&
-        body(movie, history, showModal, setShowModal, isAuthenticated)}
+        body(
+          movie,
+          history,
+          showModal,
+          setShowModal,
+          isAuthenticated,
+          getReviewsFromDB
+        )}
       {reviews && (
         <MovieReviewsWrapperStyled>
           {reviews.map((item) => (

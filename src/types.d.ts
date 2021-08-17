@@ -21,15 +21,13 @@ declare type SearchInfoType = {
   key: string;
 };
 declare type ReviewType = {
-  name: string;
-  review: string;
-  rating: number;
-  uid: string;
-  movieId: string;
   avatar: string;
-};
-declare type ReviewsReducerType = {
-  [key: string]: ReviewType[];
+  movieId: string;
+  name: string;
+  rating: number;
+  review: string;
+  uid: string;
+  owner: string;
 };
 declare type UserReducerPropsType = {
   type: string;
@@ -42,7 +40,6 @@ declare type RootStateType = {
   resultsMovies: ResultsMoviesType;
   tabsReducer: TabsType;
   urlReducer: SearchInfoType;
-  reviewsReducer: ReviewsReducerType;
   userReducer: UserType;
 };
 
@@ -121,4 +118,13 @@ declare type UserType = {
 declare type DataLSType = {
   userId: string;
   token: string;
+};
+
+declare type ReviewPropsType = {
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  getReviewsFromDB: () => Promise<void>;
+};
+
+declare type ReviewActionsType = {
+  setSubmitting: (isSubmitting: boolean) => void;
 };

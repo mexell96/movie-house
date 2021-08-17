@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
-import { setUser } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { message } from "antd";
+
+import { setUser } from "../redux/actions";
 import { useHttp } from "./http.hook";
 import { lightTheme, darkTheme } from "../Themes";
 
@@ -40,6 +42,24 @@ const useAuth = () => {
     }
   }, []);
 
+  const getReviews = useCallback(async (id: string) => {
+    try {
+      const reviews = await request(`/api/reviews/${id}`, "GET");
+      return reviews;
+    } catch (e) {
+      console.log(e, "E message createUserPage");
+    }
+  }, []);
+
+  const setReview = useCallback(async (newReview: ReviewType) => {
+    try {
+      const response = await request("/api/create-review", "POST", newReview);
+      message.success(response.message);
+    } catch (e) {
+      console.log(e, "E message createUserPage");
+    }
+  }, []);
+
   const login = useCallback((jwtToken: string, id: string) => {
     setToken(jwtToken);
     setUserId(id);
@@ -68,7 +88,17 @@ const useAuth = () => {
     setReady(true);
   }, [login]);
 
-  return { login, logout, token, userId, ready, getUser, getTheme };
+  return {
+    login,
+    logout,
+    token,
+    userId,
+    ready,
+    getUser,
+    getTheme,
+    setReview,
+    getReviews,
+  };
 };
 
 export { useAuth };

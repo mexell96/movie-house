@@ -1,10 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import { makeStyles, TextField } from "@material-ui/core";
 import { uid } from "uid/secure";
-import { message } from "antd";
 
 import {
   ReviewAuthentificatedWrapperStyled,
@@ -13,19 +12,8 @@ import {
   ReviewAuthentificatedNameStyled,
 } from "./ReviewAuthentificated.style";
 
-import { setReview } from "../../redux/actions";
 import { Rating } from "..";
-import { useHttp } from "../../hooks/http.hook";
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
-
-type ReviewPropsType = {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-type ReviewActionsType = {
-  setSubmitting: (isSubmitting: boolean) => void;
-};
+import { useAuth } from "../../hooks/auth.hook";
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -40,18 +28,16 @@ const validationSchema = Yup.object().shape({
   rating: Yup.number().min(1, "Choose a rating").required("Required"),
 });
 
-const ReviewAuthentificated = ({ setShowModal }: ReviewPropsType) => {
-  const dispatch = useDispatch();
-  const reviewsReducer = useSelector(
-    ({ reviewsReducer }: RootStateType) => reviewsReducer
-  );
+const ReviewAuthentificated = ({
+  setShowModal,
+  getReviewsFromDB,
+}: ReviewPropsType) => {
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
-  const { request } = useHttp();
-  const auth = useContext(AuthContext);
+  const { userId, setReview } = useAuth();
 
   const initialValues = {
     name: userReducer.name,
@@ -64,29 +50,20 @@ const ReviewAuthentificated = ({ setShowModal }: ReviewPropsType) => {
     values: ReviewInfoType,
     actions: ReviewActionsType
   ) => {
-    const newReview: ReviewType = {
-      uid: uid(25),
-      movieId: id,
-      ...values,
-    };
-    console.log(newReview, "newReview");
-
     try {
-      const response = await request("/api/create-review", "POST", newReview, {
-        Authorization: `Bearer ${auth.token}`,
-      });
-      message.success(response.message);
-
-      const reviews: ReviewType[] =
-        (reviewsReducer && reviewsReducer[id]) || [];
-      reviews.push(response.review);
-      dispatch(setReview({ reviews, id }));
+      const newReview: ReviewType = {
+        uid: uid(25),
+        movieId: id,
+        owner: userId || uid(25),
+        ...values,
+      };
+      await setReview(newReview);
+      await getReviewsFromDB();
+      actions.setSubmitting(false);
+      setShowModal(false);
     } catch (e) {
-      console.log(e, "E message createUserPage");
+      console.log("ReviewAuthentificated -", e);
     }
-
-    actions.setSubmitting(false);
-    setShowModal(false);
   };
 
   return (

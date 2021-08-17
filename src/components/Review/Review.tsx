@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
@@ -11,16 +10,8 @@ import {
   ReviewAvatarStyled,
 } from "./Review.style";
 
-import { setReview } from "../../redux/actions";
 import { UploadImage, Rating } from "..";
-
-type ReviewPropsType = {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-type ReviewActionsType = {
-  setSubmitting: (isSubmitting: boolean) => void;
-};
+import { useAuth } from "../../hooks/auth.hook";
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -40,29 +31,31 @@ const validationSchema = Yup.object().shape({
   avatar: Yup.string().required("Required"),
 });
 
-const initialValues = { name: "", review: "", rating: 0, avatar: "" };
-
-const Review = ({ setShowModal }: ReviewPropsType) => {
-  const dispatch = useDispatch();
-  const reviewsReducer = useSelector(
-    ({ reviewsReducer }: RootStateType) => reviewsReducer
-  );
+const Review = ({ setShowModal, getReviewsFromDB }: ReviewPropsType) => {
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
+  const { setReview } = useAuth();
 
-  const onSubmit = (values: ReviewInfoType, actions: ReviewActionsType) => {
-    const review: ReviewType = {
-      uid: uid(25),
-      movieId: id,
-      ...values,
-    };
+  const initialValues = { name: "", review: "", rating: 0, avatar: "" };
 
-    const reviews: ReviewType[] = (reviewsReducer && reviewsReducer[id]) || [];
-    reviews.push(review);
-
-    dispatch(setReview({ reviews, id }));
-    actions.setSubmitting(false);
-    setShowModal(false);
+  const onSubmit = async (
+    values: ReviewInfoType,
+    actions: ReviewActionsType
+  ) => {
+    try {
+      const newReview: ReviewType = {
+        uid: uid(25),
+        movieId: id,
+        owner: uid(25),
+        ...values,
+      };
+      await setReview(newReview);
+      await getReviewsFromDB();
+      actions.setSubmitting(false);
+      setShowModal(false);
+    } catch (e) {
+      console.log("Review -", e);
+    }
   };
 
   return (
