@@ -42,7 +42,7 @@ const FormName = ({ name, id, token, getUser }: FormNamePropType) => {
         );
         message.success(response.message);
         setEditName(false);
-        getUser();
+        await getUser();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

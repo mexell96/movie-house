@@ -42,7 +42,7 @@ const FormPassword = ({ id, token, getUser }: FormPasswordPropType) => {
         );
         message.success(response.message);
         setEditPassword(false);
-        getUser();
+        await getUser();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

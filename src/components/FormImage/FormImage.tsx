@@ -58,7 +58,7 @@ const FormImage = ({ avatar, id, token, getUser }: FormImagePropType) => {
         );
         message.success(response.message);
         setEditAvatar(false);
-        getUser();
+        await getUser();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

@@ -42,7 +42,7 @@ const FormEmail = ({ email, id, token, getUser }: FormEmailPropType) => {
         );
         message.success(response.message);
         setEditEmail(false);
-        getUser();
+        await getUser();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

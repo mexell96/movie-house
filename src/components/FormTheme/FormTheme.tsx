@@ -40,7 +40,7 @@ const FormSelect = ({ theme, id, token, getUser }: FormThemePropType) => {
         );
         message.success(response.message);
         setEditTheme(false);
-        getUser();
+        await getUser();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }
