@@ -58,7 +58,7 @@ const ReviewCard = ({
         <ReviewCardHeaderStyled>
           <h2>{review.name}</h2>
           <ReviewCardDeleteReviewStyled onClick={deleteReview}>
-            <CancelPresentationIcon />
+            <CancelPresentationIcon color="error" />
           </ReviewCardDeleteReviewStyled>
         </ReviewCardHeaderStyled>
         <ReviewCardStarsStyled>
