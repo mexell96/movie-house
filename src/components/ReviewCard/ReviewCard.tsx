@@ -1,4 +1,5 @@
 import { useCallback, useContext } from "react";
+import { useSelector } from "react-redux";
 import CancelPresentationIcon from "@material-ui/icons/CancelPresentation";
 import { message } from "antd";
 
@@ -28,8 +29,11 @@ const ReviewCard = ({
   getUserReviewsFromDB,
   getReviewsFromDB,
 }: ReviewCardPropsType) => {
-  const { token } = useContext(AuthContext);
+  const { token, userId } = useContext(AuthContext);
   const { request } = useHttp();
+  const userReducer = useSelector(
+    ({ userReducer }: RootStateType) => userReducer
+  );
 
   const deleteReview = useCallback(async () => {
     try {
@@ -57,9 +61,11 @@ const ReviewCard = ({
       <ReviewCardInfoStyled>
         <ReviewCardHeaderStyled>
           <h2>{review.name}</h2>
-          <ReviewCardDeleteReviewStyled onClick={deleteReview}>
-            <CancelPresentationIcon color="error" />
-          </ReviewCardDeleteReviewStyled>
+          {userReducer.role && review.owner === userId && (
+            <ReviewCardDeleteReviewStyled onClick={deleteReview}>
+              <CancelPresentationIcon color="error" />
+            </ReviewCardDeleteReviewStyled>
+          )}
         </ReviewCardHeaderStyled>
         <h2>{review.movie}</h2>
         <ReviewCardStarsStyled>
