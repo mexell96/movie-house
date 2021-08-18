@@ -31,6 +31,7 @@ const validationSchema = Yup.object().shape({
 const ReviewAuthentificated = ({
   setShowModal,
   getReviewsFromDB,
+  title,
 }: ReviewPropsType) => {
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
@@ -53,6 +54,7 @@ const ReviewAuthentificated = ({
     try {
       const newReview: ReviewType = {
         uid: uid(25),
+        movie: title,
         movieId: id,
         owner: userId || uid(25),
         ...values,

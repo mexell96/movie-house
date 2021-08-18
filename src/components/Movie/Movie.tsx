@@ -54,12 +54,14 @@ const body = (
               <Review
                 setShowModal={setShowModal}
                 getReviewsFromDB={getReviewsFromDB}
+                title={Title}
               />
             )}
             {isAuthenticated && (
               <ReviewAuthentificated
                 setShowModal={setShowModal}
                 getReviewsFromDB={getReviewsFromDB}
+                title={Title}
               />
             )}
           </>

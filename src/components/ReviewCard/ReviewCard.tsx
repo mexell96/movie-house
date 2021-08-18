@@ -61,6 +61,7 @@ const ReviewCard = ({
             <CancelPresentationIcon color="error" />
           </ReviewCardDeleteReviewStyled>
         </ReviewCardHeaderStyled>
+        <h2>{review.movie}</h2>
         <ReviewCardStarsStyled>
           <Rating value={review.rating} changeable={false} />
         </ReviewCardStarsStyled>

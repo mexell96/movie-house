@@ -22,6 +22,7 @@ declare type SearchInfoType = {
 };
 declare type ReviewType = {
   avatar: string;
+  movie: string;
   movieId: string;
   name: string;
   rating: number;
@@ -123,6 +124,7 @@ declare type DataLSType = {
 declare type ReviewPropsType = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   getReviewsFromDB: () => Promise<void>;
+  title: string;
 };
 
 declare type ReviewActionsType = {
