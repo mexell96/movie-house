@@ -16,8 +16,8 @@ export const ProfileAvatarWrapperStyled = styled.div`
   margin: 10px 0;
 `;
 
-export const ProfileButtonDeleteAccountStyled = styled(Button)`
-  margin: 10px 0;
+export const ProfileButtonAccountStyled = styled(Button)`
+  margin: 10px;
 `;
 
 export const ProfileModalButtonsWrapperStyled = styled.div`

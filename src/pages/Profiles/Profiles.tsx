@@ -7,12 +7,14 @@ import { ProfileErrorStyled } from "./Profiles.style";
 import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
 import { Loader } from "../../components";
+import { useAuth } from "../../hooks/auth.hook";
 
 const { Option } = Select;
 
 const Profiles = () => {
   const { token } = useContext(AuthContext);
   const { request, loading } = useHttp();
+  const { getUser } = useAuth();
   const [users, setUsers] = useState<UserType[] | []>([]);
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
@@ -39,7 +41,8 @@ const Profiles = () => {
           { Authorization: `Bearer ${token}` }
         );
         message.success(response.message);
-        getUsers();
+        await getUser();
+        role === "ADMIN" && (await getUsers());
       } catch (e) {
         console.log(e, "E message createUserPage");
       }
@@ -85,7 +88,7 @@ const Profiles = () => {
 
   return (
     <>
-      {!loading && users.length !== 0 && (
+      {!loading && userReducer.role === "ADMIN" && (
         <Table bordered columns={columns} dataSource={users} rowKey="_id" />
       )}
       {!loading && userReducer.role !== "ADMIN" && (

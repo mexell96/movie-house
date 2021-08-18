@@ -1,14 +1,14 @@
 import { useContext, useCallback, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { message, Button } from "antd";
 
 import {
   ProfileTableStyled,
   ProfileTbodyStyled,
   ProfileAvatarWrapperStyled,
-  ProfileButtonDeleteAccountStyled,
+  ProfileButtonAccountStyled,
   ProfileModalButtonsWrapperStyled,
   ProfileWrapperStyled,
   ProfileCardWrapperStyled,
@@ -108,9 +108,14 @@ const Profile = () => {
               />
             </ProfileTbodyStyled>
           </ProfileTableStyled>
-          <ProfileButtonDeleteAccountStyled onClick={() => setShowModal(true)}>
+          <ProfileButtonAccountStyled onClick={() => setShowModal(true)}>
             Delete account
-          </ProfileButtonDeleteAccountStyled>
+          </ProfileButtonAccountStyled>
+          {userReducer.role === "ADMIN" && (
+            <ProfileButtonAccountStyled>
+              <Link to={`/profiles`}>View users</Link>
+            </ProfileButtonAccountStyled>
+          )}
           {showModal && (
             <Modal
               close={setShowModal}
