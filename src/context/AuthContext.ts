@@ -1,23 +1,5 @@
 import { createContext } from "react";
 
-type AuthContextType = {
-  token: string | null;
-  userId: string | null;
-  login: (jwtToken: string, id: string) => void;
-  logout: () => void;
-  isAuthenticated: boolean;
-  getUser: () => Promise<void>;
-  getTheme: () => {
-    body: string;
-    text: string;
-    toggleBorder: string;
-    background: string;
-  };
-  setReview: (newReview: ReviewType) => Promise<void>;
-  getReviews: (id: string) => Promise<void>;
-  getUserReviews: (id: string, token: string) => Promise<void>;
-};
-
 const noop = () => {};
 
 const theme = () => ({
@@ -42,4 +24,5 @@ export const AuthContext = createContext({
   setReview: asyncFunction,
   getReviews: asyncFunction,
   getUserReviews: asyncFunction,
+  authLoading: false,
 } as AuthContextType);

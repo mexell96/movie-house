@@ -4,13 +4,11 @@ type FormIdPropType = {
   id: string;
 };
 
-const FormId = ({ id }: FormIdPropType) => {
-  return (
-    <FormIdTrStyled>
-      <FormIdTdStyled>ID:</FormIdTdStyled>
-      <FormIdTdStyled>{id}</FormIdTdStyled>
-    </FormIdTrStyled>
-  );
-};
+const FormId = ({ id }: FormIdPropType): JSX.Element => (
+  <FormIdTrStyled>
+    <FormIdTdStyled>ID:</FormIdTdStyled>
+    <FormIdTdStyled>{id}</FormIdTdStyled>
+  </FormIdTrStyled>
+);
 
 export { FormId };

@@ -1,11 +1,9 @@
 import { CreateUser, FormWrapper } from "../../components";
 
-const Registration = () => {
-  return (
-    <FormWrapper>
-      <CreateUser />
-    </FormWrapper>
-  );
-};
+const Registration = () => (
+  <FormWrapper>
+    <CreateUser />
+  </FormWrapper>
+);
 
 export { Registration };

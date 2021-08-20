@@ -29,6 +29,9 @@ declare type ReviewType = {
   review: string;
   uid: string;
   owner: string;
+  createdAt?: string;
+  updatedAt?: string;
+  _id?: string;
 };
 declare type UserReducerPropsType = {
   type: string;
@@ -114,6 +117,8 @@ declare type UserType = {
   _id: string;
   avatar: string;
   theme: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 declare type DataLSType = {
@@ -129,4 +134,23 @@ declare type ReviewPropsType = {
 
 declare type ReviewActionsType = {
   setSubmitting: (isSubmitting: boolean) => void;
+};
+
+declare type AuthContextType = {
+  token: string | null;
+  userId: string | null;
+  login: (jwtToken: string, id: string) => void;
+  logout: () => void;
+  isAuthenticated: boolean;
+  getUser: () => Promise<void>;
+  getTheme: () => {
+    body: string;
+    text: string;
+    toggleBorder: string;
+    background: string;
+  };
+  setReview: (newReview: ReviewType) => Promise<void>;
+  getReviews: (id: string) => Promise<void>;
+  getUserReviews: (id: string, token: string) => Promise<void>;
+  authLoading: boolean;
 };

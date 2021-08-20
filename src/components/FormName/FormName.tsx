@@ -20,7 +20,12 @@ type NamePropType = {
   name: string;
 };
 
-const FormName = ({ name, id, token, getUser }: FormNamePropType) => {
+const FormName = ({
+  name,
+  id,
+  token,
+  getUser,
+}: FormNamePropType): JSX.Element => {
   const [editName, setEditName] = useState(false);
   const { loading, error, request, clearError } = useHttp();
 
@@ -49,7 +54,7 @@ const FormName = ({ name, id, token, getUser }: FormNamePropType) => {
     })();
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = (errorInfo: any): void => {
     console.log("Failed:", errorInfo);
   };
 

@@ -23,7 +23,7 @@ const Rating = ({
   errors,
   touched,
   changeable,
-}: RatingPropsType) => {
+}: RatingPropsType): JSX.Element => {
   const [hoverPosition, setHoverPosition] = useState(value);
 
   return (

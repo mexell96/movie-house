@@ -18,13 +18,18 @@ type FormImagePropType = {
   getUser: () => Promise<void>;
 };
 
-const FormImage = ({ avatar, id, token, getUser }: FormImagePropType) => {
+const FormImage = ({
+  avatar,
+  id,
+  token,
+  getUser,
+}: FormImagePropType): JSX.Element => {
   const [sizeError, setSizeError] = useState(false);
   const [editAvatar, setEditAvatar] = useState(false);
   const { loading, error, request, clearError } = useHttp();
   const [newAvatar, setNewAvatar] = useState("");
 
-  const onFileChange = (input: any) => {
+  const onFileChange = (input: any): void => {
     const file = input.target.files[0];
     if (file && file.size < MEGABYTE) {
       const reader = new FileReader();
@@ -47,7 +52,7 @@ const FormImage = ({ avatar, id, token, getUser }: FormImagePropType) => {
     }
   }, [error, clearError]);
 
-  const changeAvatar = (newAvatar: any) => {
+  const changeAvatar = (newAvatar: any): void => {
     (async () => {
       try {
         const response = await request(
@@ -65,7 +70,7 @@ const FormImage = ({ avatar, id, token, getUser }: FormImagePropType) => {
     })();
   };
 
-  const cancel = () => {
+  const cancel = (): void => {
     setNewAvatar("");
     setEditAvatar(false);
   };

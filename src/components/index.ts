@@ -1,6 +1,5 @@
 export * from "./Header";
 export * from "./Loader";
-export * from "./Movie";
 export * from "./MovieList";
 export * from "./Navbar";
 export * from "./SearchInput";

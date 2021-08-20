@@ -8,9 +8,8 @@ import {
   Profile,
   Profiles,
   Registration,
+  Movie,
 } from "./pages";
-
-import { Movie } from "./components";
 
 const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {

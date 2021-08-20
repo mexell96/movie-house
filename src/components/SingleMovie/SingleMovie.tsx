@@ -10,24 +10,28 @@ import {
 
 import { getPicture } from "../../utils";
 
-const SingleMovie = ({ imdbID, Poster, Title, Year, Type }: MovieType) => {
-  return (
-    <SingleMovieStyled>
-      <Link
-        to={`/movies/${imdbID}`}
-        key={imdbID}
-        onClick={() => window.scroll(0, 0)}>
-        <SingleMoviePosterStyled src={getPicture(Poster)} alt={Title} />
-        <div>
-          <SingleMovieTitleStyled>{Title}</SingleMovieTitleStyled>
-          <SingleMovieSubTitleStyled>{Year}</SingleMovieSubTitleStyled>
-          <SingleMovieSubTitleCapitalizerStyled>
-            {Type}
-          </SingleMovieSubTitleCapitalizerStyled>
-        </div>
-      </Link>
-    </SingleMovieStyled>
-  );
-};
+const SingleMovie = ({
+  imdbID,
+  Poster,
+  Title,
+  Year,
+  Type,
+}: MovieType): JSX.Element => (
+  <SingleMovieStyled>
+    <Link
+      to={`/movies/${imdbID}`}
+      key={imdbID}
+      onClick={() => window.scroll(0, 0)}>
+      <SingleMoviePosterStyled src={getPicture(Poster)} alt={Title} />
+      <div>
+        <SingleMovieTitleStyled>{Title}</SingleMovieTitleStyled>
+        <SingleMovieSubTitleStyled>{Year}</SingleMovieSubTitleStyled>
+        <SingleMovieSubTitleCapitalizerStyled>
+          {Type}
+        </SingleMovieSubTitleCapitalizerStyled>
+      </div>
+    </Link>
+  </SingleMovieStyled>
+);
 
 export { SingleMovie };

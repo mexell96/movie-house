@@ -7,12 +7,10 @@ type FormWrapperPropsType = {
   children: JSX.Element;
 };
 
-const FormWrapper = ({ children }: FormWrapperPropsType) => {
-  return (
-    <FormWrapperStyled>
-      <FormWrapperChildrenStyled>{children}</FormWrapperChildrenStyled>
-    </FormWrapperStyled>
-  );
-};
+const FormWrapper = ({ children }: FormWrapperPropsType): JSX.Element => (
+  <FormWrapperStyled>
+    <FormWrapperChildrenStyled>{children}</FormWrapperChildrenStyled>
+  </FormWrapperStyled>
+);
 
 export { FormWrapper };

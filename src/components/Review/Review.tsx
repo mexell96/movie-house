@@ -31,7 +31,11 @@ const validationSchema = Yup.object().shape({
   avatar: Yup.string().required("Required"),
 });
 
-const Review = ({ setShowModal, getReviewsFromDB, title }: ReviewPropsType) => {
+const Review = ({
+  setShowModal,
+  getReviewsFromDB,
+  title,
+}: ReviewPropsType): JSX.Element => {
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
   const { setReview } = useAuth();

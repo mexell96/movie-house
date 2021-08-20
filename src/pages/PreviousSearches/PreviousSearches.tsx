@@ -10,11 +10,15 @@ type PreviousSearchesPropsType = {
   index: number;
 };
 
-const TabPanel = ({ children, value, index }: PreviousSearchesPropsType) => (
+const TabPanel = ({
+  children,
+  value,
+  index,
+}: PreviousSearchesPropsType): JSX.Element => (
   <div>{value === index && <h1>{children}</h1>}</div>
 );
 
-const PreviousSearches = () => {
+const PreviousSearches = (): JSX.Element => {
   const dispatch = useDispatch();
   const tab = useSelector(({ tabsReducer: { tab } }: RootStateType) => tab);
 

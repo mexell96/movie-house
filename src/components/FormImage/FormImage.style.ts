@@ -5,9 +5,21 @@ type FormImageButtonType = {
   component: string;
 };
 
+export const FormImageWrapperStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
 export const FormImageButtonStyled = styled(Button)<FormImageButtonType>`
   border-radius: 50% !important;
   padding: 0 !important;
+`;
+
+export const FormImageAvatarStyled = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
 `;
 
 export const FormImageErrorStyled = styled.div`
@@ -20,16 +32,4 @@ export const FormImageErrorStyled = styled.div`
   font-weight: 400;
   line-height: 1.66;
   letter-spacing: 0.03333em;
-`;
-
-export const FormImageAvatarStyled = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-`;
-
-export const FormImageWrapperStyled = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 `;

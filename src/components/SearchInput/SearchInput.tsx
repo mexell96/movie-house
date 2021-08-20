@@ -12,7 +12,7 @@ import {
 import { setSearchValue, setUrl } from "../../redux/actions";
 import { uniqueKey } from "../../utils";
 
-const SearchInput = () => {
+const SearchInput = (): JSX.Element => {
   const dispatch = useDispatch();
   const previousSearches = useSelector(
     ({ previousSearches }: RootStateType) => previousSearches
@@ -35,14 +35,14 @@ const SearchInput = () => {
     },
   });
 
-  const setValue = () => {
+  const setValue = (): void => {
     const requestExist = previousSearches.find(
       (item: SearchInfoType) => item.key === urlReducer.key
     );
     !requestExist && urlReducer.input && dispatch(setSearchValue(urlReducer));
   };
 
-  const onFormSubmit = (e: React.FormEvent) => {
+  const onFormSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     dispatch(setUrl(searchValue));
   };
@@ -54,7 +54,10 @@ const SearchInput = () => {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <SearchInputWrapperStyled noValidate autoComplete="off" onSubmit={onFormSubmit}>
+      <SearchInputWrapperStyled
+        noValidate
+        autoComplete="off"
+        onSubmit={onFormSubmit}>
         <SearchInputStyled
           label="Search"
           variant="filled"

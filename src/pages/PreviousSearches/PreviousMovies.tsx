@@ -3,25 +3,24 @@ import { useSelector } from "react-redux";
 
 import { WrapperStyled, RequestStyled, InformationStyled } from "./styles";
 
-const singleRequest = (request: MovieType) => {
-  return (
-    <RequestStyled key={request.imdbID}>
-      <Link
-        to={`/movies/${request.imdbID}`}
-        onClick={() => window.scroll(0, 0)}>
-        <InformationStyled>
-          Looked for <span>{request.Title}</span>
-        </InformationStyled>
-      </Link>
-    </RequestStyled>
-  );
-};
+const singleRequest = (request: MovieType): JSX.Element => (
+  <RequestStyled key={request.imdbID}>
+    <Link
+      to={`/movies/${request.imdbID}`}
+      className="request"
+      onClick={() => window.scroll(0, 0)}>
+      <InformationStyled>
+        Looked for <span>{request.Title}</span>
+      </InformationStyled>
+    </Link>
+  </RequestStyled>
+);
 
-const Requests = (viewedMovie: MovieType[]) => (
+const Requests = (viewedMovie: MovieType[]): JSX.Element => (
   <>{viewedMovie.map((request: MovieType) => singleRequest(request))}</>
 );
 
-const PreviousMovies = () => {
+const PreviousMovies = (): JSX.Element => {
   const viewedMovie: MovieType[] = [];
   const resultsMovie = useSelector(
     ({ resultsMovie }: RootStateType) => resultsMovie

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@material-ui/core";
@@ -15,10 +15,17 @@ import {
   MovieReviewsWrapperStyled,
 } from "./Movie.style";
 
-import { Loader, Modal, Review, ReviewAuthentificated, ReviewCard } from "..";
+import {
+  Loader,
+  Modal,
+  Review,
+  ReviewAuthentificated,
+  ReviewCard,
+} from "../../components";
 import { fetchMovie } from "../../redux/actions";
 import { getPicture } from "../../utils";
 import { useAuth } from "../../hooks/auth.hook";
+import { AuthContext } from "../../context/AuthContext";
 
 const body = (
   { Poster, Title, Year, Plot }: MovieType,
@@ -71,7 +78,7 @@ const body = (
   );
 };
 
-const Movie = () => {
+const Movie = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
   const loading = useSelector(
@@ -80,13 +87,12 @@ const Movie = () => {
   const resultsMovie = useSelector(
     ({ resultsMovie }: RootStateType) => resultsMovie
   );
-
   const history = useHistory();
   const [movie, setMovie] = useState<MovieType | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [reviews, setReviewsState] = useState<ReviewType[] | null>(null);
-  const { token, getReviews } = useAuth();
-  const isAuthenticated = !!token;
+  const { getReviews } = useAuth();
+  const { isAuthenticated }: AuthContextType = useContext(AuthContext);
 
   useEffect(() => {
     if (resultsMovie[id]) {
@@ -101,8 +107,8 @@ const Movie = () => {
   }, [resultsMovie]);
 
   const getReviewsFromDB = async () => {
-    const reviewsBD = await getReviews(id);
-    setReviewsState(reviewsBD);
+    const reviewsDB = await getReviews(id);
+    reviewsDB && setReviewsState(reviewsDB);
   };
 
   useEffect(() => {

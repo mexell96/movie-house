@@ -7,7 +7,7 @@ import { MovieListStyled } from "./MovieList.style";
 import { Loader, SingleMovie } from "..";
 import { fetchMovies } from "../../redux/actions";
 
-const MoviesList = () => {
+const MoviesList = (): JSX.Element => {
   const location = useLocation();
   const dispatch = useDispatch();
   const urlReducer = useSelector(({ urlReducer }: RootStateType) => urlReducer);

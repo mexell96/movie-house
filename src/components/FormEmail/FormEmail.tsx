@@ -20,7 +20,12 @@ type EmailPropType = {
   email: string;
 };
 
-const FormEmail = ({ email, id, token, getUser }: FormEmailPropType) => {
+const FormEmail = ({
+  email,
+  id,
+  token,
+  getUser,
+}: FormEmailPropType): JSX.Element => {
   const [editEmail, setEditEmail] = useState(false);
   const { loading, error, request, clearError } = useHttp();
 
@@ -31,7 +36,7 @@ const FormEmail = ({ email, id, token, getUser }: FormEmailPropType) => {
     }
   }, [error, clearError]);
 
-  const onFinish = ({ email }: EmailPropType) => {
+  const onFinish = ({ email }: EmailPropType): void => {
     (async () => {
       try {
         const response = await request(
@@ -49,7 +54,7 @@ const FormEmail = ({ email, id, token, getUser }: FormEmailPropType) => {
     })();
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = (errorInfo: any): void => {
     console.log("Failed:", errorInfo);
   };
 

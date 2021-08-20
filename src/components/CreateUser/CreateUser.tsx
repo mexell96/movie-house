@@ -9,9 +9,16 @@ import { AuthContext } from "../../context/AuthContext";
 import { MEGABYTE } from "../../consts";
 import { setUser } from "../../redux/actions";
 
+type RegistrationPropsType = {
+  email: string;
+  name: string;
+  password: string;
+  upload: any;
+};
+
 const CreateUser = () => {
   const history = useHistory();
-  const authentication: any = useContext(AuthContext);
+  const { login }: AuthContextType = useContext(AuthContext);
   const { loading, error, request, clearError } = useHttp();
   const dispatch = useDispatch();
 
@@ -22,8 +29,13 @@ const CreateUser = () => {
     }
   }, [error, clearError]);
 
-  const onFinish = ({ email, name, password, upload }: any) => {
-    const registerHandler = async () => {
+  const onFinish = ({
+    email,
+    name,
+    password,
+    upload,
+  }: RegistrationPropsType): void => {
+    (async () => {
       try {
         const response = await request("/api/register", "POST", {
           email,
@@ -37,20 +49,19 @@ const CreateUser = () => {
           password,
         });
         dispatch(setUser(dataLogin.user));
-        authentication.login(dataLogin.token, dataLogin.userId);
+        login(dataLogin.token, dataLogin.userId);
         history.push(`/profile/${dataLogin.userId}`);
       } catch (e) {
         console.log(e, "E message createUserPage");
       }
-    };
-    registerHandler();
+    })();
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = (errorInfo: any): void => {
     console.log("Failed:", errorInfo);
   };
 
-  const beforeUpload = (file: any) => {
+  const beforeUpload = (file: any): string | false => {
     const imgType = ["image/png", "image/jpeg", "image/jpeg"];
     if (imgType.includes(file.type) && file.size <= MEGABYTE) {
       return false;

@@ -12,22 +12,22 @@ const useAuth = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const dispatch = useDispatch();
   const { request } = useHttp();
-
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
+  const [authLoading, setAuthLoading] = useState(false);
 
-  const getTheme = () => {
-    return userReducer.theme === "light" ? lightTheme : darkTheme;
-  };
+  const getTheme = () =>
+    userReducer.theme === "light" ? lightTheme : darkTheme;
 
   const getUser = useCallback(async () => {
+    setAuthLoading(true);
     const data: DataLSType = JSON.parse(
       localStorage.getItem("userData") || "null"
     );
     if (data) {
       try {
-        const user: any = await request(
+        const user: UserType = await request(
           `/api/profile/${data.userId}`,
           "GET",
           null,
@@ -36,32 +36,42 @@ const useAuth = () => {
           }
         );
         dispatch(setUser(user));
+        setAuthLoading(false);
       } catch (e) {
+        setAuthLoading(false);
         console.log(e, "Error profile");
       }
     }
   }, []);
 
   const getReviews = useCallback(async (id: string) => {
+    setAuthLoading(true);
     try {
       const reviews = await request(`/api/reviews/${id}`, "GET");
+      console.log(reviews, "reviews 333");
+      setAuthLoading(false);
       return reviews;
     } catch (e) {
+      setAuthLoading(false);
       console.log(e, "E message createUserPage");
     }
   }, []);
 
   const setReview = useCallback(async (newReview: ReviewType) => {
+    setAuthLoading(true);
     try {
       const response = await request("/api/create-review", "POST", newReview);
       message.success(response.message);
+      setAuthLoading(false);
     } catch (e) {
+      setAuthLoading(false);
       console.log(e, "E message createUserPage");
     }
   }, []);
 
   const getUserReviews = useCallback(
     async (id: string, token: string | null) => {
+      setAuthLoading(true);
       try {
         const reviews = await request(
           `/api/profile-reviews/${id}`,
@@ -71,8 +81,10 @@ const useAuth = () => {
             Authorization: `Bearer ${token}`,
           }
         );
+        setAuthLoading(false);
         return reviews;
       } catch (e) {
+        setAuthLoading(false);
         console.log(e, "E message createUserPage");
       }
     },
@@ -80,6 +92,7 @@ const useAuth = () => {
   );
 
   const login = useCallback((jwtToken: string, id: string) => {
+    setAuthLoading(true);
     setToken(jwtToken);
     setUserId(id);
 
@@ -87,6 +100,7 @@ const useAuth = () => {
       "userData",
       JSON.stringify({ userId: id, token: jwtToken })
     );
+    setAuthLoading(false);
   }, []);
 
   const logout = useCallback(() => {
@@ -118,6 +132,7 @@ const useAuth = () => {
     setReview,
     getReviews,
     getUserReviews,
+    authLoading,
   };
 };
 

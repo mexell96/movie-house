@@ -15,7 +15,8 @@ import {
 import { AuthContext } from "../../context/AuthContext";
 
 const Header = () => {
-  const auth: any = useContext(AuthContext);
+  const { isAuthenticated, logout, userId, authLoading }: AuthContextType =
+    useContext(AuthContext);
   const history = useHistory();
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
@@ -23,15 +24,15 @@ const Header = () => {
 
   const logoutHandler = (event: any) => {
     event.preventDefault();
-    auth.logout();
+    logout();
     history.push("/");
   };
 
   return (
     <HeaderStyled onClick={() => window.scroll(0, 0)}>
       <div>Movie-house</div>
-      <>
-        {!auth.isAuthenticated && (
+      {!isAuthenticated ||
+        (isAuthenticated && authLoading && (
           <HeaderButtonsStyled>
             <Button>
               <Link to={`/login`}>Login</Link>
@@ -40,19 +41,18 @@ const Header = () => {
               <Link to={`/registration`}>Registration</Link>
             </Button>
           </HeaderButtonsStyled>
-        )}
-        {auth.isAuthenticated && (
-          <HeaderAvatarStyled>
-            <HeaderImgLinkStyled to={`/profile/${auth.userId}`}>
-              <HeaderImgStyled src={userReducer.avatar} alt="avatar" />
-            </HeaderImgLinkStyled>
-            <HeaderNameStyled>{userReducer.name}</HeaderNameStyled>
-            <Button onClick={logoutHandler}>
-              <Link to={`/`}>Logout</Link>
-            </Button>
-          </HeaderAvatarStyled>
-        )}
-      </>
+        ))}
+      {isAuthenticated && !authLoading && (
+        <HeaderAvatarStyled>
+          <HeaderImgLinkStyled to={`/profile/${userId}`}>
+            <HeaderImgStyled src={userReducer.avatar} alt="avatar" />
+          </HeaderImgLinkStyled>
+          <HeaderNameStyled>{userReducer.name}</HeaderNameStyled>
+          <Button onClick={logoutHandler}>
+            <Link to={`/`}>Logout</Link>
+          </Button>
+        </HeaderAvatarStyled>
+      )}
     </HeaderStyled>
   );
 };

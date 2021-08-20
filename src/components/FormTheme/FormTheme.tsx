@@ -5,8 +5,6 @@ import { FormThemeTrStyled, FormThemeTdStyled } from "./FormTheme.style";
 
 import { useHttp } from "../../hooks/http.hook";
 
-const { Option } = Select;
-
 type FormThemePropType = {
   theme: string;
   id: string;
@@ -18,7 +16,12 @@ type ThemePropType = {
   theme: string;
 };
 
-const FormSelect = ({ theme, id, token, getUser }: FormThemePropType) => {
+const FormSelect = ({
+  theme,
+  id,
+  token,
+  getUser,
+}: FormThemePropType): JSX.Element => {
   const [editTheme, setEditTheme] = useState(false);
   const { loading, error, request, clearError } = useHttp();
 
@@ -29,7 +32,7 @@ const FormSelect = ({ theme, id, token, getUser }: FormThemePropType) => {
     }
   }, [error, clearError]);
 
-  const onFinish = ({ theme }: ThemePropType) => {
+  const onFinish = ({ theme }: ThemePropType): void => {
     (async () => {
       try {
         const response = await request(
@@ -47,7 +50,7 @@ const FormSelect = ({ theme, id, token, getUser }: FormThemePropType) => {
     })();
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = (errorInfo: any): any => {
     console.log("Failed:", errorInfo);
   };
 
@@ -70,8 +73,8 @@ const FormSelect = ({ theme, id, token, getUser }: FormThemePropType) => {
               noStyle
               rules={[{ required: true, message: "Theme is required" }]}>
               <Select value={theme} style={{ width: 120 }}>
-                <Option value="light">light</Option>
-                <Option value="dark">dark</Option>
+                <Select.Option value="light">light</Select.Option>
+                <Select.Option value="dark">dark</Select.Option>
               </Select>
             </Form.Item>
             <Form.Item>

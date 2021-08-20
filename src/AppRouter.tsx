@@ -23,6 +23,7 @@ const AppRouter = () => {
     setReview,
     getReviews,
     getUserReviews,
+    authLoading,
   } = useAuth();
   const isAuthenticated = !!token;
   const routes = useRoutes(isAuthenticated);
@@ -31,35 +32,37 @@ const AppRouter = () => {
     getUser();
   }, []);
 
-  if (!ready) {
-    return <Loader />;
-  }
-
   return (
-    <ThemeProvider theme={getTheme}>
-      <GlobalStyles />
-      <AuthContext.Provider
-        value={{
-          token,
-          login,
-          logout,
-          userId,
-          isAuthenticated,
-          getUser,
-          getTheme,
-          setReview,
-          getReviews,
-          getUserReviews,
-        }}>
-        <Router>
-          <Header />
-          <AppRouterStyled>
-            <Container>{routes}</Container>
-          </AppRouterStyled>
-          <Navbar />
-        </Router>
-      </AuthContext.Provider>
-    </ThemeProvider>
+    <>
+      {!ready && <Loader />}
+      {ready && (
+        <ThemeProvider theme={getTheme}>
+          <GlobalStyles />
+          <AuthContext.Provider
+            value={{
+              token,
+              login,
+              logout,
+              userId,
+              isAuthenticated,
+              getUser,
+              getTheme,
+              setReview,
+              getReviews,
+              getUserReviews,
+              authLoading,
+            }}>
+            <Router>
+              <Header />
+              <AppRouterStyled>
+                <Container>{routes}</Container>
+              </AppRouterStyled>
+              <Navbar />
+            </Router>
+          </AuthContext.Provider>
+        </ThemeProvider>
+      )}
+    </>
   );
 };
 

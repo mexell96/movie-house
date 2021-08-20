@@ -17,8 +17,8 @@ const Pagination = ({
   count,
   currentPage,
   portionOfPages,
-}: PaginationPropsType) => {
-  const getPreviousPages = (currentPage: number, number: number) => {
+}: PaginationPropsType): JSX.Element => {
+  const getPreviousPages = (currentPage: number, number: number): number[] => {
     const previousArray = [];
     for (let item = --currentPage; item !== currentPage - number; item--) {
       if (item > 0) {
@@ -28,7 +28,7 @@ const Pagination = ({
     return previousArray.reverse();
   };
 
-  const getNextPages = (currentPage: number, number: number) => {
+  const getNextPages = (currentPage: number, number: number): number[] => {
     const nextArray = [];
     for (let item = ++currentPage; item !== currentPage + number; item++) {
       if (item <= count) {

@@ -9,10 +9,8 @@ import { AuthContext } from "../../context/AuthContext";
 import { Loader } from "../../components";
 import { useAuth } from "../../hooks/auth.hook";
 
-const { Option } = Select;
-
-const Profiles = () => {
-  const { token } = useContext(AuthContext);
+const Profiles = (): JSX.Element => {
+  const { token }: AuthContextType = useContext(AuthContext);
   const { request, loading } = useHttp();
   const { getUser } = useAuth();
   const [users, setUsers] = useState<UserType[] | []>([]);
@@ -31,7 +29,7 @@ const Profiles = () => {
     }
   }, [token, request]);
 
-  const changeRole = (role: string, id: string) => {
+  const changeRole = (role: string, id: string): void => {
     (async () => {
       try {
         const response = await request(
@@ -70,8 +68,8 @@ const Profiles = () => {
             value={role}
             style={{ width: 120 }}
             onChange={(value) => changeRole(value, user._id)}>
-            <Option value="ADMIN">ADMIN</Option>
-            <Option value="USER">USER</Option>
+            <Select.Option value="ADMIN">ADMIN</Select.Option>
+            <Select.Option value="USER">USER</Select.Option>
           </Select>
         );
       },

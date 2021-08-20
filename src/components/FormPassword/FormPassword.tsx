@@ -4,10 +4,10 @@ import { Form, Input, Button, message } from "antd";
 import {
   FormPasswordTrStyled,
   FormPasswordTdStyled,
+  FormPasswordDivStyled,
 } from "./FormPassword.style";
 
 import { useHttp } from "../../hooks/http.hook";
-import { FormPasswordDivStyled } from "./FormPassword.style";
 
 type FormPasswordPropType = {
   id: string;
@@ -20,7 +20,11 @@ type PasswordsPropType = {
   newPassword: string;
 };
 
-const FormPassword = ({ id, token, getUser }: FormPasswordPropType) => {
+const FormPassword = ({
+  id,
+  token,
+  getUser,
+}: FormPasswordPropType): JSX.Element => {
   const [editPassword, setEditPassword] = useState(false);
   const { loading, error, request, clearError } = useHttp();
 
@@ -31,7 +35,7 @@ const FormPassword = ({ id, token, getUser }: FormPasswordPropType) => {
     }
   }, [error, clearError]);
 
-  const onFinish = ({ oldPassword, newPassword }: PasswordsPropType) => {
+  const onFinish = ({ oldPassword, newPassword }: PasswordsPropType): void => {
     (async () => {
       try {
         const response = await request(
@@ -49,7 +53,7 @@ const FormPassword = ({ id, token, getUser }: FormPasswordPropType) => {
     })();
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = (errorInfo: any): void => {
     console.log("Failed:", errorInfo);
   };
 

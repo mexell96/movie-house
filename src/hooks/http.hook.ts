@@ -1,31 +1,28 @@
-import { API_BASE } from "./../consts";
 import { useState, useCallback } from "react";
+import axios from "axios";
+
+import { API_BASE } from "./../consts";
 
 const useHttp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const request = useCallback(
-    async (url, method = "GET", body = null, headers = {}) => {
+    async (url, method = "GET", data = null, headers = {}) => {
       setLoading(true);
       try {
-        if (body) {
-          body = JSON.stringify(body);
+        if (data) {
+          data = JSON.stringify(data);
           headers["Content-Type"] = "application/json";
         }
-        const response = await fetch(`${API_BASE}${url}`, {
+        const response = await axios({
           method,
-          body,
           headers,
+          data,
+          url: `${API_BASE}${url}`,
         });
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || "Something error");
-        }
-
         setLoading(false);
-        return data;
+        return response.data;
       } catch (error) {
         const message = (error as Error).message;
         console.log(message, "Error http.hook");

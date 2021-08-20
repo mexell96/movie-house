@@ -20,10 +20,10 @@ const UploadImage = ({
   value,
   errors,
   touched,
-}: UploadImagePropsType) => {
+}: UploadImagePropsType): JSX.Element => {
   const [sizeError, setSizeError] = useState(false);
 
-  const onFileChange = (input: any) => {
+  const onFileChange = (input: any): void => {
     const file = input.target.files[0];
     if (file && file.size < MEGABYTE) {
       const reader = new FileReader();

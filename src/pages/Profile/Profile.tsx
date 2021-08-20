@@ -31,9 +31,9 @@ import {
 
 const Profile = () => {
   const history = useHistory();
-  const { token, getUser, logout } = useContext(AuthContext);
-  const { request, loading } = useHttp();
-  const { getUserReviews } = useAuth();
+  const { token, getUser, logout }: AuthContextType = useContext(AuthContext);
+  const { request } = useHttp();
+  const { getUserReviews, authLoading } = useAuth();
   const { id } = useParams<{ id: string }>();
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
@@ -55,21 +55,25 @@ const Profile = () => {
   }, []);
 
   const getUserReviewsFromDB = async () => {
-    const userReviewsDB = await getUserReviews(id, token);
-    setUserReviews(userReviewsDB);
+    try {
+      const userReviewsDB = await getUserReviews(id, token);
+      setUserReviews(userReviewsDB);
+    } catch (e) {
+      console.log("Error - ", e);
+    }
   };
 
   useEffect(() => {
     getUserReviewsFromDB();
   }, []);
 
-  if (loading) {
+  if (authLoading) {
     return <Loader />;
   }
 
   return (
     <>
-      {!loading && id && userReducer && token && (
+      {!authLoading && id && userReducer && token && (
         <ProfileWrapperStyled>
           <h2>Profile</h2>
           <ProfileAvatarWrapperStyled>

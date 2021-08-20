@@ -4,12 +4,18 @@ import { Form, Input, Button, Checkbox, message } from "antd";
 import { useHistory } from "react-router-dom";
 
 import { useHttp } from "../../hooks/http.hook";
-import { AuthContext } from "../../context/AuthContext";
 import { setUser } from "../../redux/actions";
+import { AuthContext } from "../../context/AuthContext";
+
+type LoginPropsType = {
+  email: string;
+  password: string;
+  remember: boolean;
+};
 
 const Login = () => {
   const history = useHistory();
-  const authentication: any = useContext(AuthContext);
+  const { login }: AuthContextType = useContext(AuthContext);
   const { loading, error, request, clearError } = useHttp();
   const dispatch = useDispatch();
 
@@ -20,8 +26,8 @@ const Login = () => {
     }
   }, [error, clearError]);
 
-  const onFinish = ({ email, password, remember }: any) => {
-    const loginHandler = async () => {
+  const onFinish = ({ email, password, remember }: LoginPropsType): void => {
+    (async () => {
       try {
         const data = await request("/api/login", "POST", {
           email,
@@ -30,16 +36,15 @@ const Login = () => {
         });
         message.success(data.message);
         dispatch(setUser(data.user));
-        authentication.login(data.token, data.userId);
+        login(data.token, data.userId);
         history.push(`/`);
       } catch (e) {
         console.log(e, "E message loginPage");
       }
-    };
-    loginHandler();
+    })();
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = (errorInfo: any): void => {
     console.log("Failed:", errorInfo);
   };
 

@@ -29,7 +29,7 @@ const ReviewCard = ({
   getUserReviewsFromDB,
   getReviewsFromDB,
 }: ReviewCardPropsType) => {
-  const { token, userId } = useContext(AuthContext);
+  const { token, userId }: AuthContextType = useContext(AuthContext);
   const { request } = useHttp();
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
