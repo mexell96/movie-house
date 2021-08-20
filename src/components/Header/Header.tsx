@@ -31,17 +31,16 @@ const Header = () => {
   return (
     <HeaderStyled onClick={() => window.scroll(0, 0)}>
       <div>Movie-house</div>
-      {!isAuthenticated ||
-        (isAuthenticated && authLoading && (
-          <HeaderButtonsStyled>
-            <Button>
-              <Link to={`/login`}>Login</Link>
-            </Button>
-            <Button>
-              <Link to={`/registration`}>Registration</Link>
-            </Button>
-          </HeaderButtonsStyled>
-        ))}
+      {!isAuthenticated && (
+        <HeaderButtonsStyled>
+          <Button>
+            <Link to={`/login`}>Login</Link>
+          </Button>
+          <Button>
+            <Link to={`/registration`}>Registration</Link>
+          </Button>
+        </HeaderButtonsStyled>
+      )}
       {isAuthenticated && !authLoading && (
         <HeaderAvatarStyled>
           <HeaderImgLinkStyled to={`/profile/${userId}`}>

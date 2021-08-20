@@ -115,7 +115,8 @@ const Profile = () => {
           <ProfileButtonAccountStyled onClick={() => setShowModal(true)}>
             Delete account
           </ProfileButtonAccountStyled>
-          {userReducer.role === "ADMIN" && (
+          {(userReducer.role === "SUPERADMIN" ||
+            userReducer.role === "ADMIN") && (
             <ProfileButtonAccountStyled>
               <Link to={`/profiles`}>View users</Link>
             </ProfileButtonAccountStyled>

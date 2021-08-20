@@ -1,6 +1,6 @@
 import { useCallback, useContext, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Table, Select, message } from "antd";
+import { Table, Select, message, Button, Popconfirm } from "antd";
 
 import { ProfileErrorStyled } from "./Profiles.style";
 
@@ -17,6 +17,25 @@ const Profiles = (): JSX.Element => {
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
+
+  const handleDelete = (id: string) => {
+    (async () => {
+      try {
+        const response = await request(
+          `/api/root-delete-user/${id}`,
+          "DELETE",
+          null,
+          { Authorization: `Bearer ${token}` }
+        );
+        console.log(response, "response 7777");
+        message.success(response.message);
+        await getUsers();
+      } catch (error) {
+        message.error("You don't have access");
+        console.log("Error - ", error);
+      }
+    })();
+  };
 
   const getUsers = useCallback(async () => {
     try {
@@ -40,7 +59,7 @@ const Profiles = (): JSX.Element => {
         );
         message.success(response.message);
         await getUser();
-        role === "ADMIN" && (await getUsers());
+        (role === "SUPERADMIN" || role === "ADMIN") && (await getUsers());
       } catch (e) {
         console.log(e, "E message createUserPage");
       }
@@ -66,18 +85,33 @@ const Profiles = (): JSX.Element => {
         return (
           <Select
             value={role}
-            style={{ width: 120 }}
+            style={{ width: "100%" }}
             onChange={(value) => changeRole(value, user._id)}>
+            <Select.Option value="SUPERADMIN">SUPERADMIN</Select.Option>
             <Select.Option value="ADMIN">ADMIN</Select.Option>
             <Select.Option value="USER">USER</Select.Option>
           </Select>
         );
       },
     },
+    {
+      title: "Delete user",
+      dataIndex: "deleteUser",
+      key: "deleteUser",
+      render: (_: any, user: UserType) =>
+        users.length >= 1 ? (
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() => handleDelete(user._id)}>
+            <Button>Delete</Button>
+          </Popconfirm>
+        ) : null,
+    },
   ];
 
   useEffect(() => {
-    userReducer.role === "ADMIN" && getUsers();
+    (userReducer.role === "ADMIN" || userReducer.role === "SUPERADMIN") &&
+      getUsers();
   }, [getUsers, userReducer]);
 
   if (loading) {
@@ -86,10 +120,11 @@ const Profiles = (): JSX.Element => {
 
   return (
     <>
-      {!loading && userReducer.role === "ADMIN" && (
-        <Table bordered columns={columns} dataSource={users} rowKey="_id" />
-      )}
-      {!loading && userReducer.role !== "ADMIN" && (
+      {!loading &&
+        (userReducer.role === "ADMIN" || userReducer.role === "SUPERADMIN") && (
+          <Table bordered columns={columns} dataSource={users} rowKey="_id" />
+        )}
+      {!loading && userReducer.role === "USER" && (
         <ProfileErrorStyled>You don't have access.</ProfileErrorStyled>
       )}
     </>
