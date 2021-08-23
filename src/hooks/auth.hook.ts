@@ -4,7 +4,7 @@ import { message } from "antd";
 
 import { setUser } from "../redux/actions";
 import { useHttp } from "./http.hook";
-import { lightTheme, darkTheme } from "../Themes";
+import { lightTheme, darkTheme } from "../themes";
 
 const useAuth = () => {
   const [token, setToken] = useState<string | null>(null);
