@@ -53,3 +53,17 @@ export const ReviewCardHeaderStyled = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+export const ReviewCardUserNameStyled = styled.h2`
+  padding: 0 10px;
+`;
+
+export const ReviewCardMovieStyled = styled.h2`
+  padding: 0 10px;
+  margin: 0;
+
+  &:hover {
+    background-color: #39445a;
+    border-radius: 10px;
+  }
+`;

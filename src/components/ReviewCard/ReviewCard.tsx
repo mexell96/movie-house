@@ -1,5 +1,6 @@
 import { useCallback, useContext } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import CancelPresentationIcon from "@material-ui/icons/CancelPresentation";
 import { message } from "antd";
 
@@ -12,6 +13,8 @@ import {
   ReviewCardInfoStyled,
   ReviewCardDeleteReviewStyled,
   ReviewCardHeaderStyled,
+  ReviewCardMovieStyled,
+  ReviewCardUserNameStyled,
 } from "./ReviewCard.style";
 
 import { Rating } from "..";
@@ -60,14 +63,16 @@ const ReviewCard = ({
       </ReviewCardAvatarWrapperStyled>
       <ReviewCardInfoStyled>
         <ReviewCardHeaderStyled>
-          <h2>{review.name}</h2>
+          <ReviewCardUserNameStyled>{review.name}</ReviewCardUserNameStyled>
           {userReducer.role && review.owner === userId && (
             <ReviewCardDeleteReviewStyled onClick={deleteReview}>
               <CancelPresentationIcon color="error" />
             </ReviewCardDeleteReviewStyled>
           )}
         </ReviewCardHeaderStyled>
-        <h2>{review.movie}</h2>
+        <Link to={`/movies/${review.movieId}`}>
+          <ReviewCardMovieStyled>{review.movie}</ReviewCardMovieStyled>
+        </Link>
         <ReviewCardStarsStyled>
           <Rating value={review.rating} changeable={false} />
         </ReviewCardStarsStyled>
