@@ -8,6 +8,8 @@ import { useHttp } from "../../hooks/http.hook";
 import { AuthContext } from "../../context/AuthContext";
 import { Loader } from "../../components";
 import { useAuth } from "../../hooks/auth.hook";
+import { UserName } from "./UserName";
+import { UserEmail } from "./UserEmail";
 
 const Profiles = (): JSX.Element => {
   const { token }: AuthContextType = useContext(AuthContext);
@@ -71,11 +73,17 @@ const Profiles = (): JSX.Element => {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      render: (userName: string, user: UserType) => {
+        return <UserName userName={userName} user={user} />;
+      },
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      render: (userEmail: string, user: UserType) => {
+        return <UserEmail userEmail={userEmail} user={user} />;
+      },
     },
     {
       title: "Role",
