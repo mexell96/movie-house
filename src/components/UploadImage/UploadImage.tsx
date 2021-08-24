@@ -6,7 +6,8 @@ import {
   UploadImageAvatarStyled,
 } from "./UploadImage.styled";
 
-import { MEGABYTE, noPicture } from "../../consts";
+import { MEGABYTE } from "../../consts";
+import { getPicture } from "../../utils";
 
 type UploadImagePropsType = {
   value: string;
@@ -38,7 +39,7 @@ const UploadImage = ({
   return (
     <div>
       <UploadImageButtonStyled component="label">
-        <UploadImageAvatarStyled src={value || noPicture} alt="avatar" />
+        <UploadImageAvatarStyled src={getPicture(value)} alt="avatar" />
         <input
           accept="image/*"
           id="avatar"
