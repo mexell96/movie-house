@@ -15,7 +15,7 @@ type RegistrationPropsType = {
   upload: any;
 };
 
-const CreateUser = () => {
+const CreateUser = (): JSX.Element => {
   const history = useHistory();
   const { login } = useLogin();
   const { loading, error, request, clearError } = useHttp();
@@ -43,13 +43,13 @@ const CreateUser = () => {
           upload,
         });
         message.success(response.message);
-        const dataLogin = await request("/api/login", "POST", {
+        const dataUser = await request("/api/login", "POST", {
           email,
           password,
         });
-        dispatch(setUser({ token: dataLogin.token, user: dataLogin.user }));
-        login(dataLogin.token);
-        history.push(`/profile/${dataLogin.user._id}`);
+        dispatch(setUser({ token: dataUser.token, user: dataUser.user }));
+        login(dataUser.token);
+        history.push(`/profile/${dataUser.user._id}`);
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

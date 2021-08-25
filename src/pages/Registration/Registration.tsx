@@ -1,6 +1,6 @@
 import { CreateUser, FormWrapper } from "../../components";
 
-const Registration = () => (
+const Registration = (): JSX.Element => (
   <FormWrapper>
     <CreateUser />
   </FormWrapper>

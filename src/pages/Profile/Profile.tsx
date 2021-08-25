@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Link, useHistory } from "react-router-dom";
@@ -14,25 +14,20 @@ import {
   ProfileCardWrapperStyled,
 } from "./Profile.style";
 
-import { useHttp } from "../../hooks";
+import { useHttp, useLogout, useAuth, useGetUserReviews } from "../../hooks";
 import {
   FormId,
   FormName,
   FormEmail,
   FormSelect,
-  Loader,
   FormImage,
   FormPassword,
   ReviewCard,
   Modal,
 } from "../../components";
-import { useLogout } from "../../hooks/logout";
-import { useAuth } from "../../hooks/auth";
-import { useGetUserReviews } from "../../hooks/getUserReviews";
 
 const Profile = () => {
   const history = useHistory();
-
   const { auth } = useAuth();
   const { logout } = useLogout();
   const { request } = useHttp();
@@ -44,7 +39,7 @@ const Profile = () => {
   const [showModal, setShowModal] = useState(false);
   const [userReviews, setUserReviews] = useState<ReviewType[] | null>(null);
 
-  const deleteUser = useCallback(async () => {
+  const deleteUser = async () => {
     try {
       const response = await request(`/api/delete-user/${id}`, "DELETE", null, {
         Authorization: `Bearer ${token}`,
@@ -55,7 +50,7 @@ const Profile = () => {
     } catch (e) {
       console.log(e, "Error profiles");
     }
-  }, []);
+  };
 
   const getUserReviewsFromDB = async () => {
     try {
@@ -69,10 +64,6 @@ const Profile = () => {
   useEffect(() => {
     getUserReviewsFromDB();
   }, []);
-
-  // if (authLoading) {
-  //   return <Loader />;
-  // }
 
   return (
     <>

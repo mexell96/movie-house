@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import HistoryIcon from "@material-ui/icons/History";
 import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
+
 import { NavbarStyled, NavbarButtonStyled } from "./Navbar.style";
 
-const Navbar = () => {
+const Navbar = (): JSX.Element => {
   return (
     <NavbarStyled>
       <NavbarButtonStyled

@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Table, Select, message, Button, Popconfirm } from "antd";
 
@@ -16,6 +16,19 @@ const Profiles = (): JSX.Element => {
   const { token, user } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
+
+  const getUsers = () => {
+    (async () => {
+      try {
+        const users = await request(`/api/profiles`, "GET", null, {
+          Authorization: `Bearer ${token}`,
+        });
+        setUsers(users);
+      } catch (e) {
+        console.log(e, "Error profiles");
+      }
+    })();
+  };
 
   const handleDelete = (id: string) => {
     (async () => {
@@ -35,17 +48,6 @@ const Profiles = (): JSX.Element => {
       }
     })();
   };
-
-  const getUsers = useCallback(async () => {
-    try {
-      const users = await request(`/api/profiles`, "GET", null, {
-        Authorization: `Bearer ${token}`,
-      });
-      setUsers(users);
-    } catch (e) {
-      console.log(e, "Error profiles");
-    }
-  }, [token, request]);
 
   const changeRole = (role: string, id: string): void => {
     (async () => {
@@ -116,7 +118,7 @@ const Profiles = (): JSX.Element => {
 
   useEffect(() => {
     (user.role === "ADMIN" || user.role === "SUPERADMIN") && getUsers();
-  }, [getUsers, token, user]);
+  }, [token, user]);
 
   if (loading) {
     return <Loader />;

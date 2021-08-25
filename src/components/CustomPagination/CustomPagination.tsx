@@ -6,7 +6,7 @@ import { MOVIES_NUMBER_ON_ONE_PAGE, PORTION_OF_PAGES } from "../../consts";
 import { uniqueKey } from "../../utils";
 import { Pagination } from "./Pagination";
 
-const CustomPagination = () => {
+const CustomPagination = (): JSX.Element => {
   const dispatch = useDispatch();
   const resultsMovies = useSelector(
     ({ resultsMovies }: RootStateType) => resultsMovies
