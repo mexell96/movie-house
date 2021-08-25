@@ -49,7 +49,7 @@ const CreateUser = () => {
         });
         dispatch(setUser({ token: dataLogin.token, user: dataLogin.user }));
         login(dataLogin.token);
-        history.push(`/profile/${dataLogin.userId}`);
+        history.push(`/profile/${dataLogin.user._id}`);
       } catch (e) {
         console.log(e, "E message createUserPage");
       }
