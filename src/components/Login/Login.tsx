@@ -31,11 +31,10 @@ const Login = () => {
         const data: LoginDataPropsType = await request("/api/login", "POST", {
           email,
           password,
-          remember,
         });
         message.success(data.message);
         dispatch(setUser({ user: data.user, token: data.token }));
-        login(data.token);
+        remember && login(data.token);
         history.push(`/`);
       } catch (e) {
         console.log(e, "E message loginPage");
