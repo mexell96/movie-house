@@ -1,4 +1,3 @@
-import { useCallback, useContext } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CancelPresentationIcon from "@material-ui/icons/CancelPresentation";
@@ -18,8 +17,7 @@ import {
 } from "./ReviewCard.style";
 
 import { Rating } from "..";
-import { useHttp } from "../../hooks/http.hook";
-import { AuthContext } from "../../context/AuthContext";
+import { useHttp } from "../../hooks";
 
 type ReviewCardPropsType = {
   review: ReviewType;
@@ -32,20 +30,19 @@ const ReviewCard = ({
   getUserReviewsFromDB,
   getReviewsFromDB,
 }: ReviewCardPropsType) => {
-  const { token, userId }: AuthContextType = useContext(AuthContext);
   const { request } = useHttp();
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
 
-  const deleteReview = useCallback(async () => {
+  const deleteReview = async () => {
     try {
       const response = await request(
         `/api/profile-reviews/${review.uid}`,
         "DELETE",
         null,
         {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${userReducer.token}`,
         }
       );
       message.success(response.message);
@@ -54,7 +51,7 @@ const ReviewCard = ({
     } catch (e) {
       console.log(e, "Error profiles");
     }
-  }, []);
+  };
 
   return (
     <ReviewCardWrapperStyled>
@@ -64,7 +61,7 @@ const ReviewCard = ({
       <ReviewCardInfoStyled>
         <ReviewCardHeaderStyled>
           <ReviewCardUserNameStyled>{review.name}</ReviewCardUserNameStyled>
-          {userReducer.role && review.owner === userId && (
+          {userReducer.user.role && review.owner === userReducer.user._id && (
             <ReviewCardDeleteReviewStyled onClick={deleteReview}>
               <CancelPresentationIcon color="error" />
             </ReviewCardDeleteReviewStyled>

@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import axios from "axios";
 
-import { API_BASE } from "./../consts";
+import { API_BASE } from "../consts";
 
 const useHttp = () => {
   const [loading, setLoading] = useState(false);
@@ -33,7 +33,8 @@ const useHttp = () => {
     },
     []
   );
-  const clearError = useCallback(() => setError(null), []);
+
+  const clearError = () => setError(null);
 
   return { loading, error, request, clearError };
 };

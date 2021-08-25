@@ -13,7 +13,7 @@ import {
 } from "./ReviewAuthentificated.style";
 
 import { Rating } from "..";
-import { useAuth } from "../../hooks/auth.hook";
+import { useSetReview } from "../../hooks";
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -33,18 +33,16 @@ const ReviewAuthentificated = ({
   getReviewsFromDB,
   title,
 }: ReviewPropsType) => {
-  const userReducer = useSelector(
-    ({ userReducer }: RootStateType) => userReducer
-  );
+  const { user } = useSelector(({ userReducer }: RootStateType) => userReducer);
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
-  const { userId, setReview } = useAuth();
+  const { setReview } = useSetReview();
 
   const initialValues = {
-    name: userReducer.name,
+    name: user.name,
     review: "",
     rating: 0,
-    avatar: userReducer.avatar,
+    avatar: user.avatar,
   };
 
   const onSubmit = async (
@@ -56,7 +54,7 @@ const ReviewAuthentificated = ({
         uid: uid(25),
         movie: title,
         movieId: id,
-        owner: userId || uid(25),
+        owner: user._id || uid(25),
         ...values,
       };
       await setReview(newReview);
@@ -70,9 +68,9 @@ const ReviewAuthentificated = ({
 
   return (
     <ReviewAuthentificatedWrapperStyled>
-      <ReviewAuthentificatedImgStyled src={userReducer.avatar} alt="avatar" />
+      <ReviewAuthentificatedImgStyled src={user.avatar} alt="avatar" />
       <ReviewAuthentificatedNameStyled>
-        {userReducer.name}
+        {user.name}
       </ReviewAuthentificatedNameStyled>
       <Formik
         initialValues={initialValues}

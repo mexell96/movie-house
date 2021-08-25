@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "antd";
@@ -12,15 +11,16 @@ import {
   HeaderNameStyled,
 } from "./Header.styled";
 
-import { AuthContext } from "../../context/AuthContext";
+import { useLogout } from "../../hooks";
 
 const Header = () => {
-  const { isAuthenticated, logout, userId, authLoading }: AuthContextType =
-    useContext(AuthContext);
+  const { logout } = useLogout();
   const history = useHistory();
-  const userReducer = useSelector(
+  const { token, user } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
+
+  const isAuthenticated = !!token;
 
   const logoutHandler = (event: any) => {
     event.preventDefault();
@@ -41,12 +41,12 @@ const Header = () => {
           </Button>
         </HeaderButtonsStyled>
       )}
-      {isAuthenticated && !authLoading && (
+      {isAuthenticated && (
         <HeaderAvatarStyled>
-          <HeaderImgLinkStyled to={`/profile/${userId}`}>
-            <HeaderImgStyled src={userReducer.avatar} alt="avatar" />
+          <HeaderImgLinkStyled to={`/profile/${user._id}`}>
+            <HeaderImgStyled src={user.avatar} alt="avatar" />
           </HeaderImgLinkStyled>
-          <HeaderNameStyled>{userReducer.name}</HeaderNameStyled>
+          <HeaderNameStyled>{user.name}</HeaderNameStyled>
           <Button onClick={logoutHandler}>
             <Link to={`/`}>Logout</Link>
           </Button>

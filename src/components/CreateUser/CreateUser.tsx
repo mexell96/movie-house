@@ -1,13 +1,12 @@
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Form, Input, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 
-import { useHttp } from "../../hooks/http.hook";
-import { AuthContext } from "../../context/AuthContext";
 import { MEGABYTE } from "../../consts";
 import { setUser } from "../../redux/actions";
+import { useLogin, useHttp } from "../../hooks";
 
 type RegistrationPropsType = {
   email: string;
@@ -18,7 +17,7 @@ type RegistrationPropsType = {
 
 const CreateUser = () => {
   const history = useHistory();
-  const { login }: AuthContextType = useContext(AuthContext);
+  const { login } = useLogin();
   const { loading, error, request, clearError } = useHttp();
   const dispatch = useDispatch();
 
@@ -48,8 +47,8 @@ const CreateUser = () => {
           email,
           password,
         });
-        dispatch(setUser(dataLogin.user));
-        login(dataLogin.token, dataLogin.userId);
+        dispatch(setUser({ token: dataLogin.token, user: dataLogin.user }));
+        login(dataLogin.token);
         history.push(`/profile/${dataLogin.userId}`);
       } catch (e) {
         console.log(e, "E message createUserPage");

@@ -7,12 +7,12 @@ import {
   FormPasswordDivStyled,
 } from "./FormPassword.style";
 
-import { useHttp } from "../../hooks/http.hook";
+import { useHttp } from "../../hooks";
 
 type FormPasswordPropType = {
   id: string;
   token: string;
-  getUser: () => Promise<void>;
+  auth: () => Promise<void>;
 };
 
 type PasswordsPropType = {
@@ -23,7 +23,7 @@ type PasswordsPropType = {
 const FormPassword = ({
   id,
   token,
-  getUser,
+  auth,
 }: FormPasswordPropType): JSX.Element => {
   const [editPassword, setEditPassword] = useState(false);
   const { loading, error, request, clearError } = useHttp();
@@ -46,7 +46,7 @@ const FormPassword = ({
         );
         message.success(response.message);
         setEditPassword(false);
-        await getUser();
+        await auth();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

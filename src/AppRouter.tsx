@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Container } from "@material-ui/core";
 import { ThemeProvider } from "styled-components";
 
@@ -8,58 +9,34 @@ import { GlobalStyles } from "./styles";
 
 import { Header, Loader, Navbar } from "./components";
 import { useRoutes } from "./routes";
-import { useAuth } from "./hooks/auth.hook";
-import { AuthContext } from "./context/AuthContext";
+import { useAuth, useTheme } from "./hooks/";
 
 const AppRouter = () => {
-  const {
-    token,
-    login,
-    logout,
-    userId,
-    ready,
-    getUser,
-    getTheme,
-    setReview,
-    getReviews,
-    getUserReviews,
-    authLoading,
-  } = useAuth();
-  const isAuthenticated = !!token;
-  const routes = useRoutes(isAuthenticated);
+  const { token } = useSelector(
+    ({ userReducer }: RootStateType) => userReducer
+  );
+  const { auth, loading } = useAuth();
+  const { theme } = useTheme();
+
+  const routes = useRoutes(!!token);
 
   useEffect(() => {
-    getUser();
+    auth();
   }, []);
 
   return (
     <>
-      {!ready && <Loader />}
-      {ready && (
-        <ThemeProvider theme={getTheme}>
+      {loading && <Loader />}
+      {!loading && (
+        <ThemeProvider theme={theme}>
           <GlobalStyles />
-          <AuthContext.Provider
-            value={{
-              token,
-              login,
-              logout,
-              userId,
-              isAuthenticated,
-              getUser,
-              getTheme,
-              setReview,
-              getReviews,
-              getUserReviews,
-              authLoading,
-            }}>
-            <Router>
-              <Header />
-              <AppRouterStyled>
-                <Container>{routes}</Container>
-              </AppRouterStyled>
-              <Navbar />
-            </Router>
-          </AuthContext.Provider>
+          <Router>
+            <Header />
+            <AppRouterStyled>
+              <Container>{routes}</Container>
+            </AppRouterStyled>
+            <Navbar />
+          </Router>
         </ThemeProvider>
       )}
     </>

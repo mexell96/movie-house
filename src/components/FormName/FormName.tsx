@@ -7,25 +7,20 @@ import {
   FormNameDivStyled,
 } from "./FormName.style";
 
-import { useHttp } from "../../hooks/http.hook";
+import { useHttp } from "../../hooks";
 
 type FormNamePropType = {
   name: string;
   id: string;
   token: string;
-  getUser: () => Promise<void>;
+  auth: () => Promise<void>;
 };
 
 type NamePropType = {
   name: string;
 };
 
-const FormName = ({
-  name,
-  id,
-  token,
-  getUser,
-}: FormNamePropType): JSX.Element => {
+const FormName = ({ name, id, token, auth }: FormNamePropType): JSX.Element => {
   const [editName, setEditName] = useState(false);
   const { loading, error, request, clearError } = useHttp();
 
@@ -47,7 +42,7 @@ const FormName = ({
         );
         message.success(response.message);
         setEditName(false);
-        await getUser();
+        await auth();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

@@ -3,13 +3,13 @@ import { Form, Button, message, Select } from "antd";
 
 import { FormThemeTrStyled, FormThemeTdStyled } from "./FormTheme.style";
 
-import { useHttp } from "../../hooks/http.hook";
+import { useHttp } from "../../hooks";
 
 type FormThemePropType = {
   theme: string;
   id: string;
   token: string;
-  getUser: () => Promise<void>;
+  auth: () => Promise<void>;
 };
 
 type ThemePropType = {
@@ -20,7 +20,7 @@ const FormSelect = ({
   theme,
   id,
   token,
-  getUser,
+  auth,
 }: FormThemePropType): JSX.Element => {
   const [editTheme, setEditTheme] = useState(false);
   const { loading, error, request, clearError } = useHttp();
@@ -43,7 +43,7 @@ const FormSelect = ({
         );
         message.success(response.message);
         setEditTheme(false);
-        await getUser();
+        await auth();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

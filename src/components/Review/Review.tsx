@@ -11,7 +11,7 @@ import {
 } from "./Review.style";
 
 import { UploadImage, Rating } from "..";
-import { useAuth } from "../../hooks/auth.hook";
+import { useSetReview } from "../../hooks";
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -38,7 +38,7 @@ const Review = ({
 }: ReviewPropsType): JSX.Element => {
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
-  const { setReview } = useAuth();
+  const { setReview } = useSetReview();
 
   const initialValues = { name: "", review: "", rating: 0, avatar: "" };
 

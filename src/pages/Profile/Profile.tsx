@@ -1,4 +1,4 @@
-import { useContext, useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Link, useHistory } from "react-router-dom";
@@ -14,9 +14,7 @@ import {
   ProfileCardWrapperStyled,
 } from "./Profile.style";
 
-import { useHttp } from "../../hooks/http.hook";
-import { useAuth } from "../../hooks/auth.hook";
-import { AuthContext } from "../../context/AuthContext";
+import { useHttp } from "../../hooks";
 import {
   FormId,
   FormName,
@@ -28,14 +26,19 @@ import {
   ReviewCard,
   Modal,
 } from "../../components";
+import { useLogout } from "../../hooks/logout";
+import { useAuth } from "../../hooks/auth";
+import { useGetUserReviews } from "../../hooks/getUserReviews";
 
 const Profile = () => {
   const history = useHistory();
-  const { token, getUser, logout }: AuthContextType = useContext(AuthContext);
+
+  const { auth } = useAuth();
+  const { logout } = useLogout();
   const { request } = useHttp();
-  const { getUserReviews, authLoading } = useAuth();
+  const { getUserReviews } = useGetUserReviews();
   const { id } = useParams<{ id: string }>();
-  const userReducer = useSelector(
+  const { token, user } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
   const [showModal, setShowModal] = useState(false);
@@ -67,56 +70,51 @@ const Profile = () => {
     getUserReviewsFromDB();
   }, []);
 
-  if (authLoading) {
-    return <Loader />;
-  }
+  // if (authLoading) {
+  //   return <Loader />;
+  // }
 
   return (
     <>
-      {!authLoading && id && userReducer && token && (
+      {id && token && (
         <ProfileWrapperStyled>
           <h2>Profile</h2>
           <ProfileAvatarWrapperStyled>
             <FormImage
-              avatar={userReducer.avatar}
-              id={userReducer._id}
+              avatar={user.avatar}
+              id={user._id}
               token={token}
-              getUser={getUser}
+              auth={auth}
             />
           </ProfileAvatarWrapperStyled>
           <ProfileTableStyled>
             <ProfileTbodyStyled>
-              <FormId id={userReducer._id} />
+              <FormId id={user._id} />
               <FormName
-                name={userReducer.name}
-                id={userReducer._id}
+                name={user.name}
+                id={user._id}
                 token={token}
-                getUser={getUser}
+                auth={auth}
               />
               <FormEmail
-                email={userReducer.email}
-                id={userReducer._id}
+                email={user.email}
+                id={user._id}
                 token={token}
-                getUser={getUser}
+                auth={auth}
               />
-              <FormPassword
-                id={userReducer._id}
-                token={token}
-                getUser={getUser}
-              />
+              <FormPassword id={user._id} token={token} auth={auth} />
               <FormSelect
-                theme={userReducer.theme}
-                id={userReducer._id}
+                theme={user.theme}
+                id={user._id}
                 token={token}
-                getUser={getUser}
+                auth={auth}
               />
             </ProfileTbodyStyled>
           </ProfileTableStyled>
           <ProfileButtonAccountStyled onClick={() => setShowModal(true)}>
             Delete account
           </ProfileButtonAccountStyled>
-          {(userReducer.role === "SUPERADMIN" ||
-            userReducer.role === "ADMIN") && (
+          {(user.role === "SUPERADMIN" || user.role === "ADMIN") && (
             <ProfileButtonAccountStyled>
               <Link to={`/profiles`}>View users</Link>
             </ProfileButtonAccountStyled>

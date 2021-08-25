@@ -7,13 +7,13 @@ import {
   FormEmailDivStyled,
 } from "./FormEmail.style";
 
-import { useHttp } from "../../hooks/http.hook";
+import { useHttp } from "../../hooks";
 
 type FormEmailPropType = {
   email: string;
   id: string;
   token: string;
-  getUser: () => Promise<void>;
+  auth: () => Promise<void>;
 };
 
 type EmailPropType = {
@@ -24,7 +24,7 @@ const FormEmail = ({
   email,
   id,
   token,
-  getUser,
+  auth,
 }: FormEmailPropType): JSX.Element => {
   const [editEmail, setEditEmail] = useState(false);
   const { loading, error, request, clearError } = useHttp();
@@ -47,7 +47,7 @@ const FormEmail = ({
         );
         message.success(response.message);
         setEditEmail(false);
-        await getUser();
+        await auth();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

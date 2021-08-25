@@ -53,7 +53,7 @@ export const setTab = (props: TabsType): TabsPropsType => ({
   payload: props,
 });
 
-export const setUser = (user: UserType | {}): UserReducerPropsType => ({
+export const setUser = (props: SetUserPropsType): UserReducerPropsType => ({
   type: SET_USER,
-  payload: user,
+  payload: props,
 });

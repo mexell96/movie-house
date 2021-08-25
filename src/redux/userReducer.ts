@@ -1,15 +1,28 @@
 import { SET_USER } from "./types";
 
-const initialState = {};
+const initialState = {
+  token: "",
+  user: {
+    email: "",
+    name: "",
+    role: "",
+    _id: "",
+    avatar: "",
+    theme: "",
+    createdAt: "",
+    updatedAt: "",
+  },
+};
 
 export const userReducer = (
-  state: UserType | {} = initialState,
+  state: SetUserPropsType = initialState,
   { type, payload }: UserReducerPropsType
-): UserType | {} => {
+): SetUserPropsType => {
   switch (type) {
     case SET_USER:
       return {
-        ...payload,
+        user: payload.user,
+        token: payload.token,
       };
     default:
       return state;

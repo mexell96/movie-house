@@ -9,16 +9,17 @@ import { message, Form, Input } from "antd";
 import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { useState, useContext, useCallback } from "react";
-import { useAuth } from "../../hooks/auth.hook";
-import { useHttp } from "../../hooks/http.hook";
-import { AuthContext } from "../../context/AuthContext";
+import { useState, useCallback } from "react";
+import { useHttp, useAuth } from "../../hooks/";
+import { useSelector } from "react-redux";
 
 const UserName = ({ userName, user }: any) => {
-  const { token }: AuthContextType = useContext(AuthContext);
   const [editName, setEditName] = useState(false);
   const { request, loading } = useHttp();
-  const { getUser } = useAuth();
+  const { auth } = useAuth();
+  const { token } = useSelector(
+    ({ userReducer }: RootStateType) => userReducer
+  );
 
   const getUsers = useCallback(async () => {
     try {
@@ -42,7 +43,7 @@ const UserName = ({ userName, user }: any) => {
         );
         message.success(response.message);
 
-        await getUser();
+        await auth();
         await getUsers();
         setEditName(false);
       } catch (e) {

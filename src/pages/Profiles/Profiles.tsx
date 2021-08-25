@@ -1,22 +1,19 @@
-import { useCallback, useContext, useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Table, Select, message, Button, Popconfirm } from "antd";
 
 import { ProfileErrorStyled } from "./Profiles.style";
 
-import { useHttp } from "../../hooks/http.hook";
-import { AuthContext } from "../../context/AuthContext";
+import { useHttp, useAuth } from "../../hooks";
 import { Loader } from "../../components";
-import { useAuth } from "../../hooks/auth.hook";
 import { UserName } from "./UserName";
 import { UserEmail } from "./UserEmail";
 
 const Profiles = (): JSX.Element => {
-  const { token }: AuthContextType = useContext(AuthContext);
   const { request, loading } = useHttp();
-  const { getUser } = useAuth();
+  const { auth } = useAuth();
   const [users, setUsers] = useState<UserType[] | []>([]);
-  const userReducer = useSelector(
+  const { token, user } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
 
@@ -60,7 +57,7 @@ const Profiles = (): JSX.Element => {
           { Authorization: `Bearer ${token}` }
         );
         message.success(response.message);
-        await getUser();
+        await auth();
         (role === "SUPERADMIN" || role === "ADMIN") && (await getUsers());
       } catch (e) {
         console.log(e, "E message createUserPage");
@@ -118,9 +115,8 @@ const Profiles = (): JSX.Element => {
   ];
 
   useEffect(() => {
-    (userReducer.role === "ADMIN" || userReducer.role === "SUPERADMIN") &&
-      getUsers();
-  }, [getUsers, userReducer]);
+    (user.role === "ADMIN" || user.role === "SUPERADMIN") && getUsers();
+  }, [getUsers, token, user]);
 
   if (loading) {
     return <Loader />;
@@ -128,11 +124,10 @@ const Profiles = (): JSX.Element => {
 
   return (
     <>
-      {!loading &&
-        (userReducer.role === "ADMIN" || userReducer.role === "SUPERADMIN") && (
-          <Table bordered columns={columns} dataSource={users} rowKey="_id" />
-        )}
-      {!loading && userReducer.role === "USER" && (
+      {!loading && (user.role === "ADMIN" || user.role === "SUPERADMIN") && (
+        <Table bordered columns={columns} dataSource={users} rowKey="_id" />
+      )}
+      {!loading && user.role === "USER" && (
         <ProfileErrorStyled>You don't have access.</ProfileErrorStyled>
       )}
     </>

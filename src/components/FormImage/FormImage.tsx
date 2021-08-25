@@ -5,24 +5,24 @@ import {
   FormImageButtonStyled,
   FormImageErrorStyled,
   FormImageAvatarStyled,
+  FormImageWrapperStyled,
 } from "./FormImage.style";
 
 import { MEGABYTE } from "../../consts";
-import { useHttp } from "../../hooks/http.hook";
-import { FormImageWrapperStyled } from "./FormImage.style";
+import { useHttp } from "../../hooks";
 
 type FormImagePropType = {
   avatar: string;
   id: string;
   token: string;
-  getUser: () => Promise<void>;
+  auth: () => Promise<void>;
 };
 
 const FormImage = ({
   avatar,
   id,
   token,
-  getUser,
+  auth,
 }: FormImagePropType): JSX.Element => {
   const [sizeError, setSizeError] = useState(false);
   const [editAvatar, setEditAvatar] = useState(false);
@@ -63,7 +63,7 @@ const FormImage = ({
         );
         message.success(response.message);
         setEditAvatar(false);
-        await getUser();
+        await auth();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

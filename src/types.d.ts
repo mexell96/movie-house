@@ -35,7 +35,7 @@ declare type ReviewType = {
 };
 declare type UserReducerPropsType = {
   type: string;
-  payload: UserType | {};
+  payload: SetUserPropsType;
 };
 declare type RootStateType = {
   appReducer: AppReducerType;
@@ -44,7 +44,7 @@ declare type RootStateType = {
   resultsMovies: ResultsMoviesType;
   tabsReducer: TabsType;
   urlReducer: SearchInfoType;
-  userReducer: UserType;
+  userReducer: SetUserPropsType;
 };
 
 declare type ResultMoviesType = {
@@ -112,7 +112,6 @@ declare type FormikPropsType = {
 declare type UserType = {
   email: string;
   name: string;
-  password: string;
   role: string;
   _id: string;
   avatar: string;
@@ -136,21 +135,13 @@ declare type ReviewActionsType = {
   setSubmitting: (isSubmitting: boolean) => void;
 };
 
-declare type AuthContextType = {
-  token: string | null;
-  userId: string | null;
-  login: (jwtToken: string, id: string) => void;
-  logout: () => void;
-  isAuthenticated: boolean;
-  getUser: () => Promise<void>;
-  getTheme: () => {
-    body: string;
-    text: string;
-    toggleBorder: string;
-    background: string;
-  };
-  setReview: (newReview: ReviewType) => Promise<void>;
-  getReviews: (id: string) => Promise<void>;
-  getUserReviews: (id: string, token: string) => Promise<void>;
-  authLoading: boolean;
+declare type LoginDataPropsType = {
+  token: string;
+  message: string;
+  user: UserType;
+};
+
+declare type SetUserPropsType = {
+  user: UserType;
+  token: string;
 };

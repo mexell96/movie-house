@@ -1,11 +1,10 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import { useHistory } from "react-router-dom";
 
-import { useHttp } from "../../hooks/http.hook";
+import { useHttp, useLogin } from "../../hooks";
 import { setUser } from "../../redux/actions";
-import { AuthContext } from "../../context/AuthContext";
 
 type LoginPropsType = {
   email: string;
@@ -15,7 +14,7 @@ type LoginPropsType = {
 
 const Login = () => {
   const history = useHistory();
-  const { login }: AuthContextType = useContext(AuthContext);
+  const { login } = useLogin();
   const { loading, error, request, clearError } = useHttp();
   const dispatch = useDispatch();
 
@@ -29,14 +28,14 @@ const Login = () => {
   const onFinish = ({ email, password, remember }: LoginPropsType): void => {
     (async () => {
       try {
-        const data = await request("/api/login", "POST", {
+        const data: LoginDataPropsType = await request("/api/login", "POST", {
           email,
           password,
           remember,
         });
         message.success(data.message);
-        dispatch(setUser(data.user));
-        login(data.token, data.userId);
+        dispatch(setUser({ user: data.user, token: data.token }));
+        login(data.token);
         history.push(`/`);
       } catch (e) {
         console.log(e, "E message loginPage");

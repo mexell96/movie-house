@@ -24,8 +24,7 @@ import {
 } from "../../components";
 import { fetchMovie } from "../../redux/actions";
 import { getPicture } from "../../utils";
-import { useAuth } from "../../hooks/auth.hook";
-import { AuthContext } from "../../context/AuthContext";
+import { useGetReviews } from "../../hooks";
 
 const body = (
   { Poster, Title, Year, Plot }: MovieType,
@@ -91,8 +90,11 @@ const Movie = (): JSX.Element => {
   const [movie, setMovie] = useState<MovieType | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [reviews, setReviewsState] = useState<ReviewType[] | null>(null);
-  const { getReviews } = useAuth();
-  const { isAuthenticated }: AuthContextType = useContext(AuthContext);
+  const { getReviews } = useGetReviews();
+  const { token } = useSelector(
+    ({ userReducer }: RootStateType) => userReducer
+  );
+  const isAuthenticated = !!token;
 
   useEffect(() => {
     if (resultsMovie[id]) {
