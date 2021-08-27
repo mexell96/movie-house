@@ -10,42 +10,37 @@ import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { useState, useCallback } from "react";
-import { useHttp, useAuth } from "../../hooks/";
+import useHttp from "../../hooks/http";
+import useAuth from "../../hooks/auth";
+
 import { useSelector } from "react-redux";
+import { getUsers, changeEmail } from "../../api/user";
 
 const UserEmail = ({ userEmail, user }: any) => {
   const [editEmail, setEditEmail] = useState(false);
-  const { request, loading } = useHttp();
-  // const { getUser } = useAuth();
+  const { loading } = useHttp();
   const { auth } = useAuth();
   const { token } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
 
-  const getUsers = useCallback(async () => {
+  const getUsersFn = useCallback(async () => {
     try {
-      const users = await request(`/api/profiles`, "GET", null, {
-        Authorization: `Bearer ${token}`,
-      });
+      const users = await getUsers();
       // setUsers(users);
     } catch (e) {
       console.log(e, "Error profiles");
     }
-  }, [token, request]);
+  }, [token]);
 
   const onFinishEmail = ({ email, id }: any): void => {
     (async () => {
       try {
-        const response = await request(
-          `/api/root-profile-email/${id}`,
-          "PATCH",
-          { email },
-          { Authorization: `Bearer ${token}` }
-        );
+        const response = await changeEmail(id, email, "root-");
         message.success(response.message);
 
         await auth();
-        await getUsers();
+        await getUsersFn();
         setEditEmail(false);
       } catch (e) {
         console.log(e, "E message createUserPage");

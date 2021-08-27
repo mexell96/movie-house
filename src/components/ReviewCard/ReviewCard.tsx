@@ -17,7 +17,7 @@ import {
 } from "./ReviewCard.style";
 
 import { Rating } from "..";
-import { useHttp } from "../../hooks";
+import { deleteReview } from "../../api/review";
 
 type ReviewCardPropsType = {
   review: ReviewType;
@@ -30,27 +30,15 @@ const ReviewCard = ({
   getUserReviewsFromDB,
   getReviewsFromDB,
 }: ReviewCardPropsType) => {
-  const { request } = useHttp();
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
 
-  const deleteReview = async () => {
-    try {
-      const response = await request(
-        `/api/profile-reviews/${review.uid}`,
-        "DELETE",
-        null,
-        {
-          Authorization: `Bearer ${userReducer.token}`,
-        }
-      );
-      message.success(response.message);
-      getUserReviewsFromDB && getUserReviewsFromDB();
-      getReviewsFromDB && getReviewsFromDB();
-    } catch (e) {
-      console.log(e, "Error profiles");
-    }
+  const deleteReviewFn = async () => {
+    const response = await deleteReview(review.uid);
+    message.success(response.message);
+    getUserReviewsFromDB && getUserReviewsFromDB();
+    getReviewsFromDB && getReviewsFromDB();
   };
 
   return (
@@ -62,7 +50,7 @@ const ReviewCard = ({
         <ReviewCardHeaderStyled>
           <ReviewCardUserNameStyled>{review.name}</ReviewCardUserNameStyled>
           {userReducer.user.role && review.owner === userReducer.user._id && (
-            <ReviewCardDeleteReviewStyled onClick={deleteReview}>
+            <ReviewCardDeleteReviewStyled onClick={deleteReviewFn}>
               <CancelPresentationIcon color="error" />
             </ReviewCardDeleteReviewStyled>
           )}

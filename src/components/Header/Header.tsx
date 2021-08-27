@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "antd";
+import useAuth from "../../hooks/auth";
 
 import {
   HeaderStyled,
@@ -11,16 +12,12 @@ import {
   HeaderNameStyled,
 } from "./Header.styled";
 
-import { useLogout } from "../../hooks";
-
 const Header = () => {
-  const { logout } = useLogout();
+  const { logout } = useAuth();
   const history = useHistory();
-  const { token, user } = useSelector(
+  const { user, isAuth } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
-
-  const isAuthenticated = !!token;
 
   const logoutHandler = (event: any) => {
     event.preventDefault();
@@ -31,7 +28,7 @@ const Header = () => {
   return (
     <HeaderStyled onClick={() => window.scroll(0, 0)}>
       <div>Movie-house</div>
-      {!isAuthenticated && (
+      {!isAuth && (
         <HeaderButtonsStyled>
           <Button>
             <Link to={`/login`}>Login</Link>
@@ -41,7 +38,7 @@ const Header = () => {
           </Button>
         </HeaderButtonsStyled>
       )}
-      {isAuthenticated && (
+      {isAuth && (
         <HeaderAvatarStyled>
           <HeaderImgLinkStyled to={`/profile/${user._id}`}>
             <HeaderImgStyled src={user.avatar} alt="avatar" />

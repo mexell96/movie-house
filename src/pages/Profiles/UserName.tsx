@@ -10,41 +10,37 @@ import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { useState, useCallback } from "react";
-import { useHttp, useAuth } from "../../hooks/";
+import useHttp from "../../hooks/http";
+import useAuth from "../../hooks/auth";
+
 import { useSelector } from "react-redux";
+import { getUsers, changeName } from "../../api/user";
 
 const UserName = ({ userName, user }: any) => {
   const [editName, setEditName] = useState(false);
-  const { request, loading } = useHttp();
+  const { loading } = useHttp();
   const { auth } = useAuth();
   const { token } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
 
-  const getUsers = useCallback(async () => {
+  const getUsersFn = useCallback(async () => {
     try {
-      const users = await request(`/api/profiles`, "GET", null, {
-        Authorization: `Bearer ${token}`,
-      });
+      const users = await getUsers();
       // setUsers(users);
     } catch (e) {
       console.log(e, "Error profiles");
     }
-  }, [token, request]);
+  }, [token]);
 
   const onFinishName = ({ name, id }: any): void => {
     (async () => {
       try {
-        const response = await request(
-          `/api/root-profile-name/${id}`,
-          "PATCH",
-          { name },
-          { Authorization: `Bearer ${token}` }
-        );
+        const response = await changeName(id, name, "root-");
         message.success(response.message);
 
         await auth();
-        await getUsers();
+        await getUsersFn();
         setEditName(false);
       } catch (e) {
         console.log(e, "E message createUserPage");

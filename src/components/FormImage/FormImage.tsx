@@ -9,7 +9,8 @@ import {
 } from "./FormImage.style";
 
 import { MEGABYTE } from "../../consts";
-import { useHttp } from "../../hooks";
+import useHttp from "../../hooks/http";
+import { changeImage } from "../../api/user";
 
 type FormImagePropType = {
   avatar: string;
@@ -26,7 +27,7 @@ const FormImage = ({
 }: FormImagePropType): JSX.Element => {
   const [sizeError, setSizeError] = useState(false);
   const [editAvatar, setEditAvatar] = useState(false);
-  const { loading, error, request, clearError } = useHttp();
+  const { loading, error, clearError } = useHttp();
   const [newAvatar, setNewAvatar] = useState("");
 
   const onFileChange = (input: any): void => {
@@ -55,12 +56,7 @@ const FormImage = ({
   const changeAvatar = (newAvatar: any): void => {
     (async () => {
       try {
-        const response = await request(
-          `/api/profile-avatar/${id}`,
-          "PATCH",
-          { avatar: newAvatar },
-          { Authorization: `Bearer ${token}` }
-        );
+        const response = await changeImage(id, newAvatar);
         message.success(response.message);
         setEditAvatar(false);
         await auth();

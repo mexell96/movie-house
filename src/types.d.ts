@@ -142,6 +142,7 @@ declare type LoginDataPropsType = {
 };
 
 declare type SetUserPropsType = {
-  user: UserType;
+  user: any;
   token: string;
+  isAuth: boolean;
 };

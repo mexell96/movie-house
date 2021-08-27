@@ -3,7 +3,8 @@ import { Form, Button, message, Select } from "antd";
 
 import { FormThemeTrStyled, FormThemeTdStyled } from "./FormTheme.style";
 
-import { useHttp } from "../../hooks";
+import useHttp from "../../hooks/http";
+import { changeTheme } from "../../api/user";
 
 type FormThemePropType = {
   theme: string;
@@ -23,7 +24,7 @@ const FormSelect = ({
   auth,
 }: FormThemePropType): JSX.Element => {
   const [editTheme, setEditTheme] = useState(false);
-  const { loading, error, request, clearError } = useHttp();
+  const { loading, error, clearError } = useHttp();
 
   useEffect(() => {
     if (error !== null) {
@@ -35,12 +36,7 @@ const FormSelect = ({
   const onFinish = ({ theme }: ThemePropType): void => {
     (async () => {
       try {
-        const response = await request(
-          `/api/profile-theme/${id}`,
-          "PATCH",
-          { theme },
-          { Authorization: `Bearer ${token}` }
-        );
+        const response = await changeTheme(id, theme);
         message.success(response.message);
         setEditTheme(false);
         await auth();

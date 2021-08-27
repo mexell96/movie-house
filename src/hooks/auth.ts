@@ -1,39 +1,52 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-import { useHttp } from "./";
 import { setUser } from "../redux/actions";
+import { authentification, login } from "../api/auth";
+import { clearLocalStorageToken, setLocalStorageToken } from "../utils";
 
 const useAuth = () => {
   const dispatch = useDispatch();
-  const { request } = useHttp();
-  const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   const auth = async () => {
-    setLoading(true);
-    const data: DataLSType = JSON.parse(
-      localStorage.getItem("userData") || "null"
+    const token: string = JSON.parse(
+      localStorage.getItem("authToken") || "null"
     );
 
-    if (data && data.token) {
-      try {
-        const user: UserType = await request(
-          `/api/profile`,
-          "POST",
-          { token: data.token },
-          {
-            Authorization: `Bearer ${data.token}`,
-          }
-        );
-        dispatch(setUser({ token: data.token, user }));
-      } catch (e) {
-        console.log(e, "Error profile");
-      }
+    if (token) {
+      const user: UserType = await authentification();
+      dispatch(setUser({ token, user, isAuth: true }));
     }
-    setLoading(false);
   };
 
-  return { auth, loading };
+  const loginFn = async (
+    email: string,
+    password: string,
+    remember: boolean
+  ) => {
+    const { user, message, token }: LoginDataPropsType = await login({
+      email,
+      password,
+    });
+    dispatch(setUser({ user, token, isAuth: true }));
+    remember && setLocalStorageToken(token);
+    history.push(`/`);
+    return message;
+  };
+
+  const logout = () => {
+    dispatch(
+      setUser({
+        token: "",
+        user: {},
+        isAuth: false,
+      })
+    );
+    clearLocalStorageToken();
+  };
+
+  return { auth, loginFn, logout };
 };
 
-export { useAuth };
+export default useAuth;

@@ -7,7 +7,8 @@ import {
   FormEmailDivStyled,
 } from "./FormEmail.style";
 
-import { useHttp } from "../../hooks";
+import useHttp from "../../hooks/http";
+import { changeEmail } from "../../api/user";
 
 type FormEmailPropType = {
   email: string;
@@ -27,7 +28,7 @@ const FormEmail = ({
   auth,
 }: FormEmailPropType): JSX.Element => {
   const [editEmail, setEditEmail] = useState(false);
-  const { loading, error, request, clearError } = useHttp();
+  const { loading, error, clearError } = useHttp();
 
   useEffect(() => {
     if (error !== null) {
@@ -39,12 +40,7 @@ const FormEmail = ({
   const onFinish = ({ email }: EmailPropType): void => {
     (async () => {
       try {
-        const response = await request(
-          `/api/profile-email/${id}`,
-          "PATCH",
-          { email },
-          { Authorization: `Bearer ${token}` }
-        );
+        const response = await changeEmail(id, email);
         message.success(response.message);
         setEditEmail(false);
         await auth();

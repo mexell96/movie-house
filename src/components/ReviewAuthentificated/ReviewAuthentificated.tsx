@@ -13,7 +13,7 @@ import {
 } from "./ReviewAuthentificated.style";
 
 import { Rating } from "..";
-import { useSetReview } from "../../hooks";
+import { setReview } from "../../api/review";
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -36,7 +36,6 @@ const ReviewAuthentificated = ({
   const { user } = useSelector(({ userReducer }: RootStateType) => userReducer);
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
-  const { setReview } = useSetReview();
 
   const initialValues = {
     name: user.name,

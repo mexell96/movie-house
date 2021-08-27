@@ -39,4 +39,4 @@ const useHttp = () => {
   return { loading, error, request, clearError };
 };
 
-export { useHttp };
+export default useHttp;

@@ -6,7 +6,9 @@ import { useHistory } from "react-router-dom";
 
 import { MEGABYTE } from "../../consts";
 import { setUser } from "../../redux/actions";
-import { useLogin, useHttp } from "../../hooks";
+import useHttp from "../../hooks/http";
+import { setLocalStorageToken } from "../../utils";
+import { login, register } from "../../api/auth";
 
 type RegistrationPropsType = {
   email: string;
@@ -17,8 +19,7 @@ type RegistrationPropsType = {
 
 const CreateUser = (): JSX.Element => {
   const history = useHistory();
-  const { login } = useLogin();
-  const { loading, error, request, clearError } = useHttp();
+  const { loading, error, clearError } = useHttp();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,19 +37,18 @@ const CreateUser = (): JSX.Element => {
   }: RegistrationPropsType): void => {
     (async () => {
       try {
-        const response = await request("/api/register", "POST", {
+        const response = await register({
           email,
           name,
           password,
           upload,
         });
         message.success(response.message);
-        const dataUser = await request("/api/login", "POST", {
-          email,
-          password,
-        });
-        dispatch(setUser({ token: dataUser.token, user: dataUser.user }));
-        login(dataUser.token);
+        const dataUser = await login({ email, password });
+        dispatch(
+          setUser({ token: dataUser.token, user: dataUser.user, isAuth: true })
+        );
+        setLocalStorageToken(dataUser.token);
         history.push(`/profile/${dataUser.user._id}`);
       } catch (e) {
         console.log(e, "E message createUserPage");

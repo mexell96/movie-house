@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 
-import { getMovies, getMovie } from "../apiFunctions";
+import { getMovie, getMovies } from "../api/movie";
+
 import {
   FETCH_MOVIES,
   SET_SEARCH_VALUES,

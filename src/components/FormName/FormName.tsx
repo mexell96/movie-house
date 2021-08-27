@@ -7,7 +7,8 @@ import {
   FormNameDivStyled,
 } from "./FormName.style";
 
-import { useHttp } from "../../hooks";
+import useHttp from "../../hooks/http";
+import { changeName } from "../../api/user";
 
 type FormNamePropType = {
   name: string;
@@ -22,7 +23,7 @@ type NamePropType = {
 
 const FormName = ({ name, id, token, auth }: FormNamePropType): JSX.Element => {
   const [editName, setEditName] = useState(false);
-  const { loading, error, request, clearError } = useHttp();
+  const { loading, error, clearError } = useHttp();
 
   useEffect(() => {
     if (error !== null) {
@@ -34,12 +35,7 @@ const FormName = ({ name, id, token, auth }: FormNamePropType): JSX.Element => {
   const onFinish = ({ name }: NamePropType) => {
     (async () => {
       try {
-        const response = await request(
-          `/api/profile-name/${id}`,
-          "PATCH",
-          { name },
-          { Authorization: `Bearer ${token}` }
-        );
+        const response = await changeName(id, name);
         message.success(response.message);
         setEditName(false);
         await auth();

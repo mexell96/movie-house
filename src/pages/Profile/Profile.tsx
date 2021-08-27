@@ -14,7 +14,10 @@ import {
   ProfileCardWrapperStyled,
 } from "./Profile.style";
 
-import { useHttp, useLogout, useAuth, useGetUserReviews } from "../../hooks";
+import useAuth from "../../hooks/auth";
+import { getUserReviews } from "../../api/review";
+import { deleteUser } from "../../api/user";
+
 import {
   FormId,
   FormName,
@@ -28,37 +31,24 @@ import {
 
 const Profile = () => {
   const history = useHistory();
-  const { auth } = useAuth();
-  const { logout } = useLogout();
-  const { request } = useHttp();
-  const { getUserReviews } = useGetUserReviews();
+  const { auth, logout } = useAuth();
   const { id } = useParams<{ id: string }>();
   const { token, user } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
   const [showModal, setShowModal] = useState(false);
-  const [userReviews, setUserReviews] = useState<ReviewType[] | null>(null);
+  const [userReviews, setUserReviews] = useState<any>(null);
 
-  const deleteUser = async () => {
-    try {
-      const response = await request(`/api/delete-user/${id}`, "DELETE", null, {
-        Authorization: `Bearer ${token}`,
-      });
-      message.success(response.message);
-      logout();
-      history.push(`/`);
-    } catch (e) {
-      console.log(e, "Error profiles");
-    }
+  const deleteUserFn = async () => {
+    const response = await deleteUser(id);
+    message.success(response.message);
+    logout();
+    history.push(`/`);
   };
 
   const getUserReviewsFromDB = async () => {
-    try {
-      const userReviewsDB = await getUserReviews(id, token);
-      setUserReviews(userReviewsDB);
-    } catch (e) {
-      console.log("Error - ", e);
-    }
+    const userReviewsDB = await getUserReviews(id);
+    setUserReviews(userReviewsDB);
   };
 
   useEffect(() => {
@@ -115,7 +105,7 @@ const Profile = () => {
               close={setShowModal}
               title="Do you want to delete this account?">
               <ProfileModalButtonsWrapperStyled>
-                <Button onClick={deleteUser}>Yes</Button>
+                <Button onClick={deleteUserFn}>Yes</Button>
                 <Button onClick={() => setShowModal(false)}>No</Button>
               </ProfileModalButtonsWrapperStyled>
             </Modal>
@@ -124,7 +114,7 @@ const Profile = () => {
       )}
       {userReviews && (
         <ProfileCardWrapperStyled>
-          {userReviews.map((item) => (
+          {userReviews.map((item: any) => (
             <ReviewCard
               key={item.uid}
               review={item}

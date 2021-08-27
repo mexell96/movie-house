@@ -11,7 +11,7 @@ import {
 } from "./Review.style";
 
 import { UploadImage, Rating } from "..";
-import { useSetReview } from "../../hooks";
+import { setReview } from "../../api/review";
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -38,7 +38,6 @@ const Review = ({
 }: ReviewPropsType): JSX.Element => {
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
-  const { setReview } = useSetReview();
 
   const initialValues = { name: "", review: "", rating: 0, avatar: "" };
 

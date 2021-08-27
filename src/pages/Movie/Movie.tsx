@@ -24,14 +24,14 @@ import {
 } from "../../components";
 import { fetchMovie } from "../../redux/actions";
 import { getPicture } from "../../utils";
-import { useGetReviews } from "../../hooks";
+import { getReviews } from "../../api/review";
 
 const body = (
   { Poster, Title, Year, Plot }: MovieType,
   history: History<unknown>,
   showModal: boolean,
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
-  isAuthenticated: boolean,
+  isAuth: boolean,
   getReviewsFromDB: () => Promise<void>
 ) => {
   return (
@@ -56,14 +56,14 @@ const body = (
       {showModal && (
         <Modal close={setShowModal} title="Write a review">
           <>
-            {!isAuthenticated && (
+            {!isAuth && (
               <Review
                 setShowModal={setShowModal}
                 getReviewsFromDB={getReviewsFromDB}
                 title={Title}
               />
             )}
-            {isAuthenticated && (
+            {isAuth && (
               <ReviewAuthentificated
                 setShowModal={setShowModal}
                 getReviewsFromDB={getReviewsFromDB}
@@ -89,12 +89,10 @@ const Movie = (): JSX.Element => {
   const history = useHistory();
   const [movie, setMovie] = useState<MovieType | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [reviews, setReviewsState] = useState<ReviewType[] | null>(null);
-  const { getReviews } = useGetReviews();
-  const { token } = useSelector(
+  const [reviews, setReviews] = useState<ReviewType[] | null>(null);
+  const { isAuth } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
-  const isAuthenticated = !!token;
 
   useEffect(() => {
     if (resultsMovie[id]) {
@@ -110,7 +108,7 @@ const Movie = (): JSX.Element => {
 
   const getReviewsFromDB = async () => {
     const reviewsDB = await getReviews(id);
-    reviewsDB && setReviewsState(reviewsDB);
+    setReviews(reviewsDB);
   };
 
   useEffect(() => {
@@ -122,14 +120,7 @@ const Movie = (): JSX.Element => {
       {loading && <Loader />}
       {!loading &&
         movie &&
-        body(
-          movie,
-          history,
-          showModal,
-          setShowModal,
-          isAuthenticated,
-          getReviewsFromDB
-        )}
+        body(movie, history, showModal, setShowModal, isAuth, getReviewsFromDB)}
       {reviews && (
         <MovieReviewsWrapperStyled>
           {reviews.map((item) => (

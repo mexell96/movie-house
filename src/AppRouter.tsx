@@ -1,45 +1,44 @@
 import { useEffect } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import { ThemeProvider } from "styled-components";
 
 import { AppRouterStyled } from "./AppRouter.style";
 import { GlobalStyles } from "./styles";
 
-import { Header, Loader, Navbar } from "./components";
-import { useRoutes } from "./routes";
-import { useAuth, useTheme } from "./hooks/";
+import { Header, Navbar } from "./components";
+import useAuth from "./hooks/auth";
+import Routes from "./routes";
+import { lightTheme, darkTheme } from "./themes";
 
 const AppRouter = () => {
-  const { token } = useSelector(
+  const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
-  const { auth, loading } = useAuth();
-  const { theme } = useTheme();
 
-  const routes = useRoutes(!!token);
+  const theme = () =>
+    userReducer?.user?.theme === "light" ? lightTheme : darkTheme;
+
+  const { auth } = useAuth();
 
   useEffect(() => {
     auth();
   }, []);
 
   return (
-    <>
-      {loading && <Loader />}
-      {!loading && (
-        <ThemeProvider theme={theme}>
-          <GlobalStyles />
-          <Router>
-            <Header />
-            <AppRouterStyled>
-              <Container>{routes}</Container>
-            </AppRouterStyled>
-            <Navbar />
-          </Router>
-        </ThemeProvider>
-      )}
-    </>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Router>
+        <Header />
+        <AppRouterStyled>
+          <Container>
+            <Routes />
+          </Container>
+        </AppRouterStyled>
+        <Navbar />
+      </Router>
+    </ThemeProvider>
   );
 };
 

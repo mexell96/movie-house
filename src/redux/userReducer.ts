@@ -2,16 +2,8 @@ import { SET_USER } from "./types";
 
 const initialState = {
   token: "",
-  user: {
-    email: "",
-    name: "",
-    role: "",
-    _id: "",
-    avatar: "",
-    theme: "",
-    createdAt: "",
-    updatedAt: "",
-  },
+  isAuth: false,
+  user: {},
 };
 
 export const userReducer = (
@@ -23,6 +15,7 @@ export const userReducer = (
       return {
         user: payload.user,
         token: payload.token,
+        isAuth: payload.isAuth,
       };
     default:
       return state;

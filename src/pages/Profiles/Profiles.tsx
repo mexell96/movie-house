@@ -4,25 +4,26 @@ import { Table, Select, message, Button, Popconfirm } from "antd";
 
 import { ProfileErrorStyled } from "./Profiles.style";
 
-import { useHttp, useAuth } from "../../hooks";
+import useHttp from "../../hooks/http";
+import useAuth from "../../hooks/auth";
+
 import { Loader } from "../../components";
 import { UserName } from "./UserName";
 import { UserEmail } from "./UserEmail";
+import { getUsers, deleteUser, changeRole } from "../../api/user";
 
 const Profiles = (): JSX.Element => {
-  const { request, loading } = useHttp();
+  const { loading } = useHttp();
   const { auth } = useAuth();
   const [users, setUsers] = useState<UserType[] | []>([]);
   const { token, user } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
 
-  const getUsers = () => {
+  const getUsersFn = () => {
     (async () => {
       try {
-        const users = await request(`/api/profiles`, "GET", null, {
-          Authorization: `Bearer ${token}`,
-        });
+        const users = await getUsers();
         setUsers(users);
       } catch (e) {
         console.log(e, "Error profiles");
@@ -33,15 +34,10 @@ const Profiles = (): JSX.Element => {
   const handleDelete = (id: string) => {
     (async () => {
       try {
-        const response = await request(
-          `/api/root-delete-user/${id}`,
-          "DELETE",
-          null,
-          { Authorization: `Bearer ${token}` }
-        );
+        const response = await deleteUser(id, "root-");
         console.log(response, "response 7777");
         message.success(response.message);
-        await getUsers();
+        await getUsersFn();
       } catch (error) {
         message.error("You don't have access");
         console.log("Error - ", error);
@@ -49,18 +45,13 @@ const Profiles = (): JSX.Element => {
     })();
   };
 
-  const changeRole = (role: string, id: string): void => {
+  const changeRoleFn = (role: string, id: string): void => {
     (async () => {
       try {
-        const response = await request(
-          `/api/profile-role/${id}`,
-          "PATCH",
-          { role },
-          { Authorization: `Bearer ${token}` }
-        );
+        const response = await changeRole(id, role);
         message.success(response.message);
         await auth();
-        (role === "SUPERADMIN" || role === "ADMIN") && (await getUsers());
+        (role === "SUPERADMIN" || role === "ADMIN") && (await getUsersFn());
       } catch (e) {
         console.log(e, "E message createUserPage");
       }
@@ -93,7 +84,7 @@ const Profiles = (): JSX.Element => {
           <Select
             value={role}
             style={{ width: "100%" }}
-            onChange={(value) => changeRole(value, user._id)}>
+            onChange={(value) => changeRoleFn(value, user._id)}>
             <Select.Option value="SUPERADMIN">SUPERADMIN</Select.Option>
             <Select.Option value="ADMIN">ADMIN</Select.Option>
             <Select.Option value="USER">USER</Select.Option>
@@ -117,7 +108,7 @@ const Profiles = (): JSX.Element => {
   ];
 
   useEffect(() => {
-    (user.role === "ADMIN" || user.role === "SUPERADMIN") && getUsers();
+    (user.role === "ADMIN" || user.role === "SUPERADMIN") && getUsersFn();
   }, [token, user]);
 
   if (loading) {

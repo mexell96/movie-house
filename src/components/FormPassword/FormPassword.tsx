@@ -7,7 +7,8 @@ import {
   FormPasswordDivStyled,
 } from "./FormPassword.style";
 
-import { useHttp } from "../../hooks";
+import useHttp from "../../hooks/http";
+import { changePassword } from "../../api/user";
 
 type FormPasswordPropType = {
   id: string;
@@ -26,7 +27,7 @@ const FormPassword = ({
   auth,
 }: FormPasswordPropType): JSX.Element => {
   const [editPassword, setEditPassword] = useState(false);
-  const { loading, error, request, clearError } = useHttp();
+  const { loading, error, clearError } = useHttp();
 
   useEffect(() => {
     if (error !== null) {
@@ -38,12 +39,7 @@ const FormPassword = ({
   const onFinish = ({ oldPassword, newPassword }: PasswordsPropType): void => {
     (async () => {
       try {
-        const response = await request(
-          `/api/profile-password/${id}`,
-          "PATCH",
-          { oldPassword, newPassword },
-          { Authorization: `Bearer ${token}` }
-        );
+        const response = await changePassword(id, { oldPassword, newPassword });
         message.success(response.message);
         setEditPassword(false);
         await auth();
