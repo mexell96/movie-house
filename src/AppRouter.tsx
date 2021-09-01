@@ -20,10 +20,12 @@ const AppRouter = () => {
   const theme = () =>
     userReducer?.user?.theme === "light" ? lightTheme : darkTheme;
 
-  const { auth } = useAuth();
+  const { checkAuthFn } = useAuth();
 
   useEffect(() => {
-    auth();
+    if (localStorage.getItem("token")) {
+      checkAuthFn();
+    }
   }, []);
 
   return (

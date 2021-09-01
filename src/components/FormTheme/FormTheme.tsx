@@ -10,19 +10,13 @@ type FormThemePropType = {
   theme: string;
   id: string;
   token: string;
-  auth: () => Promise<void>;
 };
 
 type ThemePropType = {
   theme: string;
 };
 
-const FormSelect = ({
-  theme,
-  id,
-  token,
-  auth,
-}: FormThemePropType): JSX.Element => {
+const FormSelect = ({ theme, id, token }: FormThemePropType): JSX.Element => {
   const [editTheme, setEditTheme] = useState(false);
   const { loading, error, clearError } = useHttp();
 
@@ -39,7 +33,7 @@ const FormSelect = ({
         const response = await changeTheme(id, theme);
         message.success(response.message);
         setEditTheme(false);
-        await auth();
+        // await auth();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

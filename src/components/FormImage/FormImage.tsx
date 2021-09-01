@@ -16,15 +16,9 @@ type FormImagePropType = {
   avatar: string;
   id: string;
   token: string;
-  auth: () => Promise<void>;
 };
 
-const FormImage = ({
-  avatar,
-  id,
-  token,
-  auth,
-}: FormImagePropType): JSX.Element => {
+const FormImage = ({ avatar, id, token }: FormImagePropType): JSX.Element => {
   const [sizeError, setSizeError] = useState(false);
   const [editAvatar, setEditAvatar] = useState(false);
   const { loading, error, clearError } = useHttp();
@@ -59,7 +53,7 @@ const FormImage = ({
         const response = await changeImage(id, newAvatar);
         message.success(response.message);
         setEditAvatar(false);
-        await auth();
+        // await auth();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

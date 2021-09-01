@@ -4,7 +4,7 @@ export const getUsers = async () => {
   try {
     const { data } = await instance({
       method: "GET",
-      url: "/api/profiles",
+      url: "/users",
     });
     return data;
   } catch (e) {
@@ -16,7 +16,7 @@ export const deleteUser = async (id: any, root: string = "") => {
   try {
     const { data } = await instance({
       method: "DELETE",
-      url: `/api/${root}delete-user/${id}`,
+      url: `/${root}delete-user/${id}`,
     });
     return data;
   } catch (e) {
@@ -32,7 +32,7 @@ export const changeEmail = async (
   try {
     const { data } = await instance({
       method: "PATCH",
-      url: `/api/${root}profile-email/${id}`,
+      url: `/${root}user-email/${id}`,
       data: { email },
     });
     return data;
@@ -45,7 +45,7 @@ export const changeImage = async (id: string, avatar: string) => {
   try {
     const { data } = await instance({
       method: "PATCH",
-      url: `/api/profile-avatar/${id}`,
+      url: `/user-avatar/${id}`,
       data: { avatar },
     });
     return data;
@@ -62,7 +62,7 @@ export const changeName = async (
   try {
     const { data } = await instance({
       method: "PATCH",
-      url: `/api/${root}profile-name/${id}`,
+      url: `/${root}user-name/${id}`,
       data: { name },
     });
     return data;
@@ -78,7 +78,7 @@ export const changePassword = async (
   try {
     const { data } = await instance({
       method: "PATCH",
-      url: `/api/profile-password/${id}`,
+      url: `/user-password/${id}`,
       data: { oldPassword, newPassword },
     });
     return data;
@@ -91,7 +91,7 @@ export const changeRole = async (id: string, role: string) => {
   try {
     const { data } = await instance({
       method: "PATCH",
-      url: `/api/profile-role/${id}`,
+      url: `/root-user-role/${id}`,
       data: { role },
     });
     return data;
@@ -104,7 +104,7 @@ export const changeTheme = async (id: string, theme: string) => {
   try {
     const { data } = await instance({
       method: "PATCH",
-      url: `/api/profile-theme/${id}`,
+      url: `/user-theme/${id}`,
       data: { theme },
     });
     return data;

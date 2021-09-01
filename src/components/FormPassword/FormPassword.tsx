@@ -13,7 +13,6 @@ import { changePassword } from "../../api/user";
 type FormPasswordPropType = {
   id: string;
   token: string;
-  auth: () => Promise<void>;
 };
 
 type PasswordsPropType = {
@@ -21,11 +20,7 @@ type PasswordsPropType = {
   newPassword: string;
 };
 
-const FormPassword = ({
-  id,
-  token,
-  auth,
-}: FormPasswordPropType): JSX.Element => {
+const FormPassword = ({ id, token }: FormPasswordPropType): JSX.Element => {
   const [editPassword, setEditPassword] = useState(false);
   const { loading, error, clearError } = useHttp();
 
@@ -42,7 +37,7 @@ const FormPassword = ({
         const response = await changePassword(id, { oldPassword, newPassword });
         message.success(response.message);
         setEditPassword(false);
-        await auth();
+        // await auth();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

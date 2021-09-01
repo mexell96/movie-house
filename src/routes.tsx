@@ -23,8 +23,8 @@ const Routes = (): JSX.Element => {
       <Route path="/movies/:id" component={Movie} exact />
       <Route path="/movies" component={Movies} exact />
       <Route path="/previous-searches" component={PreviousSearches} exact />
-      {isAuth && <Route path="/profile/:id" component={Profile} exact />}
-      {isAuth && <Route path="/profiles" component={Profiles} exact />}
+      {isAuth && <Route path="/user/:id" component={Profile} exact />}
+      {isAuth && <Route path="/users" component={Profiles} exact />}
       {!isAuth && <Route path="/login" component={AuthLogin} exact />}
       {!isAuth && <Route path="/registration" component={Registration} exact />}
       <Redirect to="/" />

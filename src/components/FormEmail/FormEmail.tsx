@@ -14,19 +14,13 @@ type FormEmailPropType = {
   email: string;
   id: string;
   token: string;
-  auth: () => Promise<void>;
 };
 
 type EmailPropType = {
   email: string;
 };
 
-const FormEmail = ({
-  email,
-  id,
-  token,
-  auth,
-}: FormEmailPropType): JSX.Element => {
+const FormEmail = ({ email, id, token }: FormEmailPropType): JSX.Element => {
   const [editEmail, setEditEmail] = useState(false);
   const { loading, error, clearError } = useHttp();
 
@@ -43,7 +37,6 @@ const FormEmail = ({
         const response = await changeEmail(id, email);
         message.success(response.message);
         setEditEmail(false);
-        await auth();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

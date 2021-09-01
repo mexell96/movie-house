@@ -1,20 +1,21 @@
 import axios from "axios";
 import { API_BASE } from "../consts";
+import { setLocalStorageToken, clearLocalStorageToken } from "../utils";
 
-const tokenFn = () => JSON.parse(localStorage.getItem("authToken") || "null");
+const tokenFn = () => JSON.parse(localStorage.getItem("token") || "null");
 
 const instance = axios.create({
   baseURL: API_BASE,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 instance.interceptors.request.use(
-  (request) => {
-    request.headers.Authorization = `Bearer ${tokenFn()}`;
-    console.log(request, "request");
-    return request;
+  (config) => {
+    config.headers.Authorization = `Bearer ${tokenFn()}`;
+    return config;
   },
   (error) => {
     console.log(error, "error");
@@ -23,17 +24,31 @@ instance.interceptors.request.use(
 );
 
 instance.interceptors.response.use(
-  (response) => {
-    console.log(response, "response");
-    return response;
+  (config) => {
+    return config;
   },
-  (error) => {
-    if (error.response.status === 401) {
-      console.log("666");
-    }
+  async (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      originalRequest &&
+      !error.config._isRetry
+    ) {
+      originalRequest._isRetry = true;
+      try {
+        const response = await instance({
+          method: "GET",
+          url: "/refresh",
+        });
+        setLocalStorageToken(response.data.accessToken || "");
 
-    console.log(error, "error");
-    return Promise.reject(error);
+        return instance.request(originalRequest);
+      } catch (e) {
+        console.log("Not authorized");
+        clearLocalStorageToken();
+      }
+    }
+    throw error;
   }
 );
 

@@ -53,7 +53,7 @@ const ReviewAuthentificated = ({
         uid: uid(25),
         movie: title,
         movieId: id,
-        owner: user._id || uid(25),
+        owner: user.id || uid(25),
         ...values,
       };
       await setReview(newReview);

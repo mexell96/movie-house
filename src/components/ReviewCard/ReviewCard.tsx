@@ -49,7 +49,7 @@ const ReviewCard = ({
       <ReviewCardInfoStyled>
         <ReviewCardHeaderStyled>
           <ReviewCardUserNameStyled>{review.name}</ReviewCardUserNameStyled>
-          {userReducer.user.role && review.owner === userReducer.user._id && (
+          {userReducer.user.role && review.owner === userReducer.user.id && (
             <ReviewCardDeleteReviewStyled onClick={deleteReviewFn}>
               <CancelPresentationIcon color="error" />
             </ReviewCardDeleteReviewStyled>

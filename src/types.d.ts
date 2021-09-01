@@ -113,7 +113,7 @@ declare type UserType = {
   email: string;
   name: string;
   role: string;
-  _id: string;
+  id: string;
   avatar: string;
   theme: string;
   createdAt: string;
@@ -136,7 +136,7 @@ declare type ReviewActionsType = {
 };
 
 declare type LoginDataPropsType = {
-  token: string;
+  accessToken: string;
   message: string;
   user: UserType;
 };

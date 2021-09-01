@@ -11,7 +11,6 @@ import SaveIcon from "@material-ui/icons/Save";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { useState, useCallback } from "react";
 import useHttp from "../../hooks/http";
-import useAuth from "../../hooks/auth";
 
 import { useSelector } from "react-redux";
 import { getUsers, changeName } from "../../api/user";
@@ -19,7 +18,6 @@ import { getUsers, changeName } from "../../api/user";
 const UserName = ({ userName, user }: any) => {
   const [editName, setEditName] = useState(false);
   const { loading } = useHttp();
-  const { auth } = useAuth();
   const { token } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
@@ -27,7 +25,6 @@ const UserName = ({ userName, user }: any) => {
   const getUsersFn = useCallback(async () => {
     try {
       const users = await getUsers();
-      // setUsers(users);
     } catch (e) {
       console.log(e, "Error profiles");
     }
@@ -39,7 +36,6 @@ const UserName = ({ userName, user }: any) => {
         const response = await changeName(id, name, "root-");
         message.success(response.message);
 
-        await auth();
         await getUsersFn();
         setEditName(false);
       } catch (e) {
@@ -67,7 +63,7 @@ const UserName = ({ userName, user }: any) => {
           name="Name"
           initialValues={{
             name: userName,
-            id: user._id,
+            id: user.id,
           }}
           onFinish={onFinishName}
           onFinishFailed={onFinishFailed}

@@ -4,7 +4,7 @@ export const deleteReview = async (uid: any) => {
   try {
     const { data } = await instance({
       method: "DELETE",
-      url: `/api/profile-reviews/${uid}`,
+      url: `/user-reviews/${uid}`,
     });
     return data;
   } catch (e) {
@@ -16,7 +16,7 @@ export const getReviews = async (id: string) => {
   try {
     const { data } = await instance({
       method: "GET",
-      url: `/api/reviews/${id}`,
+      url: `/reviews/${id}`,
     });
     return data;
   } catch (e) {
@@ -28,7 +28,7 @@ export const getUserReviews = async (id: string) => {
   try {
     const { data } = await instance({
       method: "GET",
-      url: `/api/profile-reviews/${id}`,
+      url: `/user-reviews/${id}`,
     });
     return data;
   } catch (e) {
@@ -40,7 +40,7 @@ export const setReview = async (newReview: ReviewType) => {
   try {
     const { data } = await instance({
       method: "POST",
-      url: "/api/create-review",
+      url: "/create-review",
       data: newReview,
     });
     return data;

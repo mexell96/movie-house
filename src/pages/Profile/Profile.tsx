@@ -31,7 +31,7 @@ import {
 
 const Profile = () => {
   const history = useHistory();
-  const { auth, logout } = useAuth();
+  const { logoutFn } = useAuth();
   const { id } = useParams<{ id: string }>();
   const { token, user } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
@@ -42,7 +42,7 @@ const Profile = () => {
   const deleteUserFn = async () => {
     const response = await deleteUser(id);
     message.success(response.message);
-    logout();
+    logoutFn();
     history.push(`/`);
   };
 
@@ -61,35 +61,15 @@ const Profile = () => {
         <ProfileWrapperStyled>
           <h2>Profile</h2>
           <ProfileAvatarWrapperStyled>
-            <FormImage
-              avatar={user.avatar}
-              id={user._id}
-              token={token}
-              auth={auth}
-            />
+            <FormImage avatar={user.avatar} id={user.id} token={token} />
           </ProfileAvatarWrapperStyled>
           <ProfileTableStyled>
             <ProfileTbodyStyled>
-              <FormId id={user._id} />
-              <FormName
-                name={user.name}
-                id={user._id}
-                token={token}
-                auth={auth}
-              />
-              <FormEmail
-                email={user.email}
-                id={user._id}
-                token={token}
-                auth={auth}
-              />
-              <FormPassword id={user._id} token={token} auth={auth} />
-              <FormSelect
-                theme={user.theme}
-                id={user._id}
-                token={token}
-                auth={auth}
-              />
+              <FormId id={user.id} />
+              <FormName name={user.name} id={user.id} token={token} />
+              <FormEmail email={user.email} id={user.id} token={token} />
+              <FormPassword id={user.id} token={token} />
+              <FormSelect theme={user.theme} id={user.id} token={token} />
             </ProfileTbodyStyled>
           </ProfileTableStyled>
           <ProfileButtonAccountStyled onClick={() => setShowModal(true)}>
@@ -97,7 +77,7 @@ const Profile = () => {
           </ProfileButtonAccountStyled>
           {(user.role === "SUPERADMIN" || user.role === "ADMIN") && (
             <ProfileButtonAccountStyled>
-              <Link to={`/profiles`}>View users</Link>
+              <Link to={`/users`}>View users</Link>
             </ProfileButtonAccountStyled>
           )}
           {showModal && (

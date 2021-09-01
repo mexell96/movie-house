@@ -11,7 +11,6 @@ import SaveIcon from "@material-ui/icons/Save";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { useState, useCallback } from "react";
 import useHttp from "../../hooks/http";
-import useAuth from "../../hooks/auth";
 
 import { useSelector } from "react-redux";
 import { getUsers, changeEmail } from "../../api/user";
@@ -19,7 +18,6 @@ import { getUsers, changeEmail } from "../../api/user";
 const UserEmail = ({ userEmail, user }: any) => {
   const [editEmail, setEditEmail] = useState(false);
   const { loading } = useHttp();
-  const { auth } = useAuth();
   const { token } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
@@ -27,7 +25,6 @@ const UserEmail = ({ userEmail, user }: any) => {
   const getUsersFn = useCallback(async () => {
     try {
       const users = await getUsers();
-      // setUsers(users);
     } catch (e) {
       console.log(e, "Error profiles");
     }
@@ -39,7 +36,6 @@ const UserEmail = ({ userEmail, user }: any) => {
         const response = await changeEmail(id, email, "root-");
         message.success(response.message);
 
-        await auth();
         await getUsersFn();
         setEditEmail(false);
       } catch (e) {
@@ -68,7 +64,7 @@ const UserEmail = ({ userEmail, user }: any) => {
           name="Email"
           initialValues={{
             email: userEmail,
-            id: user._id,
+            id: user.id,
           }}
           onFinish={onFinishEmail}
           onFinishFailed={onFinishFailed}

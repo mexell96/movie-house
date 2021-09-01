@@ -9,9 +9,9 @@ export const getPicture = (poster: string) => {
 };
 
 export const setLocalStorageToken = (token: string) => {
-  localStorage.setItem("authToken", JSON.stringify(token));
+  localStorage.setItem("token", JSON.stringify(token));
 };
 
 export const clearLocalStorageToken = () => {
-  localStorage.removeItem("authToken");
+  localStorage.removeItem("token");
 };

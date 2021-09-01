@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import useAuth from "../../hooks/auth";
 
 import {
@@ -13,15 +13,16 @@ import {
 } from "./Header.styled";
 
 const Header = () => {
-  const { logout } = useAuth();
+  const { logoutFn } = useAuth();
   const history = useHistory();
   const { user, isAuth } = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
 
-  const logoutHandler = (event: any) => {
+  const logoutHandler = async (event: any) => {
     event.preventDefault();
-    logout();
+    const response = await logoutFn();
+    message.success(response.message);
     history.push("/");
   };
 
@@ -40,10 +41,10 @@ const Header = () => {
       )}
       {isAuth && (
         <HeaderAvatarStyled>
-          <HeaderImgLinkStyled to={`/profile/${user._id}`}>
-            <HeaderImgStyled src={user.avatar} alt="avatar" />
+          <HeaderImgLinkStyled to={`/user/${user?.id}`}>
+            <HeaderImgStyled src={user?.avatar} alt="avatar" />
           </HeaderImgLinkStyled>
-          <HeaderNameStyled>{user.name}</HeaderNameStyled>
+          <HeaderNameStyled>{user?.name}</HeaderNameStyled>
           <Button onClick={logoutHandler}>
             <Link to={`/`}>Logout</Link>
           </Button>

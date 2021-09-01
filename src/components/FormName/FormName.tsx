@@ -14,14 +14,13 @@ type FormNamePropType = {
   name: string;
   id: string;
   token: string;
-  auth: () => Promise<void>;
 };
 
 type NamePropType = {
   name: string;
 };
 
-const FormName = ({ name, id, token, auth }: FormNamePropType): JSX.Element => {
+const FormName = ({ name, id, token }: FormNamePropType): JSX.Element => {
   const [editName, setEditName] = useState(false);
   const { loading, error, clearError } = useHttp();
 
@@ -38,7 +37,7 @@ const FormName = ({ name, id, token, auth }: FormNamePropType): JSX.Element => {
         const response = await changeName(id, name);
         message.success(response.message);
         setEditName(false);
-        await auth();
+        // await auth();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

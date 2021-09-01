@@ -1,10 +1,11 @@
 import instance from "./instance";
 
-export const authentification = async () => {
+export const login = async (props: any) => {
   try {
     const { data } = await instance({
-      method: "GET",
-      url: `/api/profile`,
+      method: "POST",
+      url: "/login",
+      data: props,
     });
     return data;
   } catch (e) {
@@ -12,12 +13,11 @@ export const authentification = async () => {
   }
 };
 
-export const login = async (props: any) => {
+export const logout = async () => {
   try {
     const { data } = await instance({
       method: "POST",
-      url: "/api/login",
-      data: props,
+      url: "/logout",
     });
     return data;
   } catch (e) {
@@ -29,8 +29,20 @@ export const register = async (props: any) => {
   try {
     const { data } = await instance({
       method: "POST",
-      url: "/api/register",
+      url: "/registration",
       data: props,
+    });
+    return data;
+  } catch (e) {
+    console.log("Error -", e);
+  }
+};
+
+export const checkAuth = async () => {
+  try {
+    const data = await instance({
+      method: "GET",
+      url: "/refresh",
     });
     return data;
   } catch (e) {

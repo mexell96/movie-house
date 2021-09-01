@@ -46,10 +46,14 @@ const CreateUser = (): JSX.Element => {
         message.success(response.message);
         const dataUser = await login({ email, password });
         dispatch(
-          setUser({ token: dataUser.token, user: dataUser.user, isAuth: true })
+          setUser({
+            user: dataUser.user,
+            token: dataUser.accessToken,
+            isAuth: true,
+          })
         );
-        setLocalStorageToken(dataUser.token);
-        history.push(`/profile/${dataUser.user._id}`);
+        setLocalStorageToken(dataUser.accessToken);
+        history.push(`/user/${dataUser.user.id}`);
       } catch (e) {
         console.log(e, "E message createUserPage");
       }
