@@ -8,6 +8,7 @@ import {
 } from "./FormName.style";
 
 import useHttp from "../../hooks/http";
+import useAuth from "../../hooks/auth";
 import { changeName } from "../../api/user";
 
 type FormNamePropType = {
@@ -23,6 +24,7 @@ type NamePropType = {
 const FormName = ({ name, id, token }: FormNamePropType): JSX.Element => {
   const [editName, setEditName] = useState(false);
   const { loading, error, clearError } = useHttp();
+  const { checkAuthFn } = useAuth();
 
   useEffect(() => {
     if (error !== null) {
@@ -37,7 +39,7 @@ const FormName = ({ name, id, token }: FormNamePropType): JSX.Element => {
         const response = await changeName(id, name);
         message.success(response.message);
         setEditName(false);
-        // await auth();
+        checkAuthFn();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

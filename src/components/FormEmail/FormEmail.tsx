@@ -8,6 +8,7 @@ import {
 } from "./FormEmail.style";
 
 import useHttp from "../../hooks/http";
+import useAuth from "../../hooks/auth";
 import { changeEmail } from "../../api/user";
 
 type FormEmailPropType = {
@@ -23,6 +24,7 @@ type EmailPropType = {
 const FormEmail = ({ email, id, token }: FormEmailPropType): JSX.Element => {
   const [editEmail, setEditEmail] = useState(false);
   const { loading, error, clearError } = useHttp();
+  const { checkAuthFn } = useAuth();
 
   useEffect(() => {
     if (error !== null) {
@@ -37,6 +39,7 @@ const FormEmail = ({ email, id, token }: FormEmailPropType): JSX.Element => {
         const response = await changeEmail(id, email);
         message.success(response.message);
         setEditEmail(false);
+        checkAuthFn();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

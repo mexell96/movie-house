@@ -4,6 +4,7 @@ import { Form, Button, message, Select } from "antd";
 import { FormThemeTrStyled, FormThemeTdStyled } from "./FormTheme.style";
 
 import useHttp from "../../hooks/http";
+import useAuth from "../../hooks/auth";
 import { changeTheme } from "../../api/user";
 
 type FormThemePropType = {
@@ -19,6 +20,7 @@ type ThemePropType = {
 const FormSelect = ({ theme, id, token }: FormThemePropType): JSX.Element => {
   const [editTheme, setEditTheme] = useState(false);
   const { loading, error, clearError } = useHttp();
+  const { checkAuthFn } = useAuth();
 
   useEffect(() => {
     if (error !== null) {
@@ -33,7 +35,7 @@ const FormSelect = ({ theme, id, token }: FormThemePropType): JSX.Element => {
         const response = await changeTheme(id, theme);
         message.success(response.message);
         setEditTheme(false);
-        // await auth();
+        checkAuthFn();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

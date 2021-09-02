@@ -1,6 +1,4 @@
-import { API_BASE } from "./../consts";
 import instance from "./instance";
-import axios from "axios";
 
 export const login = async (props: any) => {
   try {
@@ -18,7 +16,7 @@ export const login = async (props: any) => {
 export const logout = async () => {
   try {
     const { data } = await instance({
-      method: "POST",
+      method: "GET",
       url: "/logout",
     });
     return data;
@@ -42,8 +40,9 @@ export const register = async (props: any) => {
 
 export const checkAuth = async () => {
   try {
-    const data = await axios.get(`${API_BASE}/refresh`, {
-      withCredentials: true,
+    const data = await instance({
+      method: "GET",
+      url: "/refresh",
     });
     return data;
   } catch (e) {

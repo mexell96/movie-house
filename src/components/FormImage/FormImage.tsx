@@ -10,6 +10,7 @@ import {
 
 import { MEGABYTE } from "../../consts";
 import useHttp from "../../hooks/http";
+import useAuth from "../../hooks/auth";
 import { changeImage } from "../../api/user";
 
 type FormImagePropType = {
@@ -23,6 +24,7 @@ const FormImage = ({ avatar, id, token }: FormImagePropType): JSX.Element => {
   const [editAvatar, setEditAvatar] = useState(false);
   const { loading, error, clearError } = useHttp();
   const [newAvatar, setNewAvatar] = useState("");
+  const { checkAuthFn } = useAuth();
 
   const onFileChange = (input: any): void => {
     const file = input.target.files[0];
@@ -53,7 +55,7 @@ const FormImage = ({ avatar, id, token }: FormImagePropType): JSX.Element => {
         const response = await changeImage(id, newAvatar);
         message.success(response.message);
         setEditAvatar(false);
-        // await auth();
+        checkAuthFn();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }

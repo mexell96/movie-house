@@ -8,6 +8,7 @@ import {
 } from "./FormPassword.style";
 
 import useHttp from "../../hooks/http";
+import useAuth from "../../hooks/auth";
 import { changePassword } from "../../api/user";
 
 type FormPasswordPropType = {
@@ -23,6 +24,7 @@ type PasswordsPropType = {
 const FormPassword = ({ id, token }: FormPasswordPropType): JSX.Element => {
   const [editPassword, setEditPassword] = useState(false);
   const { loading, error, clearError } = useHttp();
+  const { checkAuthFn } = useAuth();
 
   useEffect(() => {
     if (error !== null) {
@@ -37,7 +39,7 @@ const FormPassword = ({ id, token }: FormPasswordPropType): JSX.Element => {
         const response = await changePassword(id, { oldPassword, newPassword });
         message.success(response.message);
         setEditPassword(false);
-        // await auth();
+        checkAuthFn();
       } catch (e) {
         console.log(e, "E message createUserPage");
       }
