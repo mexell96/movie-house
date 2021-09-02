@@ -5,7 +5,6 @@ import { Table, Select, message, Button, Popconfirm } from "antd";
 import { ProfileErrorStyled } from "./Profiles.style";
 
 import useHttp from "../../hooks/http";
-
 import { Loader } from "../../components";
 import { UserName } from "./UserName";
 import { UserEmail } from "./UserEmail";
@@ -60,7 +59,9 @@ const Profiles = (): JSX.Element => {
       dataIndex: "name",
       key: "name",
       render: (userName: string, user: UserType) => {
-        return <UserName userName={userName} user={user} />;
+        return (
+          <UserName userName={userName} user={user} getUsersFn={getUsersFn} />
+        );
       },
     },
     {
@@ -68,7 +69,13 @@ const Profiles = (): JSX.Element => {
       dataIndex: "email",
       key: "email",
       render: (userEmail: string, user: UserType) => {
-        return <UserEmail userEmail={userEmail} user={user} />;
+        return (
+          <UserEmail
+            userEmail={userEmail}
+            user={user}
+            getUsersFn={getUsersFn}
+          />
+        );
       },
     },
     {

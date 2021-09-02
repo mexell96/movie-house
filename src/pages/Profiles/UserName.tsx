@@ -1,5 +1,4 @@
 import {
-  ProfileErrorStyled,
   ProfileEditIconStyled,
   ProfileEditStyled,
   ProfileChangeIconStyled,
@@ -9,33 +8,18 @@ import { message, Form, Input } from "antd";
 import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { useState, useCallback } from "react";
-import useHttp from "../../hooks/http";
+import { useState } from "react";
 
-import { useSelector } from "react-redux";
-import { getUsers, changeName } from "../../api/user";
+import { changeName } from "../../api/user";
 
-const UserName = ({ userName, user }: any) => {
+const UserName = ({ userName, user, getUsersFn }: any) => {
   const [editName, setEditName] = useState(false);
-  const { loading } = useHttp();
-  const { token } = useSelector(
-    ({ userReducer }: RootStateType) => userReducer
-  );
-
-  const getUsersFn = useCallback(async () => {
-    try {
-      const users = await getUsers();
-    } catch (e) {
-      console.log(e, "Error profiles");
-    }
-  }, [token]);
 
   const onFinishName = ({ name, id }: any): void => {
     (async () => {
       try {
         const response = await changeName(id, name, "root-");
         message.success(response.message);
-
         await getUsersFn();
         setEditName(false);
       } catch (e) {

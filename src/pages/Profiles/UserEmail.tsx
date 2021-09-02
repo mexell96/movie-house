@@ -1,5 +1,4 @@
 import {
-  ProfileErrorStyled,
   ProfileEditIconStyled,
   ProfileEditStyled,
   ProfileChangeIconStyled,
@@ -9,33 +8,18 @@ import { message, Form, Input } from "antd";
 import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { useState, useCallback } from "react";
-import useHttp from "../../hooks/http";
+import { useState } from "react";
 
-import { useSelector } from "react-redux";
-import { getUsers, changeEmail } from "../../api/user";
+import { changeEmail } from "../../api/user";
 
-const UserEmail = ({ userEmail, user }: any) => {
+const UserEmail = ({ userEmail, user, getUsersFn }: any) => {
   const [editEmail, setEditEmail] = useState(false);
-  const { loading } = useHttp();
-  const { token } = useSelector(
-    ({ userReducer }: RootStateType) => userReducer
-  );
-
-  const getUsersFn = useCallback(async () => {
-    try {
-      const users = await getUsers();
-    } catch (e) {
-      console.log(e, "Error profiles");
-    }
-  }, [token]);
 
   const onFinishEmail = ({ email, id }: any): void => {
     (async () => {
       try {
         const response = await changeEmail(id, email, "root-");
         message.success(response.message);
-
         await getUsersFn();
         setEditEmail(false);
       } catch (e) {
@@ -58,7 +42,6 @@ const UserEmail = ({ userEmail, user }: any) => {
           </ProfileEditIconStyled>
         </>
       )}
-
       {editEmail && (
         <Form
           name="Email"
