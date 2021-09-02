@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 import CancelPresentationIcon from "@material-ui/icons/CancelPresentation";
 import { message } from "antd";
 
@@ -14,6 +15,7 @@ import {
   ReviewCardHeaderStyled,
   ReviewCardMovieStyled,
   ReviewCardUserNameStyled,
+  ReviewCardMovieLinkStyled,
 } from "./ReviewCard.style";
 
 import { Rating } from "..";
@@ -30,6 +32,8 @@ const ReviewCard = ({
   getUserReviewsFromDB,
   getReviewsFromDB,
 }: ReviewCardPropsType) => {
+  const { id } = useParams<{ id: string }>();
+
   const userReducer = useSelector(
     ({ userReducer }: RootStateType) => userReducer
   );
@@ -55,9 +59,16 @@ const ReviewCard = ({
             </ReviewCardDeleteReviewStyled>
           )}
         </ReviewCardHeaderStyled>
-        <Link to={`/movies/${review.movieId}`}>
+        {review.owner === id && (
+          <Link to={`/movies/${review.movieId}`}>
+            <ReviewCardMovieLinkStyled>
+              {review.movie}
+            </ReviewCardMovieLinkStyled>
+          </Link>
+        )}
+        {review.owner !== id && (
           <ReviewCardMovieStyled>{review.movie}</ReviewCardMovieStyled>
-        </Link>
+        )}
         <ReviewCardStarsStyled>
           <Rating value={review.rating} changeable={false} />
         </ReviewCardStarsStyled>

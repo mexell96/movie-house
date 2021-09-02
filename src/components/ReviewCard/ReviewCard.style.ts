@@ -61,6 +61,11 @@ export const ReviewCardUserNameStyled = styled.h2`
 export const ReviewCardMovieStyled = styled.h2`
   padding: 0 10px;
   margin: 0;
+`;
+
+export const ReviewCardMovieLinkStyled = styled.h2`
+  padding: 0 10px;
+  margin: 0;
 
   &:hover {
     background-color: #39445a;
