@@ -36,9 +36,8 @@ instance.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
-        const response = await instance({
-          method: "GET",
-          url: "/refresh",
+        const response = await axios.get(`${API_BASE}/refresh`, {
+          withCredentials: true,
         });
         setLocalStorageToken(response.data.accessToken || "");
 
