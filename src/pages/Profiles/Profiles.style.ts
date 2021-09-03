@@ -29,3 +29,17 @@ export const ProfileEditIconStyled = styled.button`
 export const ProfileChangeIconStyled = styled.div`
   display: flex;
 `;
+
+export const UserAvatarContainerStyled = styled.div`
+  display: flex;
+  width: 5vw;
+  height: 5vw;
+  margin: 0 auto;
+`;
+
+export const UserAvatarStyled = styled.img`
+  height: 5vw;
+  width: 5vw;
+  border-radius: 50%;
+  margin-bottom: 5vw;
+`;

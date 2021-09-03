@@ -8,6 +8,8 @@ import useHttp from "../../hooks/http";
 import { Loader } from "../../components";
 import { UserName } from "./UserName";
 import { UserEmail } from "./UserEmail";
+import { UserAvatar } from "./UserAvatar";
+
 import { getUsers, deleteUser, changeRole } from "../../api/user";
 
 const Profiles = (): JSX.Element => {
@@ -54,6 +56,20 @@ const Profiles = (): JSX.Element => {
   };
 
   const columns = [
+    {
+      title: "Avatar",
+      dataIndex: "avatar",
+      key: "avatar",
+      render: (userAvatar: string, user: UserType) => {
+        return (
+          <UserAvatar
+            userAvatar={userAvatar}
+            user={user}
+            getUsersFn={getUsersFn}
+          />
+        );
+      },
+    },
     {
       title: "Name",
       dataIndex: "name",
