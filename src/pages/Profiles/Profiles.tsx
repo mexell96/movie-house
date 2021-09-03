@@ -11,6 +11,7 @@ import { UserEmail } from "./UserEmail";
 import { UserAvatar } from "./UserAvatar";
 
 import { getUsers, deleteUser, changeRole } from "../../api/user";
+import { getUserReviews } from "../../api/review";
 
 const Profiles = (): JSX.Element => {
   const { loading } = useHttp();
@@ -23,6 +24,12 @@ const Profiles = (): JSX.Element => {
     (async () => {
       try {
         const users = await getUsers();
+        await Promise.all(
+          users.map(async (user: any) => {
+            user.reviews = await getUserReviews(user.id);
+            user.key = user.id;
+          })
+        );
         setUsers(users);
       } catch (e) {
         console.log(e, "Error profiles");
@@ -53,6 +60,28 @@ const Profiles = (): JSX.Element => {
         console.log(e, "E message createUserPage");
       }
     })();
+  };
+
+  const expandedRowRender = ({ reviews }: any) => {
+    const columns = [
+      {
+        title: "Movie",
+        dataIndex: "movie",
+        key: "movie",
+      },
+      {
+        title: "Rating",
+        dataIndex: "rating",
+        key: "rating",
+      },
+      {
+        title: "Review",
+        dataIndex: "review",
+        key: "review",
+      },
+    ];
+
+    return <Table columns={columns} dataSource={reviews} pagination={false} />;
   };
 
   const columns = [
@@ -137,7 +166,14 @@ const Profiles = (): JSX.Element => {
   return (
     <>
       {!loading && (user.role === "ADMIN" || user.role === "SUPERADMIN") && (
-        <Table bordered columns={columns} dataSource={users} rowKey="id" />
+        <Table
+          bordered
+          columns={columns}
+          dataSource={users}
+          expandable={{ expandedRowRender }}
+          rowKey="id"
+          pagination={false}
+        />
       )}
       {!loading && user.role === "USER" && (
         <ProfileErrorStyled>You don't have access.</ProfileErrorStyled>
