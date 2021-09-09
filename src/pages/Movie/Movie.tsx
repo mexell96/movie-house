@@ -26,7 +26,7 @@ import { fetchMovie } from "../../redux/actions";
 import { getPicture } from "../../utils";
 import { getReviews } from "../../api/review";
 
-const socket = new WebSocket("ws://movie-house-back.herokuapp.com");
+const socket = new WebSocket("wss://movie-house-back.herokuapp.com");
 
 const body = (
   { Poster, Title, Year, Plot }: MovieType,
