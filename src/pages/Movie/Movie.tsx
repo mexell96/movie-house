@@ -26,6 +26,8 @@ import { fetchMovie } from "../../redux/actions";
 import { getPicture } from "../../utils";
 import { getReviews } from "../../api/review";
 
+const socket = new WebSocket("ws://movie-house-back.herokuapp.com");
+
 const body = (
   { Poster, Title, Year, Plot }: MovieType,
   history: History<unknown>,
@@ -106,9 +108,28 @@ const Movie = (): JSX.Element => {
     resultsMovie[id] && setMovie(resultsMovie[id]);
   }, [resultsMovie]);
 
+  socket.onmessage = (event) => {
+    let msg = JSON.parse(event.data);
+    switch (msg.method) {
+      case "review":
+        getReviewsFromDB();
+        break;
+    }
+  };
+
   const getReviewsFromDB = async () => {
     const reviewsDB = await getReviews(id);
     setReviews(reviewsDB);
+    if (
+      reviews?.length !== reviewsDB?.length &&
+      reviews?.length !== undefined
+    ) {
+      socket.send(
+        JSON.stringify({
+          method: "review",
+        })
+      );
+    }
   };
 
   useEffect(() => {
